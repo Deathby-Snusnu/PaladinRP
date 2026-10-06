@@ -1,9 +1,8 @@
 # Paladin RP
 
 Paladin RP enthält Rollenspieltext-Sammlungen zu Segen, Auren, Siegeln,
-Fähigkeiten und Völkern sowie Code für die Textauswahl und Chat-Ausgabe. Eine
-reguläre Spielerbedienung ist derzeit nicht vorgesehen; die verbliebenen
-`/prp`-Handler dienen höchstens zu Testzwecken.
+Fähigkeiten und Völkern sowie Code für zufällige Textauswahl und Chat-Ausgabe.
+Die Textchance und Abklingzeit lassen sich über Chatbefehle einstellen.
 
 ## Installation
 
@@ -26,40 +25,52 @@ Charakterauswahlbildschirm unter **AddOns** aktiviert werden. Änderungen an
 Addon-Dateien erfordern üblicherweise einen `/reload` oder einen Neustart des
 Spiels.
 
-## Test- und Entwicklungsbefehle
+## Bedienung
 
-Die im Code verbliebenen `/prp`-Slash-Handler bieten keine reguläre
-Addon-Funktion mehr und dienen höchstens zu Testzwecken. Sie sind nicht als
-unterstützte Bedienoberfläche gedacht; die folgenden Beispiele dokumentieren
-lediglich vorhandene Testbefehle und müssen nicht zuverlässig funktionieren:
+Die Textpools verwenden Schlüssel wie:
 
 ```text
-/prp might
-/prp wisdom
-/prp protection
-/prp freedom
-/prp kings
-/prp devotion
-/prp retribution
-/prp crusader
-/prp fury
+MIGHT
+WISDOM
+PROTECTION
+FREEDOM
+KINGS
+GREATER_MIGHT
+DEVOTION
+RETRIBUTION
+CRUSADER
+FURY
+HAMMER
+LAYONHANDS
+DIVINE_SHIELD
 ```
 
-Im Handler sind außerdem Testparameter für Textchance und Abklingzeit
-hinterlegt:
+Große Segen haben eigene Textschlüssel mit dem Präfix `GREATER_`, zum Beispiel
+`GREATER_MIGHT` und `GREATER_WISDOM`. Bei Textpools mit Ziel- und
+Gruppentexten wird bei vorhandenem Ziel der Zieltext verwendet, andernfalls
+der Gruppentext, sofern einer vorhanden ist.
+
+Vorgesehen ist, einen Schlüssel mit `/prp <schlüssel>` aufzurufen. Die
+Textausgabe funktioniert derzeit jedoch nicht: Der
+Slash-Handler ruft `PaladinRP_TryText` auf, die Funktion ist jedoch als
+`PaladinRP.TryText` definiert. Der vorgesehene Chatkanal richtet sich nach dem
+Gruppenstatus (Instanzgruppe, Schlachtzug, Gruppe oder ohne Gruppe `/say`).
+Außerhalb einer Gruppe wird die für den Charakter verfügbare Volkssprache
+verwendet.
+
+Die Textchance und Abklingzeit sind pro Charakter gespeichert. Standardmäßig
+beträgt die Textchance 65 Prozent und die Abklingzeit 12 Sekunden. Sie können
+im Chat angepasst werden:
 
 ```text
 /prp chance 65
 /prp cooldown 12
 ```
 
-Diese Parameter sind ebenfalls nicht als unterstützte Einstellungen für
-Spieler gedacht.
-
-Die Textauswahl unterscheidet große von normalen Segen über ein `GREATER_`-
-Präfix, zum Beispiel `GREATER_MIGHT` und `GREATER_WISDOM`. Dies ist eine
-Unterscheidung im internen Textschlüssel und keine Zusage, dass die
-Test-Slash-Handler diese Eingaben zuverlässig verarbeiten.
+Die Textchance wird auf einen Wert zwischen 0 und 100 begrenzt. Die Abklingzeit
+kann nicht negativ sein und wird in Sekunden angegeben. Beide Einstellungs-
+befehle funktionieren unabhängig von der derzeit nicht funktionierenden
+Textausgabe.
 
 ## Projektstruktur
 
@@ -67,6 +78,7 @@ Test-Slash-Handler diese Eingaben zuverlässig verarbeiten.
 PaladinRP/
 ├── README.md
 ├── CHANGELOG.md
+├── LICENSE
 ├── PaladinRP.toc
 ├── PaladinRP.lua
 ├── data/
@@ -84,8 +96,7 @@ PaladinRP/
   zu ladenden Dateien. Die Reihenfolge dort ist wichtig: Die Textdaten werden
   vor der Hauptlogik geladen.
 - `PaladinRP.lua` enthält Code zur Initialisierung, Textauswahl und Chat-Ausgabe
-  sowie die verbliebenen `/prp`-Testhandler. Diese sind keine reguläre
-  Spielerfunktion.
+  sowie den `/prp`-Befehl und die Einstellungen für Textchance und Abklingzeit.
 - `data/` enthält die Textpools mit Schlüsseln wie `MIGHT`. Je nach Datenart
   liegen Texte in `ziel`-/`gruppe`-Listen oder in rassenspezifischen Listen.
   Neue Texte können durch Ergänzen der passenden Datenstruktur hinzugefügt
@@ -93,13 +104,15 @@ PaladinRP/
 - `ui/Settings.lua` ist für eine zukünftige Einstellungsoberfläche vorgesehen;
   eine Konfigurationsoberfläche ist derzeit noch nicht implementiert.
 
-Die Einstellungen werden unter `PaladinRP_CharacterDB` pro Charakter
+Textchance und Abklingzeit werden unter `PaladinRP_CharacterDB` pro Charakter
 gespeichert.
 
 ## Tests
 
-Das Projekt enthält derzeit keine automatisierte Testsuite. Die verbliebenen
-Slash-Handler sind nicht als verlässlicher manueller Test vorgesehen.
+Das Projekt enthält derzeit keine automatisierte Testsuite. Die Einstellungs-
+Slash-Befehle können im Spiel manuell ausprobiert werden. Die Textausgabe über
+`/prp <schlüssel>` ist aufgrund des oben beschriebenen Aufrufnamensfehlers
+derzeit nicht funktionsfähig.
 
 ## Lizenz
 

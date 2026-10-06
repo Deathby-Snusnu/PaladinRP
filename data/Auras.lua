@@ -13,6 +13,9 @@ PaladinRP_Auras = {
             "Das Licht steht mit uns.",
             "Möge die Hingabe an das Licht uns schützen.",
             "Wir stehen unter dem Schutz des Lichts.",
+            "Haltet zusammen. Das Licht verlässt uns nicht.",
+            "Möge unser Glaube uns durch jede Gefahr tragen.",
+            "Im Licht finden wir Schutz und Stärke.",
         },
     },
 
@@ -23,6 +26,9 @@ PaladinRP_Auras = {
             "Wer uns angreift, wird die Macht des Lichts kennenlernen.",
             "Das Licht vergelte jeden Schlag.",
             "Unsere Feinde sollen die Vergeltung des Lichts spüren.",
+            "Jeder Angriff auf uns soll eine Antwort finden.",
+            "Das Licht lässt das Unrecht nicht unbeantwortet.",
+            "Möge unsere Standhaftigkeit unsere Feinde erzittern lassen.",
         },
     },
 
@@ -33,6 +39,9 @@ PaladinRP_Auras = {
             "Bleibt konzentriert. Das Licht führt unsere Hand.",
             "Lasst Euch nicht vom Kampf ablenken.",
             "Das Licht gebe uns einen klaren Geist.",
+            "Ruhig bleiben. Jeder Schritt hat seinen Sinn.",
+            "Lasst den Lärm des Kampfes Euren Geist nicht trüben.",
+            "Ein klarer Blick und eine ruhige Hand.",
         },
     },
 
@@ -43,6 +52,9 @@ PaladinRP_Auras = {
             "Wo Schatten lauert, soll das Licht vorangehen.",
             "Der Schatten soll keinen Platz unter uns finden.",
             "Das Licht bewahre uns vor den Mächten der Finsternis.",
+            "Fürchtet den Schatten nicht. Das Licht ist bei uns.",
+            "Keine Finsternis soll unseren Weg verdunkeln.",
+            "Haltet dem Dunkel stand, gemeinsam sind wir stark.",
         },
     },
 
@@ -52,6 +64,9 @@ PaladinRP_Auras = {
         gruppe = {
             "Das Licht bewahre uns vor der Flamme.",
             "Möge das Licht unsere Haut gegen die Flammen schützen.",
+            "Die Hitze soll unseren Mut nicht schmelzen lassen.",
+            "Haltet stand. Keine Flamme währt ewig.",
+            "Möge das Licht uns durch das Feuer geleiten.",
         },
     },
 
@@ -61,6 +76,9 @@ PaladinRP_Auras = {
         gruppe = {
             "Möge das Licht uns vor eisiger Kälte bewahren.",
             "Der Frost soll unsere Entschlossenheit nicht brechen.",
+            "Lasst die Kälte nicht in Eure Herzen dringen.",
+            "Selbst im tiefsten Frost bleibt unser Wille ungebrochen.",
+            "Möge das Licht unsere Schritte durch die Kälte führen.",
         },
     },
 }

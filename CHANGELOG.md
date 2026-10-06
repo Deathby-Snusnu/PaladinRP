@@ -6,7 +6,13 @@
 
 ### Hinzugefügt
 
-- Neue Siegeltexte für den Kreuzfahrer und den Furor.
+- Zusätzliche Rollenspieltexte für Hammer des Zorns, Handauflegung und
+  Göttlichen Schild.
+- Zusätzliche Gruppentexte für alle vorhandenen Auren.
+- Zusätzliche Ziel- und Gruppentexte für alle normalen Segen.
+- Zusätzliche Ziel- und Gruppentexte für alle großen Segen.
+- Zusätzliche zwergische und menschliche Rassentexte.
+- Zusätzliche Gruppentexte für alle vorhandenen Siegel.
 - Zwergische Rassentexte für den Kreuzfahrer, die Rechtschaffenheit und den
   Furor.
 - Eindeutige `GREATER_`-Textschlüssel für die Auswahl großer Segen, die
