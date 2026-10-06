@@ -27,6 +27,20 @@ PaladinRP_Racial = {
             "Möge das Licht meine Schritte führen und mein Hammer den Rest erledigen.",
             "Ein Zwerg kennt seinen Weg. Das Licht zeigt ihn.",
         },
+
+        ["RIGHTEOUSNESS"] = {
+        "Das Licht führe meine Hand. Mein Hammer folgt.",
+        "Recht und Ordnung. Der Hammer sorgt für Nachdruck.",
+        "Möge meine Hand fest und mein Urteil gerecht sein.",
+        "Das Licht urteilt. Mein Hammer vollstreckt.",
+        },
+
+        ["FURY"] = {
+        "Das Licht führe meinen Zorn. Der Hammer folgt.",
+        "Mein Zorn ist gerecht. Mein Hammer ist bereit.",
+        "Ein wütender Zwerg ist ein überzeugender Zwerg.",
+        "Möge mein Furor so standhaft sein wie Zwergenstahl.",
+        },
     },
 
     ["Human"] = {

@@ -54,4 +54,15 @@ PaladinRP_Seals = {
         "Vorwärts im Namen des Lichts.",
         },
     },
+
+    ["FURY"] = {
+    name = "Siegel des Furors",
+    gruppe = {
+        "Möge das Licht meinen Zorn führen.",
+        "Das Licht gebe meinem Zorn Richtung.",
+        "Mein Zorn dient dem Licht.",
+        "Im Zorn des Lichts.",
+        "Möge mein Furor gerecht sein.",
+        },
+    },
 }
