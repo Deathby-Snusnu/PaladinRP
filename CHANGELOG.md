@@ -6,10 +6,11 @@
 
 ### Hinzugefügt
 
-- Neue Siegeltexte für den Kreuzfahrer (`/prp crusader`) und den Furor
-  (`/prp fury`).
+- Neue Siegeltexte für den Kreuzfahrer und den Furor.
 - Zwergische Rassentexte für den Kreuzfahrer, die Rechtschaffenheit und den
   Furor.
+- Eindeutige `GREATER_`-Textschlüssel für die Auswahl großer Segen, die
+  Namenskonflikte mit normalen Segen vermeiden.
 
 ## [0.1.0] - 2026-10-06
 

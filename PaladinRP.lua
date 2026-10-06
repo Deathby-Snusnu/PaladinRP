@@ -212,6 +212,19 @@ local function GetTextPool(emote)
     end
 
 
+    -- Große Segen benötigen ein Präfix, da ihre Schlüssel mit normalen
+    -- Segen kollidieren (z. B. MIGHT und WISDOM).
+    local greaterPrefix = "GREATER_"
+
+    if string.sub(emote, 1, #greaterPrefix) == greaterPrefix then
+        local greaterEmote = string.sub(emote, #greaterPrefix + 1)
+
+        if PaladinRP_GreaterBlessings[greaterEmote] then
+            return PaladinRP_GreaterBlessings[greaterEmote]
+        end
+    end
+
+
     -- --------------------------------------
     -- 2. Rassenspezifische Texte
     -- --------------------------------------
