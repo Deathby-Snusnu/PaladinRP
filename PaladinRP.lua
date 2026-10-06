@@ -1,4 +1,3 @@
--- PaladinRP addon entry point.
 -- ==========================================
 -- PALADIN RP
 -- HAUPTDATEI
@@ -9,14 +8,17 @@ local ADDON_NAME = "PaladinRP"
 PaladinRP = PaladinRP or {}
 
 -- ==========================================
--- STANDARD-EINSTELLUNGEN
+-- STANDARDWERTE
 -- ==========================================
 
 local DEFAULTS = {
     textChance = 65,
     cooldown = 12,
-    channel = "AUTO",
 }
+
+-- Zeitpunkt des letzten RP-Textes
+local lastRPText = 0
+
 
 -- ==========================================
 -- INITIALISIERUNG
@@ -34,20 +36,29 @@ local function InitializeDatabase()
         PaladinRP_CharacterDB.cooldown = DEFAULTS.cooldown
     end
 
-    if PaladinRP_CharacterDB.channel == nil then
-        PaladinRP_CharacterDB.channel = DEFAULTS.channel
-    end
-
     if PaladinRP_CharacterDB.personalTexts == nil then
         PaladinRP_CharacterDB.personalTexts = {}
     end
 end
 
+
+-- ==========================================
+-- ZUFALLSTEXT
+-- ==========================================
+
+local function GetRandomText(pool)
+
+    if not pool or #pool == 0 then
+        return nil
+    end
+
+    return pool[math.random(#pool)]
+end
+
+
 -- ==========================================
 -- COOLDOWN
 -- ==========================================
-
-local lastRPText = 0
 
 local function IsCooldownReady()
 
@@ -57,31 +68,24 @@ local function IsCooldownReady()
     return (now - lastRPText) >= cooldown
 end
 
+
 local function GetRemainingCooldown()
 
     local now = GetTime()
     local cooldown = PaladinRP_CharacterDB.cooldown
-    local remaining = cooldown - (now - lastRPText)
 
-    return math.max(0, remaining)
+    return math.max(
+        0,
+        cooldown - (now - lastRPText)
+    )
 end
 
+
 local function StartCooldown()
+
     lastRPText = GetTime()
 end
 
--- ==========================================
--- ZUFALL
--- ==========================================
-
-local function GetRandomText(pool)
-
-    if not pool or #pool == 0 then
-        return nil
-    end
-
-    return pool[math.random(1, #pool)]
-end
 
 -- ==========================================
 -- ZIEL
@@ -96,36 +100,41 @@ local function GetTargetName()
     return UnitName("target")
 end
 
+
 -- ==========================================
--- RASSENSPRACHE
+-- VOLKSSPRACHE
 -- ==========================================
+
+local RacialLanguages = {
+
+    Human = "Gemeinsprache",
+    Dwarf = "Zwergisch",
+    Gnome = "Gnomisch",
+    NightElf = "Darnassisch",
+    Draenei = "Draenei",
+
+    Orc = "Orcisch",
+    Troll = "Zandali",
+    Undead = "Gossensprache",
+    BloodElf = "Thalassisch",
+    Tauren = "Taurisch",
+}
+
 
 local function GetRacialLanguageID()
 
-    local racialLanguageNames = {
-        Human = "Gemeinsprache",
-        Dwarf = "Zwergisch",
-        Gnome = "Gnomisch",
-        NightElf = "Darnassisch",
-        Draenei = "Draenei",
-
-        Orc = "Orcisch",
-        Troll = "Zandali",
-        Undead = "Gossensprache",
-        BloodElf = "Thalassisch",
-        Tauren = "Taurisch",
-    }
-
     local _, race = UnitRace("player")
-    local languageName = racialLanguageNames[race]
+
+    local languageName = RacialLanguages[race]
 
     if not languageName then
         return nil
     end
 
-    for i = 1, GetNumLanguages() do
+    for index = 1, GetNumLanguages() do
 
-        local language, languageID = GetLanguageByIndex(i)
+        local language, languageID =
+            GetLanguageByIndex(index)
 
         if language == languageName then
             return languageID
@@ -135,17 +144,12 @@ local function GetRacialLanguageID()
     return nil
 end
 
+
 -- ==========================================
--- CHAT-KANAL
+-- CHATKANAL
 -- ==========================================
 
 local function GetChatChannel()
-
-    local configured = PaladinRP_CharacterDB.channel
-
-    if configured ~= "AUTO" then
-        return configured
-    end
 
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
         return "INSTANCE_CHAT"
@@ -162,8 +166,9 @@ local function GetChatChannel()
     return "SAY"
 end
 
+
 -- ==========================================
--- CHAT SENDEN
+-- TEXT SENDEN
 -- ==========================================
 
 local function SendRPText(text)
@@ -176,7 +181,6 @@ local function SendRPText(text)
 
     local languageID = nil
 
-    -- Die Sprache ist nur für SAY/YELL relevant.
     if channel == "SAY" or channel == "YELL" then
         languageID = GetRacialLanguageID()
     end
@@ -190,62 +194,28 @@ local function SendRPText(text)
     return true
 end
 
--- ==========================================
--- PERSÖNLICHE TEXTE
--- ==========================================
-
-local function GetPersonalText(emote)
-
-    local personal = PaladinRP_CharacterDB.personalTexts
-
-    if not personal then
-        return nil
-    end
-
-    local pool = personal[emote]
-
-    if not pool or #pool == 0 then
-        return nil
-    end
-
-    return GetRandomText(pool)
-end
 
 -- ==========================================
--- RASSEN-TEXTE
--- ==========================================
-
-local function GetRacialText(emote)
-
-    local _, race = UnitRace("player")
-
-    if not PaladinRP_Racial[race] then
-        return nil
-    end
-
-    local pool = PaladinRP_Racial[race][emote]
-
-    if not pool then
-        return nil
-    end
-
-    return GetRandomText(pool)
-end
-
--- ==========================================
--- TEXTPOOL SUCHEN
+-- TEXTPOOL
 -- ==========================================
 
 local function GetTextPool(emote)
 
-    -- 1. Persönlicher Text
-    local personal = PaladinRP_CharacterDB.personalTexts
+    -- --------------------------------------
+    -- 1. Persönliche Texte
+    -- --------------------------------------
 
-    if personal and personal[emote] then
-        return personal[emote]
+    if PaladinRP_CharacterDB.personalTexts
+        and PaladinRP_CharacterDB.personalTexts[emote] then
+
+        return PaladinRP_CharacterDB.personalTexts[emote]
     end
 
-    -- 2. Rassenspezifischer Text
+
+    -- --------------------------------------
+    -- 2. Rassenspezifische Texte
+    -- --------------------------------------
+
     local _, race = UnitRace("player")
 
     if PaladinRP_Racial[race]
@@ -254,27 +224,47 @@ local function GetTextPool(emote)
         return PaladinRP_Racial[race][emote]
     end
 
+
+    -- --------------------------------------
     -- 3. Normale Segen
+    -- --------------------------------------
+
     if PaladinRP_Blessings[emote] then
         return PaladinRP_Blessings[emote]
     end
 
+
+    -- --------------------------------------
     -- 4. Große Segen
+    -- --------------------------------------
+
     if PaladinRP_GreaterBlessings[emote] then
         return PaladinRP_GreaterBlessings[emote]
     end
 
+
+    -- --------------------------------------
     -- 5. Auren
+    -- --------------------------------------
+
     if PaladinRP_Auras[emote] then
         return PaladinRP_Auras[emote]
     end
 
+
+    -- --------------------------------------
     -- 6. Siegel
+    -- --------------------------------------
+
     if PaladinRP_Seals[emote] then
         return PaladinRP_Seals[emote]
     end
 
+
+    -- --------------------------------------
     -- 7. Sonstige Fähigkeiten
+    -- --------------------------------------
+
     if PaladinRP_Abilities[emote] then
         return PaladinRP_Abilities[emote]
     end
@@ -282,11 +272,12 @@ local function GetTextPool(emote)
     return nil
 end
 
+
 -- ==========================================
--- TEXT ERMITTELN
+-- RP-TEXT ERZEUGEN
 -- ==========================================
 
-local function GetRPText(emote)
+local function BuildRPText(emote)
 
     local pool = GetTextPool(emote)
 
@@ -294,21 +285,34 @@ local function GetRPText(emote)
         return nil
     end
 
-    -- Persönliche Texte sind direkt ein Array.
+
+    -- ======================================
+    -- PERSÖNLICHER / RASSEN-TEXT
+    -- ======================================
+
     if type(pool[1]) == "string" then
 
         local text = GetRandomText(pool)
 
         local targetName = GetTargetName()
 
-        if targetName and string.find(text, "%%s") then
-            text = string.format(text, targetName)
+        if targetName
+            and string.find(text, "%%s") then
+
+            text = string.format(
+                text,
+                targetName
+            )
         end
 
         return text
     end
 
-    -- Datenobjekt mit ziel/gruppe
+
+    -- ======================================
+    -- ZIELTEXT
+    -- ======================================
+
     local targetName = GetTargetName()
 
     if targetName
@@ -318,11 +322,20 @@ local function GetRPText(emote)
         local text = GetRandomText(pool.ziel)
 
         if string.find(text, "%%s") then
-            text = string.format(text, targetName)
+
+            text = string.format(
+                text,
+                targetName
+            )
         end
 
         return text
     end
+
+
+    -- ======================================
+    -- GRUPPENTEXT
+    -- ======================================
 
     if pool.gruppe
         and #pool.gruppe > 0 then
@@ -333,78 +346,45 @@ local function GetRPText(emote)
     return nil
 end
 
+
 -- ==========================================
--- HAUPTFUNKTION
+-- RP-TEXT VERSUCHEN
 -- ==========================================
 
-function PaladinRP_Do(emote)
-
+function PaladinRP.TryText(emote)
     emote = string.upper(emote or "")
 
     if emote == "" then
-
-        print("|cffffd100Paladin RP:|r Kein Befehl angegeben.")
-
         return
     end
-
-    -- --------------------------------------
-    -- COOLDOWN
-    -- --------------------------------------
 
     if not IsCooldownReady() then
-
-        local remaining = GetRemainingCooldown()
-
-        print(
-            string.format(
-                "|cffc79c6ePaladin RP:|r " ..
-                "RP-Text auf Abklingzeit. Noch %.1f Sekunden.",
-                remaining
-            )
-        )
-
         return
     end
-
-    -- --------------------------------------
-    -- ZUFALLSCHANCE
-    -- --------------------------------------
 
     local chance = PaladinRP_CharacterDB.textChance
 
-    local roll = math.random(1, 100)
-
-    if roll > chance then
-
-        -- Kein Text, aber auch kein Fehler.
+    if math.random(100) > chance then
         return
     end
 
-    -- --------------------------------------
-    -- TEXT
-    -- --------------------------------------
-
-    local text = GetRPText(emote)
+    local text = BuildRPText(emote)
 
     if not text then
-
         print(
             "|cffff0000Paladin RP:|r " ..
-            "Kein RP-Text für '" .. emote .. "' gefunden."
+            "Kein Text für " ..
+            emote ..
+            " vorhanden."
         )
-
         return
     end
-
-    -- --------------------------------------
-    -- SENDEN
-    -- --------------------------------------
 
     if SendRPText(text) then
         StartCooldown()
     end
 end
+
 
 -- ==========================================
 -- SLASH COMMAND
@@ -414,15 +394,15 @@ SLASH_PALADINRP1 = "/prp"
 
 SlashCmdList["PALADINRP"] = function(message)
 
-    local emote = string.match(
-        message or "",
-        "^%s*(%S+)"
-    )
+    local command =
+        string.match(
+            message or "",
+            "^%s*(%S+)"
+        )
 
-    if not emote then
+    if not command then
 
         print("|cffc79c6ePaladin RP|r")
-        print("")
         print("/prp might")
         print("/prp wisdom")
         print("/prp protection")
@@ -430,50 +410,56 @@ SlashCmdList["PALADINRP"] = function(message)
         print("/prp kings")
         print("/prp devotion")
         print("/prp retribution")
-        print("")
-        print("/prp chance 65")
-        print("/prp cooldown 12")
 
         return
     end
 
-    local command = string.lower(emote)
+
+    command = string.lower(command)
+
 
     -- ======================================
-    -- CHANCE
+    -- TEXTCHANCE
     -- ======================================
 
     if command == "chance" then
 
-        local value = tonumber(
-            string.match(
-                message,
-                "^%s*%S+%s+(%d+)"
+        local value =
+            tonumber(
+                string.match(
+                    message,
+                    "^%s*%S+%s+(%d+)"
+                )
             )
-        )
 
         if not value then
+
             print(
-                "|cffff0000Paladin RP:|r " ..
-                "Beispiel: /prp chance 65"
+                "Benutzung: /prp chance 65"
             )
+
             return
         end
 
-        value = math.max(0, math.min(100, value))
+        value = math.max(
+            0,
+            math.min(100, value)
+        )
 
-        PaladinRP_CharacterDB.textChance = value
+        PaladinRP_CharacterDB.textChance =
+            value
 
         print(
             string.format(
                 "|cffc79c6ePaladin RP:|r " ..
-                "Textchance auf %d%% gesetzt.",
+                "Textchance: %d%%",
                 value
             )
         )
 
         return
     end
+
 
     -- ======================================
     -- COOLDOWN
@@ -481,29 +467,32 @@ SlashCmdList["PALADINRP"] = function(message)
 
     if command == "cooldown" then
 
-        local value = tonumber(
-            string.match(
-                message,
-                "^%s*%S+%s+(%d+)"
+        local value =
+            tonumber(
+                string.match(
+                    message,
+                    "^%s*%S+%s+(%d+)"
+                )
             )
-        )
 
         if not value then
+
             print(
-                "|cffff0000Paladin RP:|r " ..
-                "Beispiel: /prp cooldown 12"
+                "Benutzung: /prp cooldown 12"
             )
+
             return
         end
 
         value = math.max(0, value)
 
-        PaladinRP_CharacterDB.cooldown = value
+        PaladinRP_CharacterDB.cooldown =
+            value
 
         print(
             string.format(
                 "|cffc79c6ePaladin RP:|r " ..
-                "Cooldown auf %d Sekunden gesetzt.",
+                "Cooldown: %d Sekunden",
                 value
             )
         )
@@ -511,8 +500,14 @@ SlashCmdList["PALADINRP"] = function(message)
         return
     end
 
-    PaladinRP_Do(emote)
+
+    -- ======================================
+    -- MANUELLER RP-TEXT
+    -- ======================================
+
+    PaladinRP_TryText(command)
 end
+
 
 -- ==========================================
 -- INITIALISIERUNG
@@ -522,17 +517,16 @@ local eventFrame = CreateFrame("Frame")
 
 eventFrame:RegisterEvent("PLAYER_LOGIN")
 
-eventFrame:SetScript("OnEvent", function()
+eventFrame:SetScript(
+    "OnEvent",
+    function()
 
-    InitializeDatabase()
+        InitializeDatabase()
 
-    math.randomseed(
-        time()
-    )
+        print(
+            "|cffc79c6ePaladin RP|r geladen. " ..
+            "Befehl: |cffffd100/prp|r"
+        )
 
-    print(
-        "|cffc79c6ePaladin RP|r geladen. " ..
-        "Befehl: |cffffd100/prp|r"
-    )
-
-end)
+    end
+)
