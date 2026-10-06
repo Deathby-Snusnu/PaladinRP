@@ -103,5 +103,5 @@ Slash-Handler sind nicht als verlässlicher manueller Test vorgesehen.
 
 ## Lizenz
 
-Im Projekt ist derzeit keine Lizenzdatei enthalten; eine Lizenz ist daher
-nicht dokumentiert.
+Dieses Projekt steht unter der MIT-Lizenz. Den vollständigen Lizenztext findest
+du in der Datei [LICENSE](LICENSE).
