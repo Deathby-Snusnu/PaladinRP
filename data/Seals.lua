@@ -43,4 +43,15 @@ PaladinRP_Seals = {
             "Möge das Licht meine Hand führen.",
         },
     },
+
+    ["CRUSADER"] = {
+    name = "Siegel des Kreuzfahrers",
+    gruppe = {
+        "Das Licht führe meinen Weg.",
+        "Im Namen des Lichts ziehe ich voran.",
+        "Möge das Licht meine Schritte führen.",
+        "Mein Weg ist der Weg des Lichts.",
+        "Vorwärts im Namen des Lichts.",
+        },
+    },
 }

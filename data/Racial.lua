@@ -19,6 +19,14 @@ PaladinRP_Racial = {
             "Möge Euer Verstand scharf wie eine Axt sein, %s.",
             "Möge Euer Urteil fest wie Stahl sein, %s.",
         },
+
+        
+        ["CRUSADER"] = {
+            "Das Licht führe meinen Weg. Der Hammer folgt.",
+            "Vorwärts. Das Licht und mein Hammer kennen den Weg.",
+            "Möge das Licht meine Schritte führen und mein Hammer den Rest erledigen.",
+            "Ein Zwerg kennt seinen Weg. Das Licht zeigt ihn.",
+        },
     },
 
     ["Human"] = {
