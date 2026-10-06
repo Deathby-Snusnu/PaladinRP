@@ -2,6 +2,15 @@
 
 Änderungen an Paladin RP werden in dieser Datei dokumentiert.
 
+## [Unreleased]
+
+### Hinzugefügt
+
+- Neue Siegeltexte für den Kreuzfahrer (`/prp crusader`) und den Furor
+  (`/prp fury`).
+- Zwergische Rassentexte für den Kreuzfahrer, die Rechtschaffenheit und den
+  Furor.
+
 ## [0.1.0] - 2026-10-06
 
 ### Hinzugefügt

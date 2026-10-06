@@ -31,6 +31,8 @@ Befehlsübersicht an. Beispiele:
 /prp kings
 /prp devotion
 /prp retribution
+/prp crusader
+/prp fury
 ```
 
 Der Schlüssel des Befehls entspricht dem Textschlüssel in den Datendateien;
@@ -38,6 +40,11 @@ Groß- und Kleinschreibung ist beim Befehl unerheblich. Gibt es ein Ziel, kann
 ein Text aus der `ziel`-Liste verwendet werden. `%s` wird dabei durch den
 Zielnamen ersetzt. Ohne Ziel wird, sofern vorhanden, ein Text aus der
 `gruppe`-Liste gewählt.
+
+Für Siegel gibt es unter anderem die Befehle `crusader` (Siegel des
+Kreuzfahrers) und `fury` (Siegel des Furors). Zwergische Paladine erhalten für
+`crusader`, `righteousness` (Rechtschaffenheit) und `fury` zusätzlich
+rassenspezifische Texte.
 
 Die Textchance und die Abklingzeit lassen sich pro Charakter anpassen:
 
