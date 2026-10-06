@@ -1,0 +1,18 @@
+## Interface: 16001
+## Title: Paladin RP
+## Notes: Rollenspiel-Unterstützung für Paladine
+## Author: Hannes
+## Version: 0.1.0
+
+## SavedVariablesPerCharacter: PaladinRP_CharacterDB
+
+PaladinRP.lua
+
+data\Blessings.lua
+data\GreaterBlessings.lua
+data\Auras.lua
+data\Seals.lua
+data\Abilities.lua
+data\Racial.lua
+
+ui\Settings.lua
