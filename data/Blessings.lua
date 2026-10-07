@@ -22,8 +22,8 @@ PaladinRP_Blessings = {
         gruppe = {
             "Das Licht gebe Euch Macht und Stärke.",
             "Möge das Licht unsere Reihen stärken.",
-            "Gemeinsam stehen wir stark im Licht.",
-            "Möge unsere Kraft uns auf dem rechten Weg halten.",
+            "Gemeinsam stehen wir stark.",
+            "Möge unsere Kraft dem rechten Zweck dienen.",
         },
     },
 
@@ -35,15 +35,15 @@ PaladinRP_Blessings = {
             "Möge das Licht Euren Verstand schärfen, %s.",
             "Möge Euer Urteil klar und Euer Geist wach sein, %s.",
             "Möge Euch Weisheit den rechten Weg zeigen, %s.",
-            "Hört auf Euren Geist und folgt dem Licht, %s.",
+            "Handelt mit Bedacht, %s.",
             "Möge Klarheit Eure Entscheidungen leiten, %s.",
         },
 
         gruppe = {
             "Das Licht gebe uns Weisheit.",
             "Möge das Licht unseren Geist erhellen.",
-            "Lasst uns mit Bedacht handeln und dem Licht folgen.",
-            "Möge unser Urteil so klar sein wie unser Ziel.",
+            "Lasst uns mit Bedacht handeln.",
+            "Möge unser Urteil klar bleiben.",
         },
     },
 
@@ -54,15 +54,15 @@ PaladinRP_Blessings = {
             "Das Licht wache über Euch, %s.",
             "Möge das Licht Euch vor Unheil bewahren, %s.",
             "Möge der Schutz des Lichts Euch begleiten, %s.",
-            "Möge kein Unheil Euren Weg kreuzen, %s.",
+            "Kein Schlag soll Euch erreichen, %s.",
             "Steht fest. Das Licht hält seine schützende Hand über Euch, %s.",
-            "Möge Euch das Licht in jeder Gefahr beistehen, %s.",
+            "Für diesen Augenblick seid Ihr behütet, %s.",
         },
 
         gruppe = {
             "Das Licht wache über uns.",
             "Möge der Schutz des Lichts uns begleiten.",
-            "Haltet zusammen. Das Licht schützt unsere Gemeinschaft.",
+            "Haltet zusammen. Das Licht schützt unsere Reihen.",
             "Möge das Licht zwischen uns und der Gefahr stehen.",
         },
     },
@@ -71,19 +71,19 @@ PaladinRP_Blessings = {
         name = "Segen der Rettung",
 
         ziel = {
-            "Möge das Licht Euch bewahren, %s.",
-            "Vertraut auf das Licht, %s.",
-            "Möge Euch das Licht in Zeiten der Not beistehen, %s.",
-            "Das Licht lasse Euch nicht fallen, %s.",
-            "Wenn die Gefahr naht, möge das Licht Euch Zuflucht sein, %s.",
-            "Haltet stand, %s. Das Licht ist an Eurer Seite.",
+            "Möge der Zorn unserer Feinde an Euch vorübergehen, %s.",
+            "Das Licht lenke feindliche Augen von Euch fort, %s.",
+            "Bleibt im Schatten größerer Bedrohungen, %s.",
+            "Möge Euer Wirken unbemerkt bleiben, bis es zu spät ist, %s.",
+            "Das Licht schenke Euch Zurückhaltung im Angesicht des Feindes, %s.",
+            "Möge die Aufmerksamkeit des Feindes Euch meiden, %s.",
         },
 
         gruppe = {
-            "Vertraut auf das Licht.",
-            "Möge das Licht uns bewahren.",
-            "In der Stunde der Not stehen wir füreinander ein.",
-            "Möge das Licht unsere Gemeinschaft durch jede Gefahr führen.",
+            "Möge der Zorn unserer Feinde an uns vorübergehen.",
+            "Lasst andere den Blick des Feindes binden.",
+            "Wir wirken, ohne unnötig Aufmerksamkeit zu wecken.",
+            "Möge das Licht feindliche Augen von uns ablenken.",
         },
     },
 
@@ -95,15 +95,15 @@ PaladinRP_Blessings = {
             "Möge Euch das Licht von allen Fesseln befreien, %s.",
             "Keine Kette soll Euch halten, %s.",
             "Möge Euer Schritt frei und ungehindert sein, %s.",
-            "Lasst Euch von nichts aufhalten, %s. Das Licht ebnet Euren Weg.",
+            "Lasst Euch von nichts aufhalten, %s.",
             "Keine Fessel ist stärker als Euer Wille, %s.",
         },
 
         gruppe = {
             "Möge das Licht uns Freiheit schenken.",
             "Nichts soll unseren Weg versperren.",
-            "Gemeinsam durchbrechen wir jede Fessel.",
-            "Möge das Licht unseren Weg frei machen.",
+            "Keine Fessel soll uns halten.",
+            "Möge unser Weg frei bleiben.",
         },
     },
 }

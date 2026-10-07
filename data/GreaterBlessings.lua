@@ -10,19 +10,19 @@ PaladinRP_GreaterBlessings = {
         name = "Großer Segen der Macht",
 
         ziel = {
-            "Das Licht gebe Eurer Gemeinschaft Macht und Stärke.",
-            "Möge das Licht die Stärke Eurer Kämpfer mehren.",
-            "Möge die Kraft des Lichts jeden in Euren Reihen stärken.",
-            "Eure Gemeinschaft soll mit Mut und unerschütterlicher Kraft voranschreiten.",
-            "Das Licht segne Eure Verbündeten mit der Stärke, die sie brauchen.",
+            "Das Licht gebe Euren Reihen Macht und Stärke.",
+            "Möge das Licht jeden Arm an Eurer Seite stärken.",
+            "Möge die Kraft des Lichts Eure Reihen erfüllen.",
+            "Eure Gefährten sollen mit Mut und Kraft voranschreiten.",
+            "Das Licht stärke alle, die an Eurer Seite kämpfen.",
         },
 
         gruppe = {
             "Das Licht gebe uns Macht und Stärke.",
             "Möge die Stärke des Lichts unsere Reihen erfüllen.",
-            "Möge jeder von uns die Kraft finden, standhaft zu bleiben.",
-            "Gemeinsam tragen wir die Stärke des Lichts in die Schlacht.",
-            "Das Licht mache unsere Gemeinschaft stark.",
+            "Jeder von uns finde die Kraft, standhaft zu bleiben.",
+            "Gemeinsam tragen wir Stärke in die Schlacht.",
+            "Das Licht stärke uns alle.",
         },
     },
 
@@ -30,19 +30,19 @@ PaladinRP_GreaterBlessings = {
         name = "Großer Segen der Weisheit",
 
         ziel = {
-            "Das Licht gebe Eurer Gemeinschaft Weisheit.",
-            "Möge das Licht die Gedanken Eurer Verbündeten erhellen.",
-            "Möge das Licht jedem in Euren Reihen Klarheit schenken.",
-            "Eure Gemeinschaft finde Weisheit in jeder Entscheidung.",
-            "Das Licht leite die Gedanken Eurer Verbündeten auf rechtem Wege.",
+            "Das Licht gebe Euren Reihen Weisheit.",
+            "Möge das Licht die Gedanken Eurer Gefährten erhellen.",
+            "Klarheit begleite jeden, der an Eurer Seite steht.",
+            "Eure Reihen mögen mit Bedacht handeln.",
+            "Das Licht leite die Gedanken Eurer Verbündeten.",
         },
 
         gruppe = {
             "Das Licht gebe uns Weisheit.",
             "Möge unser Geist vom Licht geführt werden.",
             "Lasst uns mit klarem Geist und ruhigem Urteil handeln.",
-            "Möge Weisheit unsere Gemeinschaft auf rechtem Wege halten.",
-            "Das Licht erhelle unsere Gedanken und unsere Entscheidungen.",
+            "Möge Weisheit unsere Schritte lenken.",
+            "Das Licht erhelle unsere Gedanken.",
         },
     },
 
@@ -50,19 +50,19 @@ PaladinRP_GreaterBlessings = {
         name = "Großer Segen der Könige",
 
         ziel = {
-            "Möge das Licht Euch Stärke und Würde verleihen.",
-            "Das Licht erhebe Eure Stärke und Euren Mut.",
-            "Möge das Licht jedem Eurer Verbündeten Stärke und Anmut verleihen.",
-            "Eure Gemeinschaft soll in Stärke und Würde zusammenstehen.",
-            "Mögen Mut und Kraft alle begleiten, die an Eurer Seite kämpfen.",
+            "Möge das Licht Euren Reihen Stärke und Würde verleihen.",
+            "Das Licht erhebe Mut und Kraft all jener an Eurer Seite.",
+            "Mögen Eure Gefährten aufrecht und entschlossen stehen.",
+            "Eure Reihen sollen in Stärke und Würde zusammenstehen.",
+            "Mögen Mut, Kraft und Anmut Eure Verbündeten begleiten.",
         },
 
         gruppe = {
             "Möge das Licht uns Stärke und Würde verleihen.",
             "Mögen Stärke und Würde uns begleiten.",
-            "Möge jeder von uns in Stärke und Würde handeln.",
-            "Gemeinsam stehen wir stark und aufrecht im Licht.",
-            "Das Licht erhebe unsere Gemeinschaft.",
+            "Möge jeder von uns aufrecht und entschlossen handeln.",
+            "Gemeinsam stehen wir stark im Licht.",
+            "Das Licht erhebe uns alle.",
         },
     },
 
@@ -70,19 +70,19 @@ PaladinRP_GreaterBlessings = {
         name = "Großer Segen der Rettung",
 
         ziel = {
-            "Möge das Licht über Euch und Eure Verbündeten wachen.",
-            "Das Licht bewahre Euch vor dem Untergang.",
-            "Möge das Licht Eure Gemeinschaft in dunklen Stunden bewahren.",
-            "Eure Verbündeten seien unter dem Schutz des Lichts sicher.",
-            "Das Licht stehe allen bei, die an Eurer Seite kämpfen.",
+            "Möge der Zorn des Feindes an Euren Reihen vorübergehen.",
+            "Das Licht lenke feindliche Augen von Euren Gefährten fort.",
+            "Eure Verbündeten mögen wirken, ohne unnötig Aufmerksamkeit zu wecken.",
+            "Möge der Feind andere Bedrohungen zuerst erkennen.",
+            "Das Licht halte den Blick des Feindes von Euren Reihen fern.",
         },
 
         gruppe = {
-            "Möge das Licht über uns wachen.",
-            "Das Licht bewahre unsere Gemeinschaft.",
-            "Möge niemand von uns den Schutz des Lichts entbehren.",
-            "Gemeinsam stehen wir unter dem wachsamen Blick des Lichts.",
-            "Das Licht begleite und bewahre uns alle.",
+            "Möge der Zorn des Feindes an uns vorübergehen.",
+            "Das Licht lenke feindliche Augen von uns fort.",
+            "Wir wirken mit Bedacht und ziehen keinen unnötigen Zorn auf uns.",
+            "Mögen unsere Feinde ihre Aufmerksamkeit anderswo binden.",
+            "Das Licht halte den Blick des Feindes von uns fern.",
         },
     },
 }
