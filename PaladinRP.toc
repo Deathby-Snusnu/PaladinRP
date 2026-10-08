@@ -6,6 +6,8 @@
 
 ## SavedVariablesPerCharacter: PaladinRP_CharacterDB
 
+config\Settings.lua
+
 PaladinRP.lua
 
 data\Blessings.lua

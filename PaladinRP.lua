@@ -4,6 +4,7 @@
 -- ==========================================
 
 local ADDON_NAME = "PaladinRP"
+local SETTINGS = RPChatMod_Settings
 
 PaladinRP = PaladinRP or {}
 
@@ -12,8 +13,8 @@ PaladinRP = PaladinRP or {}
 -- ==========================================
 
 local DEFAULTS = {
-    textChance = 30,
-    cooldown = 20,
+    textChance = SETTINGS.textChance,
+    cooldown = SETTINGS.cooldown,
 }
 
 -- Zeitpunkt des letzten RP-Textes
@@ -150,6 +151,10 @@ end
 -- ==========================================
 
 local function GetChatChannel()
+
+    if SETTINGS.chatChannel ~= "AUTO" then
+        return SETTINGS.chatChannel
+    end
 
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
         return "INSTANCE_CHAT"

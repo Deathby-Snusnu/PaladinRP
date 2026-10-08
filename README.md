@@ -2,7 +2,9 @@
 
 Paladin RP enthält Rollenspieltext-Sammlungen zu Segen, Auren, Siegeln,
 Fähigkeiten und Völkern sowie Code für zufällige Textauswahl und Chat-Ausgabe.
-Die Textchance und Abklingzeit lassen sich über Chatbefehle einstellen.
+Textchance, Abklingzeit und Chatkanal werden in `config/Settings.lua`
+konfiguriert. Textchance und Abklingzeit lassen sich außerdem über Chatbefehle
+einstellen.
 
 ## Installation
 
@@ -58,19 +60,21 @@ Gruppenstatus (Instanzgruppe, Schlachtzug, Gruppe oder ohne Gruppe `/say`).
 Außerhalb einer Gruppe wird die für den Charakter verfügbare Volkssprache
 verwendet.
 
-Die Textchance und Abklingzeit sind pro Charakter gespeichert. Standardmäßig
-beträgt die Textchance 65 Prozent und die Abklingzeit 12 Sekunden. Sie können
-im Chat angepasst werden:
+Die Textchance und Abklingzeit sind pro Charakter gespeichert. Die Werte aus
+`config/Settings.lua` dienen als Standardwerte für Charaktere ohne bereits
+gespeicherte Einstellungen. Standardmäßig beträgt die Textchance 30 Prozent
+und die Abklingzeit 20 Sekunden. Sie können im Chat angepasst werden:
 
 ```text
-/prp chance 65
-/prp cooldown 12
+/prp chance 30
+/prp cooldown 20
 ```
 
 Die Textchance wird auf einen Wert zwischen 0 und 100 begrenzt. Die Abklingzeit
-kann nicht negativ sein und wird in Sekunden angegeben. Beide Einstellungs-
-befehle funktionieren unabhängig von der derzeit nicht funktionierenden
-Textausgabe.
+kann nicht negativ sein und wird in Sekunden angegeben. Der Chatkanal ist
+standardmäßig `AUTO` und richtet sich dann nach dem Gruppenstatus. In
+`config/Settings.lua` kann stattdessen ein fester Kanal wie `SAY`, `PARTY` oder
+`INSTANCE_CHAT` angegeben werden.
 
 ## Projektstruktur
 
@@ -81,6 +85,8 @@ PaladinRP/
 ├── LICENSE
 ├── PaladinRP.toc
 ├── PaladinRP.lua
+├── config/
+│   └── Settings.lua
 ├── data/
 │   ├── Blessings.lua
 │   ├── GreaterBlessings.lua
@@ -93,10 +99,13 @@ PaladinRP/
 ```
 
 - `PaladinRP.toc` enthält die Metadaten des Addons und die Liste der vom Client
-  zu ladenden Dateien. Die Reihenfolge dort ist wichtig: Die Textdaten werden
+  zu ladenden Dateien. Die Reihenfolge dort ist wichtig: Die Settings werden
   vor der Hauptlogik geladen.
 - `PaladinRP.lua` enthält Code zur Initialisierung, Textauswahl und Chat-Ausgabe
-  sowie den `/prp`-Befehl und die Einstellungen für Textchance und Abklingzeit.
+  sowie den `/prp`-Befehl; Standardwerte und Chatkanal werden aus der
+  Settings-Datei gelesen.
+- `config/Settings.lua` enthält die Standardwerte für Textchance und
+  Abklingzeit sowie die Auswahl des Chatkanals.
 - `data/` enthält die Textpools mit Schlüsseln wie `MIGHT`. Je nach Datenart
   liegen Texte in `ziel`-/`gruppe`-Listen oder in rassenspezifischen Listen.
   Neue Texte können durch Ergänzen der passenden Datenstruktur hinzugefügt
