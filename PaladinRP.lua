@@ -12,8 +12,8 @@ PaladinRP = PaladinRP or {}
 -- ==========================================
 
 local DEFAULTS = {
-    textChance = 65,
-    cooldown = 12,
+    textChance = 30,
+    cooldown = 20,
 }
 
 -- Zeitpunkt des letzten RP-Textes
@@ -448,7 +448,7 @@ SlashCmdList["PALADINRP"] = function(message)
         if not value then
 
             print(
-                "Benutzung: /prp chance 65"
+                "Benutzung: /prp chance 30"
             )
 
             return
@@ -491,7 +491,7 @@ SlashCmdList["PALADINRP"] = function(message)
         if not value then
 
             print(
-                "Benutzung: /prp cooldown 12"
+                "Benutzung: /prp cooldown 20"
             )
 
             return
@@ -518,7 +518,7 @@ SlashCmdList["PALADINRP"] = function(message)
     -- MANUELLER RP-TEXT
     -- ======================================
 
-    PaladinRP_TryText(command)
+    PaladinRP.TryText(command)
 end
 
 
