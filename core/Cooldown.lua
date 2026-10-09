@@ -2,7 +2,7 @@
 local _, addon = ...
 local lastRPText
 
-function addon.IsCooldownReady()
+function addon.CooldownReady()
     local now = GetTime()
     return not lastRPText or (now - lastRPText) >= addon.db.cooldown
 end
@@ -17,3 +17,5 @@ end
 function addon.StartCooldown()
     lastRPText = GetTime()
 end
+
+addon.IsCooldownReady = addon.CooldownReady

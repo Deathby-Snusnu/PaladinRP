@@ -60,7 +60,7 @@ function addon.GetTextPool(emote)
     return nil
 end
 
-function addon.BuildRPText(emote)
+function addon.BuildText(emote)
     local pool = addon.GetTextPool(emote)
     if type(pool) ~= "table" then
         return nil
@@ -76,3 +76,5 @@ function addon.BuildRPText(emote)
     end
     return ChooseText(pool.gruppe, targetName)
 end
+
+addon.BuildRPText = addon.BuildText

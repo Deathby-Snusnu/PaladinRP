@@ -172,6 +172,11 @@ PaladinRP/
 - [core/Commands.lua](core/Commands.lua): Registrierung und Verarbeitung von `/prp`.
 - [ui/Settings.lua](ui/Settings.lua): Platzhalter nur im Quellprojekt, nicht in TOC oder ZIP.
 
+Die Kernmodule verwenden `BuildText`, `SendText`, `CooldownReady` und
+`StartCooldown`, wie die anderen AddOns. Die bisherigen Namen `BuildRPText`,
+`SendRPText` und `IsCooldownReady` bleiben als Aliase erhalten.
+`PaladinRP.TryText` ist die oeffentliche manuelle Schnittstelle.
+
 Die TOC lädt zunächst Konfiguration und Daten, dann die Kernmodule und zuletzt
 die Hauptdatei. Interne Funktionen und Daten teilen ausschließlich die private
 AddOn-Tabelle; die globalen Datencontainer und `RPChatMod_Settings` entfallen.

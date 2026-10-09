@@ -18,19 +18,19 @@ function addon.TryText(emote)
         return false
     end
     emote = emote:upper()
-    if not addon.IsCooldownReady() then
+    if not addon.CooldownReady() then
         return false
     end
     if math.random(100) > addon.db.textChance then
         return false
     end
 
-    local text = addon.BuildRPText(emote)
+    local text = addon.BuildText(emote)
     if not text then
         print("|cffff0000Paladin RP:|r Kein Text für " .. emote .. " vorhanden.")
         return false
     end
-    if addon.SendRPText(text) then
+    if addon.SendText(text) then
         addon.StartCooldown()
         return true
     end

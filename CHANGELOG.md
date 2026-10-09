@@ -6,6 +6,10 @@
 
 ### Geändert
 
+- Gemeinsame Kernfunktionen in `TryText` auf `BuildText`, `SendText` und
+  `CooldownReady` umgestellt; bisherige Funktionsnamen bleiben als Aliase.
+- Dokumentation und Integrationstests um die projektweit einheitliche
+  Kernmodulschnittstelle ergänzt.
 - Bestehende Logik in `core/Database.lua`, `core/Text.lua`, `core/Chat.lua`,
   `core/Cooldown.lua` und `core/Commands.lua` aufgeteilt. Die Hauptdatei
   enthält die öffentliche API `PaladinRP.TryText` und das Login-Ereignis.

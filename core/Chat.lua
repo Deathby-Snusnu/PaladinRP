@@ -73,7 +73,7 @@ local function PrepareText(text)
     return text, false
 end
 
-function addon.SendRPText(text)
+function addon.SendText(text)
     if type(text) ~= "string" or text == "" then
         addon.Notify("Kein nutzbarer Text vorhanden.")
         return false
@@ -105,3 +105,5 @@ function addon.SendRPText(text)
     C_ChatInfo.SendChatMessage(message, channel, languageID)
     return true
 end
+
+addon.SendRPText = addon.SendText
