@@ -4,7 +4,9 @@
 -- SIEGEL
 -- ==========================================
 
-PaladinRP_Seals = {
+local _, addon = ...
+
+addon.Seals = {
 
     ["RIGHTEOUSNESS"] = {
         name = "Siegel der Rechtschaffenheit",

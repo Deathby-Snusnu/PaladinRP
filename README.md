@@ -1,94 +1,151 @@
 # Paladin RP
 
-Paladin RP enthält Rollenspieltext-Sammlungen zu Segen, Auren, Siegeln,
-Fähigkeiten und Völkern sowie Code für zufällige Textauswahl und Chat-Ausgabe.
-Textchance, Abklingzeit und Chatkanal werden in `config/Settings.lua`
-konfiguriert. Textchance und Abklingzeit lassen sich außerdem über Chatbefehle
-einstellen.
+## Beschreibung
+
+Paladin RP enthält deutschsprachige Rollenspieltexte zu Segen, großen Segen,
+Auren, Siegeln, Fähigkeiten und Völkern. `/prp <schlüssel>` versucht, einen
+zufälligen Text anhand der gespeicherten Textchance und Abklingzeit auszugeben.
+Es gibt keine automatische Auslösung durch Zauber und keine grafische
+Einstellungsoberfläche. Das AddOn benötigt kein anderes AddOn.
+
+Die öffentliche Schnittstelle bleibt `_G.PaladinRP.TryText(emote)`.
+Beispiel für ein Makro nach dem Login:
+
+```text
+/run PaladinRP.TryText("HAMMER")
+```
+
+Die API liefert `true` nach einem erfolgreichen Chat-API-Aufruf, andernfalls
+`false`. Vor `PLAYER_LOGIN` wird der Aufruf mit einer Meldung abgelehnt.
+Nur Paladine können RP-Texte senden; andere Klassen können Hilfe und
+Einstellungen verwenden.
 
 ## Installation
 
-Der Ordner `PaladinRP` muss im Addon-Verzeichnis des verwendeten WoW-Clients
-liegen. Verwende den Installationspfad des Clients, in dem das Addon aktiviert
-werden soll:
+Kopiere den Ordner `PaladinRP` in das AddOn-Verzeichnis des gewünschten Clients:
 
 ```text
-<WoW-Installationsordner>/Interface/AddOns/PaladinRP/
+<WoW-Installationsordner>\<Client>\Interface\AddOns\PaladinRP
 ```
 
-Das Projekt liegt derzeit im Ordner `_classic_beta_`; das ist ein Beispiel für
-diesen Client und nicht zwingend der Installationspfad anderer WoW-Versionen.
-Die TOC-Datei deklariert `Interface: 16001`. Die Kompatibilität mit dem
-gewünschten Client sollte anhand dessen Addon-/Interface-Version geprüft
-werden; weitere unterstützte Client-Versionen sind nicht festgelegt.
+Aktiviere **Paladin RP** im AddOn-Menü. Änderungen an den Quelldateien erfordern
+normalerweise `/reload` oder einen Neustart des Spiels. Die Ladeliste steht in
+[PaladinRP.toc](PaladinRP.toc).
+Das Installations-ZIP enthält Spieldateien, Dokumentation und Lizenz,
+aber keine Tests, Git- oder Editor-Dateien.
 
-Das Addon wird über `PaladinRP.toc` geladen. Nach der Installation kann es im
-Charakterauswahlbildschirm unter **AddOns** aktiviert werden. Änderungen an
-Addon-Dateien erfordern üblicherweise einen `/reload` oder einen Neustart des
-Spiels.
+## Schnellstart
 
-## Bedienung
-
-Die Textpools verwenden Schlüssel wie:
+Nach dem Login zeigt `/prp` die bisherige Kurzhilfe. Zum Ausprobieren:
 
 ```text
-MIGHT
-WISDOM
-PROTECTION
-FREEDOM
-KINGS
-GREATER_MIGHT
-DEVOTION
-RETRIBUTION
-CRUSADER
-FURY
-HAMMER
-LAYONHANDS
-DIVINE_SHIELD
+/prp chance 100
+/prp cooldown 0
+/prp hammer
+/prp might
+/prp greater_might
 ```
 
-Große Segen haben eigene Textschlüssel mit dem Präfix `GREATER_`, zum Beispiel
-`GREATER_MIGHT` und `GREATER_WISDOM`. Bei Textpools mit Ziel- und
-Gruppentexten wird bei vorhandenem Ziel der Zieltext verwendet, andernfalls
-der Gruppentext, sofern einer vorhanden ist.
+Die letzten beiden Aufrufe verwenden bei vorhandenem Ziel Zieltexte, soweit
+der gewählte Pool diese anbietet. Stelle anschließend die gewünschten Werte
+wieder ein, beispielsweise Chance 30 und Cooldown 20.
 
-Ein Schlüssel wird mit `/prp <schlüssel>` aufgerufen. Standardmäßig erfolgt
-die Textausgabe immer in `/say` – auch wenn sich der Charakter in einer Gruppe
-oder einem Schlachtzug befindet. Außerhalb einer Gruppe wird die für den
-Charakter verfügbare Volkssprache verwendet.
+## Befehle
 
-Die Textchance und Abklingzeit sind pro Charakter gespeichert. Die Werte aus
-`config/Settings.lua` dienen als Standardwerte für Charaktere ohne bereits
-gespeicherte Einstellungen. Standardmäßig beträgt die Textchance 30 Prozent
-und die Abklingzeit 20 Sekunden. Sie können im Chat angepasst werden:
+| Befehl | Bedeutung |
+|--------|-----------|
+| `/prp` oder `/prp help` | Hilfe mit Beispielen |
+| `/prp list` | Verfügbare Textschlüssel auflisten |
+| `/prp status` | Aktuelle Einstellungen anzeigen |
+| `/prp <schlüssel>` | Versucht die Ausgabe eines Textes |
+| `/prp chance <0-100>` | Textchance als ganze Zahl einstellen |
+| `/prp cooldown <0-3600>` | Abklingzeit in ganzen Sekunden einstellen |
+| `/prp channel` | Aktuellen Kanal und Kanalbenutzung anzeigen |
+| `/prp channel <kanal>` | `SAY`, `PARTY`, `RAID`, `INSTANCE_CHAT` oder `AUTO` einstellen |
+
+Groß-/Kleinschreibung von Befehlen, Kanälen und Textschlüsseln ist unerheblich.
+Beispiele für Schlüssel sind `MIGHT`, `WISDOM`, `PROTECTION`, `SALVATION`,
+`FREEDOM`, `KINGS`, `GREATER_MIGHT`, `GREATER_WISDOM`, `GREATER_KINGS`,
+`GREATER_SALVATION`, `DEVOTION`, `RETRIBUTION`, `CONCENTRATION`, `SHADOW`,
+`FIRE`, `FROST`, `RIGHTEOUSNESS`, `COMMAND`, `LIGHT`, `CRUSADER`, `FURY`,
+`HAMMER`, `LAYONHANDS` und `DIVINE_SHIELD`.
+
+Ungültige Zahlen, Dezimalwerte und zusätzliche Argumente werden abgelehnt,
+nicht begrenzt oder teilweise gelesen.
+
+## Einstellungen
+
+[config/Settings.lua](config/Settings.lua) enthält `addon.defaults`:
+
+- `textChance = 30`: Wahrscheinlichkeit, ganze Zahl 0 bis 100.
+- `cooldown = 20`: Mindestabstand, ganze Zahl 0 bis 3600 Sekunden.
+- `chatChannel = "SAY"`: Standardkanal, auch in Gruppen und Schlachtzügen.
+
+Die Einstellungen und persönlichen Texte bleiben unter
+`PaladinRP_CharacterDB` pro Charakter gespeichert. Gültige gespeicherte
+Werte bleiben erhalten; fehlende Felder werden ergänzt und beschädigte
+Werte mit einer Meldung auf Standardwerte zurückgesetzt.
+
+`AUTO` wählt zuerst die Instanzgruppe, dann den Schlachtzug, dann die Gruppe,
+sonst `SAY`. Ein nicht verfügbarer expliziter Gruppen-, Raid- oder Instanzkanal
+bricht die Ausgabe mit einer Meldung ab, ohne öffentlichen SAY-Fallback.
+Bei `SAY` wird die bekannte Volkssprache anhand ihrer sprachunabhängigen ID
+gewählt, falls der Charakter diese Sprache beherrscht.
+
+Der erste Text ist sofort möglich, sofern die Textchance ihn auslöst.
+Nach einem erfolgreichen Chat-API-Aufruf beginnt der Cooldown. Abgelehnte
+Texte starten ihn nicht; eine serverseitige Zustellung wird nicht bestätigt.
+
+## Eigene Texte
+
+Ergänze die passenden Tabellen unter [data/](data/). Die Dateien erhalten die
+private AddOn-Tabelle durch `local _, addon = ...`; die Daten liegen unter
+`addon.Blessings`, `addon.GreaterBlessings`, `addon.Auras`, `addon.Seals`,
+`addon.Abilities` und `addon.Racial`.
+
+Pools können einfache Listen oder Tabellen mit `ziel`- und `gruppe`-Listen sein.
+`%s` wird in einfachen Listen mit vorhandenem Ziel beziehungsweise in
+Zieltexten durch den Zielnamen ersetzt. Die Ersetzung ist literal, keine
+`string.format`-Formatierung: andere Prozentzeichen bleiben unverändert.
+Ohne Ziel werden Texte mit `%s` nicht ausgegeben. Nach der Ersetzung gelten
+maximal 255 Bytes, keine Zeilenumbrüche und keine `|`-Chatmarkierungen.
+
+Persönliche Pools können zusätzlich unter
+`PaladinRP_CharacterDB.personalTexts["SCHLÜSSEL"]` hinterlegt werden.
+Beispiel nach dem Login:
 
 ```text
-/prp chance 30
-/prp cooldown 20
-/prp channel
-/prp channel PARTY
+/run PaladinRP_CharacterDB.personalTexts.HAMMER={"Das Licht richtet, %s.","Das Licht richtet."}
 ```
 
-Die Textchance wird auf einen Wert zwischen 0 und 100 begrenzt. Die Abklingzeit
-kann nicht negativ sein und wird in Sekunden angegeben. `/prp channel` zeigt
-den aktuellen Ausgabe-Chatkanal an. Mit `/prp channel <kanal>` lässt er sich
-ändern; gültig sind `SAY`, `PARTY`, `RAID`, `INSTANCE_CHAT` und `AUTO`.
-Standardmäßig ist `SAY` gesetzt, `AUTO` wählt den Kanal anhand des
-Gruppenstatus. Diese Einstellungen werden pro Charakter gespeichert.
-`config/Settings.lua` legt den Standardkanal für Charaktere ohne gespeicherte
-Einstellung fest.
+Für die Auswahl gilt unverändert:
+
+1. Persönlicher Pool mit dem vollständigen Schlüssel.
+2. Bei `GREATER_`: passender großer Segen ohne Präfix.
+3. Rassenspezifischer Pool.
+4. Normaler Segen.
+5. Großer Segen.
+6. Aura.
+7. Siegel.
+8. Sonstige Fähigkeit.
+
+Beispielsweise hat der normale Segen `WISDOM` Vorrang vor dem gleichnamigen
+Siegel. Enthält ein höher priorisierter Pool keinen nutzbaren Text, wird dies
+gemeldet; die Suche springt nicht still auf einen niedrigeren Pool weiter.
 
 ## Projektstruktur
 
 ```text
 PaladinRP/
-├── README.md
-├── CHANGELOG.md
-├── LICENSE
 ├── PaladinRP.toc
 ├── PaladinRP.lua
-├── config/
-│   └── Settings.lua
+├── config/Settings.lua
+├── core/
+│   ├── Database.lua
+│   ├── Text.lua
+│   ├── Chat.lua
+│   ├── Cooldown.lua
+│   └── Commands.lua
 ├── data/
 │   ├── Blessings.lua
 │   ├── GreaterBlessings.lua
@@ -96,35 +153,62 @@ PaladinRP/
 │   ├── Seals.lua
 │   ├── Abilities.lua
 │   └── Racial.lua
-└── ui/
-    └── Settings.lua
+├── ui/Settings.lua
+├── tests/test_addon.lua
+├── README.md
+├── CHANGELOG.md
+└── LICENSE
 ```
 
-- `PaladinRP.toc` enthält die Metadaten des Addons und die Liste der vom Client
-  zu ladenden Dateien. Die Reihenfolge dort ist wichtig: Die Settings werden
-  vor der Hauptlogik geladen.
-- `PaladinRP.lua` enthält Code zur Initialisierung, Textauswahl und Chat-Ausgabe
-  sowie den `/prp`-Befehl; Standardwerte werden aus der Settings-Datei gelesen,
-  charakterbezogene Einstellungen werden in `PaladinRP_CharacterDB` gespeichert.
-- `config/Settings.lua` enthält die Standardwerte für Textchance und
-  Abklingzeit sowie den konfigurierbaren Chatkanal für die Textausgabe.
-- `data/` enthält die Textpools mit Schlüsseln wie `MIGHT`. Je nach Datenart
-  liegen Texte in `ziel`-/`gruppe`-Listen oder in rassenspezifischen Listen.
-  Neue Texte können durch Ergänzen der passenden Datenstruktur hinzugefügt
-  werden.
-- `ui/Settings.lua` ist für eine zukünftige Einstellungsoberfläche vorgesehen;
-  eine Konfigurationsoberfläche ist derzeit noch nicht implementiert.
+- [PaladinRP.lua](PaladinRP.lua): Login und globale öffentliche API.
+- [core/Database.lua](core/Database.lua): Initialisierung und Validierung der Charakterdaten.
+- [core/Text.lua](core/Text.lua): Poolpriorität, Auswahl und Textaufbereitung.
+- [core/Chat.lua](core/Chat.lua): Kanal, Volkssprache und Chat-Ausgabe.
+- [core/Cooldown.lua](core/Cooldown.lua): Gemeinsamer Cooldown-Zustand.
+- [core/Commands.lua](core/Commands.lua): Registrierung und Verarbeitung von `/prp`.
+- [ui/Settings.lua](ui/Settings.lua): Platzhalter nur im Quellprojekt, nicht in TOC oder ZIP.
 
-Textchance und Abklingzeit werden unter `PaladinRP_CharacterDB` pro Charakter
-gespeichert.
+Die TOC lädt zunächst Konfiguration und Daten, dann die Kernmodule und zuletzt
+die Hauptdatei. Interne Funktionen und Daten teilen ausschließlich die private
+AddOn-Tabelle; die globalen Datencontainer und `RPChatMod_Settings` entfallen.
+Extern bleiben `PaladinRP.TryText` und die charakterbezogene DB erreichbar.
 
 ## Tests
 
-Das Projekt enthält derzeit keine automatisierte Testsuite. Die
-Slash-Befehle, Textausgabe und Wahl des Chatkanals können manuell im Spiel
-geprüft werden.
+[tests/test_addon.lua](tests/test_addon.lua) ist eine source-only Testsuite.
+Sie gehört nicht zur TOC und wird im Spiel nicht geladen. Die Tests benötigen
+einen eigenständigen Lua-Interpreter, aber keinen WoW-Client und keine
+zusätzliche Bibliothek.
+
+Aus dem Ordner `PaladinRP` jeweils mit Lua 5.1 und Lua 5.4 ausführen:
+
+```text
+lua tests\test_addon.lua
+```
+
+Der ausführbare Name kann lokal abweichen; unter Windows kann stattdessen der
+vollständige Pfad zur jeweiligen `lua.exe` verwendet werden.
+
+Jeder Test lädt die Dateien anhand der TOC in eine neue Mock-Umgebung mit
+eigener privater AddOn-Tabelle, DB und Client-Zustand. Geprüft werden
+Namespace-Isolation, öffentliche API, Login, DB-Erhalt, Textdaten und
+Poolpriorität einschließlich `GREATER_`, Ziel-/Gruppentexte, Kanal- und
+Sprachwahl, Chance, Cooldown, Slash-Befehle, strikte Eingabeprüfung,
+Klassenbeschränkung, Textgrenzen und Fehlerfälle. Die Tests sind nur im
+Quellprojekt vorhanden, nicht im Installations-ZIP.
+
+## Kompatibilität
+
+Die TOC deklariert weiterhin `Interface: 16001`. Prüfe die passende
+Interface-Version für deinen Client; weitere unterstützte Client-Versionen
+sind nicht festgelegt.
+
+Für den Versand wird `C_ChatInfo.SendChatMessage` vorausgesetzt; es gibt
+keinen Legacy-Fallback. Die Lua-Tests ersetzen die verwendeten WoW-APIs durch
+Mocks und belegen deshalb keine vollständige Ingame-Kompatibilität.
 
 ## Lizenz
 
-Dieses Projekt steht unter der MIT-Lizenz. Den vollständigen Lizenztext findest
-du in der Datei [LICENSE](LICENSE).
+Das Projekt steht unter der [MIT-Lizenz](LICENSE).
+Copyright (c) 2026 Hannes bleibt unverändert erhalten.
+Die dokumentierten Änderungen stehen im [Changelog](CHANGELOG.md).

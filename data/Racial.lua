@@ -4,7 +4,9 @@
 -- RASSEN-SPEZIFISCHE TEXTE
 -- ==========================================
 
-PaladinRP_Racial = {
+local _, addon = ...
+
+addon.Racial = {
 
     ["Dwarf"] = {
 

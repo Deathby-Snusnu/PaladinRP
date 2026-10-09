@@ -8,8 +8,6 @@
 
 config\Settings.lua
 
-PaladinRP.lua
-
 data\Blessings.lua
 data\GreaterBlessings.lua
 data\Auras.lua
@@ -17,4 +15,10 @@ data\Seals.lua
 data\Abilities.lua
 data\Racial.lua
 
-ui\Settings.lua
+core\Database.lua
+core\Text.lua
+core\Chat.lua
+core\Cooldown.lua
+core\Commands.lua
+
+PaladinRP.lua

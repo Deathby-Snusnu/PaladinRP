@@ -1,10 +1,7 @@
--- Addon settings.
--- ==========================================
--- RP CHAT MOD
--- EINSTELLUNGEN
--- ==========================================
+-- Standardwerte für Charaktere ohne gespeicherte Einstellungen.
+local _, addon = ...
 
-RPChatMod_Settings = {
+addon.defaults = {
 
     -- Wahrscheinlichkeit, dass zusätzlich zum Emote
     -- ein Text ausgegeben wird.

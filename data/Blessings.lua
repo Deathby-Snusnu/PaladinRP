@@ -4,7 +4,9 @@
 -- NORMALE SEGEN
 -- ==========================================
 
-PaladinRP_Blessings = {
+local _, addon = ...
+
+addon.Blessings = {
 
     ["MIGHT"] = {
         name = "Segen der Macht",

@@ -4,7 +4,9 @@
 -- GROSSE SEGEN
 -- ==========================================
 
-PaladinRP_GreaterBlessings = {
+local _, addon = ...
+
+addon.GreaterBlessings = {
 
     ["MIGHT"] = {
         name = "Großer Segen der Macht",

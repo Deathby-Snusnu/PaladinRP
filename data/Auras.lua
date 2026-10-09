@@ -4,7 +4,9 @@
 -- AUREN
 -- ==========================================
 
-PaladinRP_Auras = {
+local _, addon = ...
+
+addon.Auras = {
 
     ["DEVOTION"] = {
         name = "Aura der Hingabe",

@@ -4,7 +4,9 @@
 -- SONSTIGE FÄHIGKEITEN
 -- ==========================================
 
-PaladinRP_Abilities = {
+local _, addon = ...
+
+addon.Abilities = {
 
     ["HAMMER"] = {
         name = "Hammer des Zorns",

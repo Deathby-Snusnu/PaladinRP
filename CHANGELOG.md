@@ -4,8 +4,37 @@
 
 ## [Unreleased]
 
+### Geändert
+
+- Bestehende Logik in `core/Database.lua`, `core/Text.lua`, `core/Chat.lua`,
+  `core/Cooldown.lua` und `core/Commands.lua` aufgeteilt. Die Hauptdatei
+  enthält die öffentliche API `PaladinRP.TryText` und das Login-Ereignis.
+- Standardwerte nach `addon.defaults` und Textdaten in den privaten
+  AddOn-Namespace verschoben; `RPChatMod_Settings` und globale Textcontainer
+  werden nicht mehr benötigt. `PaladinRP_CharacterDB` bleibt erhalten.
+- TOC-Ladereihenfolge an die Module angepasst und den funktionslosen
+  UI-Platzhalter aus der Ladeliste entfernt, ohne seine Datei zu löschen.
+- README mit einheitlichen deutschen Kapiteln, relativen Links,
+  Modulbeschreibung und Hinweisen zu den vereinbarten Verhaltensregeln
+  aktualisiert.
+- Zahlenargumente vollständig und strikt geprüft: Chance 0–100,
+  Cooldown 0–3600, ausschließlich ganze Zahlen.
+- Beschädigte Charakterdaten mit Meldung repariert, gültige Werte erhalten.
+- Explizit nicht verfügbare Gruppenkanäle brechen die Ausgabe ab,
+  ohne öffentlichen SAY-Fallback.
+- Erste Textausgabe ohne anfängliche Cooldown-Sperre; RP-Ausgabe nur für Paladine.
+- Literale Platzhalterersetzung und Prüfung auf maximal 255 Bytes,
+  Zeilenumbrüche und Chat-Markierungen.
+- Sprachunabhängige Volkssprach-IDs und Normalisierung von Scourge zu Undead.
+- Sichere Vor-Login-Aufrufe und boolesche Rückgabe von `PaladinRP.TryText`.
+
 ### Hinzugefügt
 
+- `/prp help`, `/prp list` und `/prp status`.
+
+- TOC-gesteuerte Regressionstests in `tests/test_addon.lua` für Lua 5.1
+  und Lua 5.4 mit isolierten Mock-Umgebungen. Die Tests sind nur für den
+  Quellcode vorgesehen und werden nicht vom Client geladen.
 - `/prp channel` zum Anzeigen und Ändern des Ausgabe-Chatkanals pro Charakter.
 - `/say` als Standardkanal für Rollenspieltexte, unabhängig vom Gruppenstatus;
   der Ausgabechat bleibt über `config/Settings.lua` konfigurierbar.
