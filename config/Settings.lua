@@ -13,9 +13,11 @@ RPChatMod_Settings = {
     -- Mindestabstand zwischen zwei Textnachrichten.
     cooldown = 20,
 
-    -- Automatische Wahl des Chatkanals.
-    -- SAY -> außerhalb Gruppe
+    -- Chatkanal für die Textausgabe.
+    -- SAY -> immer /say, auch in Gruppe und Schlachtzug
     -- PARTY -> Gruppe
+    -- RAID -> Schlachtzug
     -- INSTANCE_CHAT -> Instanzgruppe
-    chatChannel = "AUTO",
+    -- AUTO -> automatisch passend zum Gruppenstatus
+    chatChannel = "SAY",
 }

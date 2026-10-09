@@ -52,13 +52,10 @@ Große Segen haben eigene Textschlüssel mit dem Präfix `GREATER_`, zum Beispie
 Gruppentexten wird bei vorhandenem Ziel der Zieltext verwendet, andernfalls
 der Gruppentext, sofern einer vorhanden ist.
 
-Vorgesehen ist, einen Schlüssel mit `/prp <schlüssel>` aufzurufen. Die
-Textausgabe funktioniert derzeit jedoch nicht: Der
-Slash-Handler ruft `PaladinRP_TryText` auf, die Funktion ist jedoch als
-`PaladinRP.TryText` definiert. Der vorgesehene Chatkanal richtet sich nach dem
-Gruppenstatus (Instanzgruppe, Schlachtzug, Gruppe oder ohne Gruppe `/say`).
-Außerhalb einer Gruppe wird die für den Charakter verfügbare Volkssprache
-verwendet.
+Ein Schlüssel wird mit `/prp <schlüssel>` aufgerufen. Standardmäßig erfolgt
+die Textausgabe immer in `/say` – auch wenn sich der Charakter in einer Gruppe
+oder einem Schlachtzug befindet. Außerhalb einer Gruppe wird die für den
+Charakter verfügbare Volkssprache verwendet.
 
 Die Textchance und Abklingzeit sind pro Charakter gespeichert. Die Werte aus
 `config/Settings.lua` dienen als Standardwerte für Charaktere ohne bereits
@@ -68,13 +65,18 @@ und die Abklingzeit 20 Sekunden. Sie können im Chat angepasst werden:
 ```text
 /prp chance 30
 /prp cooldown 20
+/prp channel
+/prp channel PARTY
 ```
 
 Die Textchance wird auf einen Wert zwischen 0 und 100 begrenzt. Die Abklingzeit
-kann nicht negativ sein und wird in Sekunden angegeben. Der Chatkanal ist
-standardmäßig `AUTO` und richtet sich dann nach dem Gruppenstatus. In
-`config/Settings.lua` kann stattdessen ein fester Kanal wie `SAY`, `PARTY` oder
-`INSTANCE_CHAT` angegeben werden.
+kann nicht negativ sein und wird in Sekunden angegeben. `/prp channel` zeigt
+den aktuellen Ausgabe-Chatkanal an. Mit `/prp channel <kanal>` lässt er sich
+ändern; gültig sind `SAY`, `PARTY`, `RAID`, `INSTANCE_CHAT` und `AUTO`.
+Standardmäßig ist `SAY` gesetzt, `AUTO` wählt den Kanal anhand des
+Gruppenstatus. Diese Einstellungen werden pro Charakter gespeichert.
+`config/Settings.lua` legt den Standardkanal für Charaktere ohne gespeicherte
+Einstellung fest.
 
 ## Projektstruktur
 
@@ -102,10 +104,10 @@ PaladinRP/
   zu ladenden Dateien. Die Reihenfolge dort ist wichtig: Die Settings werden
   vor der Hauptlogik geladen.
 - `PaladinRP.lua` enthält Code zur Initialisierung, Textauswahl und Chat-Ausgabe
-  sowie den `/prp`-Befehl; Standardwerte und Chatkanal werden aus der
-  Settings-Datei gelesen.
+  sowie den `/prp`-Befehl; Standardwerte werden aus der Settings-Datei gelesen,
+  charakterbezogene Einstellungen werden in `PaladinRP_CharacterDB` gespeichert.
 - `config/Settings.lua` enthält die Standardwerte für Textchance und
-  Abklingzeit sowie die Auswahl des Chatkanals.
+  Abklingzeit sowie den konfigurierbaren Chatkanal für die Textausgabe.
 - `data/` enthält die Textpools mit Schlüsseln wie `MIGHT`. Je nach Datenart
   liegen Texte in `ziel`-/`gruppe`-Listen oder in rassenspezifischen Listen.
   Neue Texte können durch Ergänzen der passenden Datenstruktur hinzugefügt
@@ -118,10 +120,9 @@ gespeichert.
 
 ## Tests
 
-Das Projekt enthält derzeit keine automatisierte Testsuite. Die Einstellungs-
-Slash-Befehle können im Spiel manuell ausprobiert werden. Die Textausgabe über
-`/prp <schlüssel>` ist aufgrund des oben beschriebenen Aufrufnamensfehlers
-derzeit nicht funktionsfähig.
+Das Projekt enthält derzeit keine automatisierte Testsuite. Die
+Slash-Befehle, Textausgabe und Wahl des Chatkanals können manuell im Spiel
+geprüft werden.
 
 ## Lizenz
 

@@ -6,6 +6,9 @@
 
 ### Hinzugefügt
 
+- `/prp channel` zum Anzeigen und Ändern des Ausgabe-Chatkanals pro Charakter.
+- `/say` als Standardkanal für Rollenspieltexte, unabhängig vom Gruppenstatus;
+  der Ausgabechat bleibt über `config/Settings.lua` konfigurierbar.
 - Zusätzliche Rollenspieltexte für Hammer des Zorns, Handauflegung und
   Göttlichen Schild.
 - Zusätzliche Gruppentexte für alle vorhandenen Auren.

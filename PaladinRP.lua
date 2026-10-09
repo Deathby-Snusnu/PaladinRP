@@ -15,6 +15,15 @@ PaladinRP = PaladinRP or {}
 local DEFAULTS = {
     textChance = SETTINGS.textChance,
     cooldown = SETTINGS.cooldown,
+    chatChannel = SETTINGS.chatChannel,
+}
+
+local VALID_CHAT_CHANNELS = {
+    SAY = true,
+    PARTY = true,
+    RAID = true,
+    INSTANCE_CHAT = true,
+    AUTO = true,
 }
 
 -- Zeitpunkt des letzten RP-Textes
@@ -35,6 +44,10 @@ local function InitializeDatabase()
 
     if PaladinRP_CharacterDB.cooldown == nil then
         PaladinRP_CharacterDB.cooldown = DEFAULTS.cooldown
+    end
+
+    if PaladinRP_CharacterDB.chatChannel == nil then
+        PaladinRP_CharacterDB.chatChannel = DEFAULTS.chatChannel
     end
 
     if PaladinRP_CharacterDB.personalTexts == nil then
@@ -152,8 +165,10 @@ end
 
 local function GetChatChannel()
 
-    if SETTINGS.chatChannel ~= "AUTO" then
-        return SETTINGS.chatChannel
+    local configuredChannel = PaladinRP_CharacterDB.chatChannel
+
+    if configuredChannel ~= "AUTO" then
+        return configuredChannel
     end
 
     if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
@@ -428,12 +443,58 @@ SlashCmdList["PALADINRP"] = function(message)
         print("/prp kings")
         print("/prp devotion")
         print("/prp retribution")
+        print("/prp channel [SAY|PARTY|RAID|INSTANCE_CHAT|AUTO]")
 
         return
     end
 
 
     command = string.lower(command)
+
+    -- ======================================
+    -- CHATKANAL
+    -- ======================================
+
+    if command == "channel" then
+
+        local channel =
+            string.match(
+                message or "",
+                "^%s*%S+%s+(%S+)"
+            )
+
+        if not channel then
+            print(
+                string.format(
+                    "|cffc79c6ePaladin RP:|r " ..
+                    "Aktueller Chatkanal: %s. " ..
+                    "Benutzung: /prp channel SAY|PARTY|RAID|INSTANCE_CHAT|AUTO",
+                    PaladinRP_CharacterDB.chatChannel
+                )
+            )
+            return
+        end
+
+        channel = string.upper(channel)
+
+        if not VALID_CHAT_CHANNELS[channel] then
+            print(
+                "|cffff0000Paladin RP:|r Ungültiger Chatkanal. " ..
+                "Erlaubt sind SAY, PARTY, RAID, INSTANCE_CHAT und AUTO."
+            )
+            return
+        end
+
+        PaladinRP_CharacterDB.chatChannel = channel
+
+        print(
+            string.format(
+                "|cffc79c6ePaladin RP:|r Chatkanal auf %s gesetzt.",
+                channel
+            )
+        )
+        return
+    end
 
 
     -- ======================================
