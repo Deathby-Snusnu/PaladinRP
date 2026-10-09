@@ -73,6 +73,10 @@ Beispiele für Schlüssel sind `MIGHT`, `WISDOM`, `PROTECTION`, `SALVATION`,
 Ungültige Zahlen, Dezimalwerte und zusätzliche Argumente werden abgelehnt,
 nicht begrenzt oder teilweise gelesen.
 
+Texte zwischen `*Sternchen*` werden als `/me`-Emote ausgegeben; die
+Sternchen werden entfernt. Diese Handlungen verwenden immer `EMOTE`,
+unabhängig vom eingestellten Sprachkanal.
+
 ## Einstellungen
 
 [config/Settings.lua](config/Settings.lua) enthält `addon.defaults`:

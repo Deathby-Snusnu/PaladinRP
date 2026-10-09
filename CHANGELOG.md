@@ -26,6 +26,7 @@
 - Literale Platzhalterersetzung und Prüfung auf maximal 255 Bytes,
   Zeilenumbrüche und Chat-Markierungen.
 - Sprachunabhängige Volkssprach-IDs und Normalisierung von Scourge zu Undead.
+- `*...*`-markierte Handlungstexte ohne Sternchen als `/me`-Emotes senden.
 - Sichere Vor-Login-Aufrufe und boolesche Rückgabe von `PaladinRP.TryText`.
 
 ### Hinzugefügt

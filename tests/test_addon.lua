@@ -290,6 +290,27 @@ test("Bestehende Volkssprache und Chat-API", function()
     equal(state.sent[3].language, nil)
 end)
 
+test("Markierte Handlungen werden als /me gesendet", function()
+    local env, app, state = newAddon()
+    state.login()
+    env.PaladinRP_CharacterDB.chatChannel = "PARTY"
+    env.PaladinRP_CharacterDB.textChance = 100
+    env.PaladinRP_CharacterDB.cooldown = 0
+    env.PaladinRP_CharacterDB.personalTexts.TEST_EMOTE = {
+        "*   hebt die Hand.   *",
+    }
+
+    equal(env.PaladinRP.TryText("TEST_EMOTE"), true)
+    equal(state.sent[1].text, "hebt die Hand.")
+    equal(state.sent[1].channel, "EMOTE")
+    equal(state.sent[1].language, nil)
+
+    local sentCount = #state.sent
+    equal(app.SendRPText("*unvollstaendig"), false)
+    equal(app.SendRPText("**"), false)
+    equal(#state.sent, sentCount)
+end)
+
 test("Chance und Cooldown nach erfolgreichem Versand", function()
     local env, app, state = newAddon()
     state.login()
