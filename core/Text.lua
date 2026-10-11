@@ -1,6 +1,23 @@
 local _, addon = ...
 local GREATER_PREFIX = "GREATER_"
 
+-- Zielregeln fuer RP-Texte.
+-- Freundliche Zauber duerfen niemals den Namen eines feindlichen Targets in %s einsetzen.
+local FRIENDLY_OR_SELF = {
+    MIGHT = true, WISDOM = true, PROTECTION = true,
+    SALVATION = true, FREEDOM = true, KINGS = true,
+    GREATER_MIGHT = true, GREATER_WISDOM = true,
+    GREATER_KINGS = true, GREATER_SALVATION = true,
+    LAYONHANDS = true,
+}
+
+local SELF_ONLY = {
+    DEVOTION = true, RETRIBUTION = true, CONCENTRATION = true,
+    SHADOW = true, FIRE = true, FROST = true,
+    RIGHTEOUSNESS = true, COMMAND = true,
+    DIVINE_SHIELD = true,
+}
+
 local function ChooseText(pool, targetName)
     if type(pool) ~= "table" or #pool == 0 then
         return nil
@@ -19,11 +36,28 @@ local function ChooseText(pool, targetName)
     return (text:gsub("%%s", function() return targetName end))
 end
 
-local function GetTargetName()
+local function GetCurrentTargetName()
     if not UnitExists("target") then
         return nil
     end
     return UnitName("target")
+end
+
+local function GetFriendlyTargetOrSelf()
+    if UnitExists("target") and UnitCanAssist("player", "target") then
+        return UnitName("target")
+    end
+    return UnitName("player")
+end
+
+local function ResolveTargetName(emote)
+    if SELF_ONLY[emote] then
+        return nil
+    end
+    if FRIENDLY_OR_SELF[emote] then
+        return GetFriendlyTargetOrSelf()
+    end
+    return GetCurrentTargetName()
 end
 
 function addon.GetTextPool(emote)
@@ -32,7 +66,7 @@ function addon.GetTextPool(emote)
         return personalTexts[emote]
     end
 
-    -- Präfixauflösung steht bewusst vor den rassenspezifischen Pools.
+    -- Praefixaufloesung steht bewusst vor den rassenspezifischen Pools.
     if string.sub(emote, 1, #GREATER_PREFIX) == GREATER_PREFIX then
         local greaterEmote = string.sub(emote, #GREATER_PREFIX + 1)
         if addon.GreaterBlessings[greaterEmote] then
@@ -48,7 +82,7 @@ function addon.GetTextPool(emote)
         return addon.Racial[race][emote]
     end
 
-    -- Reihenfolge erhält auch die vorhandenen Namenskollisionen.
+    -- Reihenfolge erhaelt auch die vorhandenen Namenskollisionen.
     for _, pools in ipairs({
         addon.Blessings, addon.GreaterBlessings, addon.Auras,
         addon.Seals, addon.Abilities,
@@ -66,7 +100,7 @@ function addon.BuildText(emote)
         return nil
     end
 
-    local targetName = GetTargetName()
+    local targetName = ResolveTargetName(emote)
     if #pool > 0 then
         return ChooseText(pool, targetName)
     end

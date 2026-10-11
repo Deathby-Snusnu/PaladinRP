@@ -74,3 +74,7 @@
 
 - Die Datei für die Einstellungsoberfläche ist vorhanden, eine grafische
   Konfigurationsoberfläche ist jedoch noch nicht implementiert.
+
+## 2026-10-11 - Zielauflösung
+- RP-Zielermittlung unterscheidet jetzt freundliche, Selbst- und Pet-Fähigkeiten.
+- Feindliche aktuelle Ziele werden bei Selbst-/Freundzaubern nicht mehr irrtuemlich fuer %s verwendet.
