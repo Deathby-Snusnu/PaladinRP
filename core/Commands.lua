@@ -12,6 +12,7 @@ local function ShowHelp()
     print("/prp help | list | status")
     print("/prp chance 0-100 | /prp cooldown 0-3600")
     print("/prp channel [SAY|PARTY|RAID|INSTANCE_CHAT|AUTO]")
+    print("/prp language deDE|enUS|frFR")
 end
 
 local function HandleChannel(argument)
@@ -54,11 +55,39 @@ local function HandleCooldown(argument)
     print(string.format("|cffc79c6ePaladin RP:|r Cooldown: %d Sekunden", value))
 end
 
+local function HandleLanguage(argument)
+    if argument == "" then
+        addon.Notify("Ausgabesprache: " .. addon.GetOutputLanguage() .. " (deDE, enUS, frFR)")
+        return
+    end
+    local aliases = { de = "deDE", dede = "deDE", deDE = "deDE", en = "enUS", enus = "enUS", enUS = "enUS", fr = "frFR", frfr = "frFR", frFR = "frFR" }
+    local language = aliases[argument] or aliases[string.lower(argument or "")]
+    if not language or not addon.outputLanguages[language] then
+        addon.Notify("Sprachen: deDE, enUS, frFR")
+        return
+    end
+    local ok, reason = addon.SetOutputLanguage(language)
+    if not ok then
+        if reason == "not_loaded" then
+            addon.Notify("Sprachdateien fuer " .. language .. " wurden nicht geladen. Bitte AddOn-Dateien/TOC pruefen.")
+        else
+            addon.Notify("Sprache konnte nicht aktiviert werden.")
+        end
+        return
+    end
+    addon.Notify("Ausgabesprache: " .. language .. " (" .. addon.outputLanguageNames[language] .. ")")
+end
+
 local handlers = {
+    language = HandleLanguage,
+    lang = HandleLanguage,
     channel = HandleChannel,
     chance = HandleChance,
     cooldown = HandleCooldown,
 }
+
+
+
 
 function addon.HandleCommand(message)
     if not addon.ready then
@@ -90,8 +119,8 @@ function addon.HandleCommand(message)
         return
     end
     if command == "status" and argument == "" then
-        addon.Notify(string.format("Chance: %g%% | Cooldown: %gs | Kanal: %s",
-            addon.db.textChance, addon.db.cooldown, addon.db.chatChannel))
+        addon.Notify(string.format("Chance: %g%% | Cooldown: %gs | Kanal: %s | Sprache: %s",
+            addon.db.textChance, addon.db.cooldown, addon.db.chatChannel, addon.GetOutputLanguage()))
         return
     end
     local handler = handlers[command]

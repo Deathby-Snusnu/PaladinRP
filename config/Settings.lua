@@ -2,6 +2,7 @@
 local _, addon = ...
 
 addon.defaults = {
+    outputLanguage = "deDE",
 
     -- Wahrscheinlichkeit, dass zusätzlich zum Emote
     -- ein Text ausgegeben wird.

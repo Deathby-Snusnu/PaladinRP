@@ -1,5 +1,16 @@
 local _, addon = ...
 
+
+function addon.GetPlayerRaceToken()
+    local localizedRace, raceToken = UnitRace("player")
+    local lowered = type(localizedRace) == "string" and localizedRace:lower() or ""
+    if lowered:find("skyborne", 1, true) or lowered:find("himmelsgebor", 1, true) then
+        return "Skyborne"
+    end
+    if raceToken == "Scourge" then return "Undead" end
+    return raceToken
+end
+
 function addon.Notify(message)
     print("|cffc79c6ePaladin RP:|r " .. message)
 end
@@ -36,5 +47,11 @@ function addon.InitializeDatabase()
         db.personalTexts = nil
     end
     db.personalTexts = db.personalTexts or {}
+    if db.outputLanguage ~= nil and not addon.outputLanguages[db.outputLanguage] then
+        addon.Notify("Ungueltige Ausgabesprache; Deutsch wird verwendet.")
+        db.outputLanguage = nil
+    end
+    db.outputLanguage = db.outputLanguage or addon.defaults.outputLanguage
+    addon.runtimeOutputLanguage = db.outputLanguage
     addon.db = db
 end

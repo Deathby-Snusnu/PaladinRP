@@ -62,36 +62,28 @@ end
 
 function addon.GetTextPool(emote)
     local personalTexts = addon.db.personalTexts
-    if personalTexts and personalTexts[emote] then
-        return personalTexts[emote]
-    end
+    if personalTexts and personalTexts[emote] then return personalTexts[emote] end
 
-    -- Praefixaufloesung steht bewusst vor den rassenspezifischen Pools.
-    if string.sub(emote, 1, #GREATER_PREFIX) == GREATER_PREFIX then
-        local greaterEmote = string.sub(emote, #GREATER_PREFIX + 1)
-        if addon.GreaterBlessings[greaterEmote] then
-            return addon.GreaterBlessings[greaterEmote]
-        end
-    end
-
+    local lang = addon.GetOutputLanguage()
     local _, race = UnitRace("player")
-    if race == "Scourge" then
-        race = "Undead"
-    end
-    if addon.Racial[race] and addon.Racial[race][emote] then
-        return addon.Racial[race][emote]
-    end
+    if addon.GetPlayerRaceToken then race = addon.GetPlayerRaceToken() end
+    if race == "Scourge" then race = "Undead" end
 
-    -- Reihenfolge erhaelt auch die vorhandenen Namenskollisionen.
-    for _, pools in ipairs({
-        addon.Blessings, addon.GreaterBlessings, addon.Auras,
-        addon.Seals, addon.Abilities,
-    }) do
-        if pools[emote] then
-            return pools[emote]
+    local function Find(language)
+        if string.sub(emote, 1, #GREATER_PREFIX) == GREATER_PREFIX then
+            local greaterEmote = string.sub(emote, #GREATER_PREFIX + 1)
+            local greater = addon.GetLocalePoolExact(language, "GreaterBlessings", greaterEmote)
+            if greater then return greater end
         end
+        local racial = addon.GetLocalePoolExact(language, "Racial", race, emote)
+        if racial then return racial end
+        for _, tableName in ipairs({ "Blessings", "GreaterBlessings", "Auras", "Seals", "Abilities" }) do
+            local pool = addon.GetLocalePoolExact(language, tableName, emote)
+            if pool then return pool end
+        end
+        return nil
     end
-    return nil
+    return Find(lang) or Find("deDE")
 end
 
 function addon.BuildText(emote)

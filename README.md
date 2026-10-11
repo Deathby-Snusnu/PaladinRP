@@ -221,3 +221,7 @@ Mocks und belegen deshalb keine vollständige Ingame-Kompatibilität.
 Das Projekt steht unter der [MIT-Lizenz](LICENSE).
 Copyright (c) 2026 Hannes bleibt unverändert erhalten.
 Die dokumentierten Änderungen stehen im [Changelog](CHANGELOG.md).
+
+## RP-Ausgabesprache
+
+Die RP-Texte koennen pro Charakter auf `deDE`, `enUS` oder `frFR` gestellt werden. Beispiel: `/prp language frFR`. Fehlende Alt-Texpools fallen sicher auf Deutsch zurueck.

@@ -1,3 +1,16 @@
+
+## 2026-10-11 - Sprachwahl FIX2
+
+- Ausgabesprache besitzt nun einen expliziten Laufzeitwert und wird beim Umschalten sofort aktiviert.
+- Locale-Tabellen deDE/enUS/frFR werden robust einzeln initialisiert.
+- Eine Sprache kann nur aktiviert werden, wenn ihre Dateien tatsaechlich geladen wurden.
+# Localization update 2026-10-11
+
+- RP output language can be selected per character: deDE, enUS, frFR.
+- Text data moved into language-specific `locales/<locale>/` files.
+- German is used as a safe fallback for legacy pools not translated yet.
+- Command: `language` / `lang` on the add-on slash command.
+
 # Changelog
 
 Änderungen an Paladin RP werden in dieser Datei dokumentiert.

@@ -8,12 +8,26 @@
 
 config\Settings.lua
 
-data\Blessings.lua
-data\GreaterBlessings.lua
-data\Auras.lua
-data\Seals.lua
-data\Abilities.lua
-data\Racial.lua
+locales\Init.lua
+locales\deDE\Blessings.lua
+locales\deDE\GreaterBlessings.lua
+locales\deDE\Auras.lua
+locales\deDE\Seals.lua
+locales\deDE\Abilities.lua
+locales\deDE\Racial.lua
+locales\enUS\Blessings.lua
+locales\enUS\GreaterBlessings.lua
+locales\enUS\Auras.lua
+locales\enUS\Seals.lua
+locales\enUS\Abilities.lua
+locales\enUS\Racial.lua
+locales\frFR\Blessings.lua
+locales\frFR\GreaterBlessings.lua
+locales\frFR\Auras.lua
+locales\frFR\Seals.lua
+locales\frFR\Abilities.lua
+locales\frFR\Racial.lua
+locales\Finalize.lua
 
 core\Database.lua
 core\Text.lua

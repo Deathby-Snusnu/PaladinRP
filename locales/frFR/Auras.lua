@@ -1,0 +1,3 @@
+local _, addon = ...
+
+addon.localeData.frFR.Auras = {DEVOTION={name="Aura de dévotion",gruppe={"Tenez bon. La Lumière est avec nous.","*affermit sa posture tandis qu'une aura protectrice se répand.*"}},RETRIBUTION={name="Aura de vindicte",gruppe={"Que chaque coup contre nous reçoive sa réponse."}},CONCENTRATION={name="Aura de concentration",gruppe={"Esprits calmes. Cœurs fermes."}},SHADOW={name="Aura de résistance à l'Ombre",gruppe={"Les ombres ne nous prendront pas facilement."}},FIRE={name="Aura de résistance au Feu",gruppe={"Que les flammes se brisent contre la Lumière."}},FROST={name="Aura de résistance au Givre",gruppe={"Que le froid ne trouve aucune prise sur nous."}}}

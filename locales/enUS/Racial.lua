@@ -1,0 +1,3 @@
+local _, addon = ...
+
+addon.localeData.enUS.Racial = {}
