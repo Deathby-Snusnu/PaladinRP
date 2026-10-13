@@ -1,0 +1,41 @@
+PaladinRP
+========================
+
+Copyright (c) 2026 Hannes Weichselbaum
+
+This distribution uses split licensing by file category. It is not an
+"either/or" dual license. The SPDX identifier in each source/data file is
+the authoritative indicator for that file.
+
+SOURCE CODE
+-----------
+
+Program code, including addon bootstrap files, core modules, configuration
+modules, and locale initialization/finalization logic, is licensed under the
+Mozilla Public License 2.0 (MPL-2.0).
+
+See LICENSE-CODE.
+
+ROLE-PLAYING TEXTS AND TRANSLATIONS
+----------------------------------
+
+Role-playing dialogue, emote text, ambient text, racial/class text pools, and
+translations in the language data files are licensed under the Creative
+Commons Attribution-ShareAlike 4.0 International License (CC BY-SA 4.0).
+
+See LICENSE-TEXTS.
+
+FILE-LEVEL RULE
+---------------
+
+When a file carries an SPDX-License-Identifier header, that header determines
+its license. In particular, locale Init.lua and Finalize.lua files are program
+code and remain MPL-2.0, while language data files below locales/deDE,
+locales/enUS, and locales/frFR are CC-BY-SA-4.0.
+
+This is the first intended public licensing scheme for the project; no prior
+public MIT release is being grandfathered by this notice.
+
+World of Warcraft and related names and trademarks are property of Blizzard
+Entertainment, Inc. This is an independent fan-created project and is not
+affiliated with or endorsed by Blizzard Entertainment.

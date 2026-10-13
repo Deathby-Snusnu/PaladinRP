@@ -1,3 +1,10 @@
+-- SPDX-License-Identifier: CC-BY-SA-4.0
+-- Copyright (c) 2026 Hannes Weichselbaum
+--
+-- Role-playing dialogue, emote, ambient, and translation text in this
+-- file is licensed under the Creative Commons Attribution-ShareAlike
+-- 4.0 International License.
+
 local _, addon = ...
 
 addon.localeData.enUS.Auras = {DEVOTION={name="Devotion Aura",gruppe={"Stand firm. The Light is with us.","*sets a resolute stance as a protective aura spreads outward.*"}},RETRIBUTION={name="Retribution Aura",gruppe={"Let every blow against us be answered."}},CONCENTRATION={name="Concentration Aura",gruppe={"Steady minds. Steady hearts."}},SHADOW={name="Shadow Resistance Aura",gruppe={"The shadows will not take us easily."}},FIRE={name="Fire Resistance Aura",gruppe={"Let flame break against the Light."}},FROST={name="Frost Resistance Aura",gruppe={"Let the cold find no hold on us."}}}

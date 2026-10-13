@@ -2,11 +2,12 @@
 
 ## Beschreibung
 
-Paladin RP enthält deutschsprachige Rollenspieltexte zu Segen, großen Segen,
-Auren, Siegeln, Fähigkeiten und Völkern. `/prp <schlüssel>` versucht, einen
-zufälligen Text anhand der gespeicherten Textchance und Abklingzeit auszugeben.
-Es gibt keine automatische Auslösung durch Zauber und keine grafische
-Einstellungsoberfläche. Das AddOn benötigt kein anderes AddOn.
+Paladin RP enthält deutsche, englische und französische Rollenspieltexte zu
+Segen, großen Segen, Auren, Siegeln, Fähigkeiten und Völkern.
+`/prp <schlüssel>` versucht, einen zufälligen Text anhand der gespeicherten
+Textchance und Abklingzeit auszugeben. Es gibt keine automatische Auslösung
+durch Zauber und keine grafische Einstellungsoberfläche. Das AddOn benötigt
+kein anderes AddOn.
 
 Die öffentliche Schnittstelle bleibt `_G.PaladinRP.TryText(emote)`.
 Beispiel für ein Makro nach dem Login:
@@ -62,6 +63,7 @@ wieder ein, beispielsweise Chance 30 und Cooldown 20.
 | `/prp cooldown <0-3600>` | Abklingzeit in ganzen Sekunden einstellen |
 | `/prp channel` | Aktuellen Kanal und Kanalbenutzung anzeigen |
 | `/prp channel <kanal>` | `SAY`, `PARTY`, `RAID`, `INSTANCE_CHAT` oder `AUTO` einstellen |
+| `/prp language [deDE\|enUS\|frFR]` | RP-Ausgabesprache anzeigen oder setzen |
 
 Groß-/Kleinschreibung von Befehlen, Kanälen und Textschlüsseln ist unerheblich.
 Beispiele für Schlüssel sind `MIGHT`, `WISDOM`, `PROTECTION`, `SALVATION`,
@@ -81,6 +83,7 @@ unabhängig vom eingestellten Sprachkanal.
 
 [config/Settings.lua](config/Settings.lua) enthält `addon.defaults`:
 
+- `outputLanguage = "deDE"`: RP-Ausgabesprache `deDE`, `enUS` oder `frFR`.
 - `textChance = 30`: Wahrscheinlichkeit, ganze Zahl 0 bis 100.
 - `cooldown = 20`: Mindestabstand, ganze Zahl 0 bis 3600 Sekunden.
 - `chatChannel = "SAY"`: Standardkanal, auch in Gruppen und Schlachtzügen.
@@ -89,6 +92,9 @@ Die Einstellungen und persönlichen Texte bleiben unter
 `PaladinRP_CharacterDB` pro Charakter gespeichert. Gültige gespeicherte
 Werte bleiben erhalten; fehlende Felder werden ergänzt und beschädigte
 Werte mit einer Meldung auf Standardwerte zurückgesetzt.
+Die RP-Ausgabesprache lässt sich mit `/prp language deDE|enUS|frFR` setzen;
+ohne Argument zeigt der Befehl die aktive Sprache. Fehlende ältere Textpools
+fallen auf Deutsch zurück.
 
 `AUTO` wählt zuerst die Instanzgruppe, dann den Schlachtzug, dann die Gruppe,
 sonst `SAY`. Ein nicht verfügbarer expliziter Gruppen-, Raid- oder Instanzkanal
@@ -102,10 +108,10 @@ Texte starten ihn nicht; eine serverseitige Zustellung wird nicht bestätigt.
 
 ## Eigene Texte
 
-Ergänze die passenden Tabellen unter [data/](data/). Die Dateien erhalten die
-private AddOn-Tabelle durch `local _, addon = ...`; die Daten liegen unter
-`addon.Blessings`, `addon.GreaterBlessings`, `addon.Auras`, `addon.Seals`,
-`addon.Abilities` und `addon.Racial`.
+Bearbeite die passenden Dateien unter `locales/<locale>/`. Die Dateien
+erhalten die private AddOn-Tabelle durch `local _, addon = ...`; die Textdaten
+liegen je Sprache unter `addon.localeData.<locale>` in den Tabellen
+`Blessings`, `GreaterBlessings`, `Auras`, `Seals`, `Abilities` und `Racial`.
 
 Pools können einfache Listen oder Tabellen mit `ziel`- und `gruppe`-Listen sein.
 `%s` wird in einfachen Listen mit vorhandenem Ziel beziehungsweise in
@@ -144,19 +150,16 @@ PaladinRP/
 ├── PaladinRP.toc
 ├── PaladinRP.lua
 ├── config/Settings.lua
+├── locales/
+│   ├── Init.lua
+│   ├── deDE/, enUS/, frFR/
+│   └── Finalize.lua
 ├── core/
 │   ├── Database.lua
 │   ├── Text.lua
 │   ├── Chat.lua
 │   ├── Cooldown.lua
 │   └── Commands.lua
-├── data/
-│   ├── Blessings.lua
-│   ├── GreaterBlessings.lua
-│   ├── Auras.lua
-│   ├── Seals.lua
-│   ├── Abilities.lua
-│   └── Racial.lua
 ├── ui/Settings.lua
 ├── tests/test_addon.lua
 ├── README.md
@@ -171,16 +174,19 @@ PaladinRP/
 - [core/Cooldown.lua](core/Cooldown.lua): Gemeinsamer Cooldown-Zustand.
 - [core/Commands.lua](core/Commands.lua): Registrierung und Verarbeitung von `/prp`.
 - [ui/Settings.lua](ui/Settings.lua): Platzhalter nur im Quellprojekt, nicht in TOC oder ZIP.
+- `locales/`: Laufzeittexte je Sprache. Die parallel vorhandenen Dateien unter
+  `data/` sind nicht in der TOC-Ladefolge enthalten.
 
 Die Kernmodule verwenden `BuildText`, `SendText`, `CooldownReady` und
 `StartCooldown`, wie die anderen AddOns. Die bisherigen Namen `BuildRPText`,
 `SendRPText` und `IsCooldownReady` bleiben als Aliase erhalten.
 `PaladinRP.TryText` ist die oeffentliche manuelle Schnittstelle.
 
-Die TOC lädt zunächst Konfiguration und Daten, dann die Kernmodule und zuletzt
-die Hauptdatei. Interne Funktionen und Daten teilen ausschließlich die private
-AddOn-Tabelle; die globalen Datencontainer und `RPChatMod_Settings` entfallen.
-Extern bleiben `PaladinRP.TryText` und die charakterbezogene DB erreichbar.
+Die TOC lädt zunächst Konfiguration und Sprachdaten, dann die Kernmodule und
+zuletzt die Hauptdatei. Interne Funktionen und Daten teilen ausschließlich
+die private AddOn-Tabelle; die globalen Datencontainer und
+`RPChatMod_Settings` entfallen. Extern bleiben `PaladinRP.TryText` und die
+charakterbezogene DB erreichbar.
 
 ## Tests
 
@@ -208,7 +214,7 @@ Quellprojekt vorhanden, nicht im Installations-ZIP.
 
 ## Kompatibilität
 
-Die TOC deklariert weiterhin `Interface: 16001`. Prüfe die passende
+Die TOC deklariert `Interface: 16001` und Version `0.1.0`. Prüfe die passende
 Interface-Version für deinen Client; weitere unterstützte Client-Versionen
 sind nicht festgelegt.
 
@@ -218,10 +224,10 @@ Mocks und belegen deshalb keine vollständige Ingame-Kompatibilität.
 
 ## Lizenz
 
-Das Projekt steht unter der [MIT-Lizenz](LICENSE).
-Copyright (c) 2026 Hannes bleibt unverändert erhalten.
-Die dokumentierten Änderungen stehen im [Changelog](CHANGELOG.md).
+Dieses AddOn verwendet eine **geteilte Lizenzierung nach Dateityp**:
 
-## RP-Ausgabesprache
+- Programmcode: **Mozilla Public License 2.0 (MPL-2.0)**, siehe [LICENSE](./LICENSE).
+- RP-Dialoge, Emote-/Ambient-Texte und Übersetzungen: **CC BY-SA 4.0**, siehe [LICENSE-TEXTS](./LICENSE-TEXTS).
+- Die verbindliche Zuordnung einer Lua-Datei steht in ihrem `SPDX-License-Identifier`.
 
-Die RP-Texte koennen pro Charakter auf `deDE`, `enUS` oder `frFR` gestellt werden. Beispiel: `/prp language frFR`. Fehlende Alt-Texpools fallen sicher auf Deutsch zurueck.
+Weitere Hinweise und der Markenhinweis stehen in [NOTICE](./NOTICE).
