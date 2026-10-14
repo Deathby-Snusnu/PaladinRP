@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0 - 2026-10-14
+- Einheitliche Textauswahl und Fallback-Logik.
+- Personaltexte blockieren Locale-Fallback nicht mehr.
+- Erweiterter DE/EN/FR-Textvorrat.
+
 Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 
 ## [Unreleased]

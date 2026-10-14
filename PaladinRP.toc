@@ -2,7 +2,7 @@
 ## Title: Paladin RP
 ## Notes: Rollenspiel-Unterstützung für Paladine
 ## Author: Hannes
-## Version: 0.1.0
+## Version: 0.2.0
 
 ## SavedVariablesPerCharacter: PaladinRP_CharacterDB
 
@@ -15,18 +15,21 @@ locales\deDE\Auras.lua
 locales\deDE\Seals.lua
 locales\deDE\Abilities.lua
 locales\deDE\Racial.lua
+locales\deDE\Expansion.lua
 locales\enUS\Blessings.lua
 locales\enUS\GreaterBlessings.lua
 locales\enUS\Auras.lua
 locales\enUS\Seals.lua
 locales\enUS\Abilities.lua
 locales\enUS\Racial.lua
+locales\enUS\Expansion.lua
 locales\frFR\Blessings.lua
 locales\frFR\GreaterBlessings.lua
 locales\frFR\Auras.lua
 locales\frFR\Seals.lua
 locales\frFR\Abilities.lua
 locales\frFR\Racial.lua
+locales\frFR\Expansion.lua
 locales\Finalize.lua
 
 core\Database.lua
