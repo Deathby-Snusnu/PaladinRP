@@ -1,13 +1,13 @@
 # Changelog
 
-## 0.2.0 - 2026-10-14
-- Einheitliche Textauswahl und Fallback-Logik.
-- Personaltexte blockieren Locale-Fallback nicht mehr.
-- Erweiterter DE/EN/FR-Textvorrat.
-
 Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 
 ## [Unreleased]
+
+### Dokumentation
+
+- TOC-Version, persoenlichen Fallback, Zielregeln und Locale-Erweiterungen
+  am aktuellen Code ausgerichtet; gemeinsame Anleitungen verlinkt.
 
 ### Geaendert
 
@@ -59,6 +59,14 @@ Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
   fuer Kreuzfahrer, Rechtschaffenheit und Furor.
 - Eindeutige `GREATER_`-Textschluessel fuer grosse Segen zur Vermeidung von
   Namenskonflikten mit normalen Segen.
+
+## [0.2.0] - 2026-10-14
+
+### Geaendert
+
+- Einheitliche Textauswahl und Fallback-Logik.
+- Personaltexte blockieren Locale-Fallback nicht mehr.
+- Erweiterter DE/EN/FR-Textvorrat.
 
 ## [0.1.0] - 2026-10-06
 

@@ -1,13 +1,17 @@
-# Licensing
+# Lizenzzuordnung
 
-This project deliberately separates program code from creative RP text data.
+Das AddOn trennt Programmcode von kreativen RP-Textdaten.
 
-- **MPL-2.0**: addon bootstrap, configuration, core logic, commands, database,
-  target resolution, chat handling, cooldowns, locale initialization/finalization,
-  and tools.
-- **CC BY-SA 4.0**: role-playing dialogue, emote text, ambient text, racial/class
-  pools, translations, and supplemental locale text expansions.
+- **MPL-2.0**: AddOn-Initialisierung, Konfiguration, Kernlogik, Befehle,
+  Datenbank, Zielaufloesung, Chat-Verarbeitung, Cooldowns,
+  Sprachinitialisierung/-finalisierung und Werkzeuge.
+- **CC BY-SA 4.0**: RP-Dialoge, Emote- und Ambient-Texte, Rassen-/Klassenpools,
+  Uebersetzungen und ergaenzende Locale-Textbestaende.
 
-The `SPDX-License-Identifier` header in each source/data file is authoritative.
-`LICENSE-CODE` contains the code license. `LICENSE-TEXTS` identifies the text
-license and links to its authoritative legal code.
+Massgeblich ist der `SPDX-License-Identifier` in der jeweiligen Quell- oder
+Datendatei. [LICENSE-CODE](LICENSE-CODE) enthaelt die Codelizenz;
+[LICENSE-TEXTS](LICENSE-TEXTS) bezeichnet die Textlizenz und verlinkt ihren
+verbindlichen Rechtstext. Weitere Rechte- und Markenhinweise stehen in
+[NOTICE](NOTICE). Diese Erlaeuterung aendert keine Lizenzbedingungen.
+
+Installation und Nutzung: [README](README.md).

@@ -21,6 +21,12 @@ Die API liefert `true` nach einem erfolgreichen Chat-API-Aufruf, andernfalls
 Nur Paladine können RP-Texte senden; andere Klassen können Hilfe und
 Einstellungen verwenden.
 
+## Dokumentation
+
+[Sammlungsübersicht](../README.md) · [Changelog](CHANGELOG.md) ·
+[Texteditor und Handbuch](../RPTextStudio/HANDBUCH.md) ·
+[Verpackung und gemeinsame Tests](../VERPACKUNG.md)
+
 ## Installation
 
 Kopiere den Ordner `PaladinRP` in das AddOn-Verzeichnis des gewünschten Clients:
@@ -114,11 +120,21 @@ liegen je Sprache unter `addon.localeData.<locale>` in den Tabellen
 `Blessings`, `GreaterBlessings`, `Auras`, `Seals`, `Abilities` und `Racial`.
 
 Pools können einfache Listen oder Tabellen mit `ziel`- und `gruppe`-Listen sein.
-`%s` wird in einfachen Listen mit vorhandenem Ziel beziehungsweise in
-Zieltexten durch den Zielnamen ersetzt. Die Ersetzung ist literal, keine
+`%s` wird durch den für den Schlüssel aufgelösten Namen ersetzt.
+Die Ersetzung ist literal, keine
 `string.format`-Formatierung: andere Prozentzeichen bleiben unverändert.
-Ohne Ziel werden Texte mit `%s` nicht ausgegeben. Nach der Ersetzung gelten
+Ohne aufgelösten Namen werden Texte mit `%s` nicht ausgegeben. Nach der Ersetzung gelten
 maximal 255 Bytes, keine Zeilenumbrüche und keine `|`-Chatmarkierungen.
+
+Segen mit den Schlüsseln MIGHT, WISDOM, PROTECTION, SALVATION, FREEDOM,
+KINGS sowie GREATER_MIGHT, GREATER_WISDOM, GREATER_KINGS,
+GREATER_SALVATION und LAYONHANDS verwenden ein freundliches Ziel, sonst
+den eigenen Charakter. DEVOTION, RETRIBUTION, CONCENTRATION, SHADOW, FIRE,
+FROST, RIGHTEOUSNESS, COMMAND und DIVINE_SHIELD verwenden keinen Zielnamen.
+Andere Schlüssel nutzen das aktuelle Ziel, sofern vorhanden.
+Bei strukturierten Pools wird mit Namen zuerst `ziel`, danach `gruppe`
+versucht; anschließend sind zielunabhängige Einträge aus `ziel` möglich.
+Dies bestätigt keinen Zaubererfolg.
 
 Persönliche Pools können zusätzlich unter
 `PaladinRP_CharacterDB.personalTexts["SCHLÜSSEL"]` hinterlegt werden.
@@ -130,7 +146,7 @@ Beispiel nach dem Login:
 
 Für die Auswahl gilt unverändert:
 
-1. Persönlicher Pool mit dem vollständigen Schlüssel.
+1. Nutzbarer persönlicher Text mit dem vollständigen Schlüssel.
 2. Bei `GREATER_`: passender großer Segen ohne Präfix.
 3. Rassenspezifischer Pool.
 4. Normaler Segen.
@@ -140,8 +156,10 @@ Für die Auswahl gilt unverändert:
 8. Sonstige Fähigkeit.
 
 Beispielsweise hat der normale Segen `WISDOM` Vorrang vor dem gleichnamigen
-Siegel. Enthält ein höher priorisierter Pool keinen nutzbaren Text, wird dies
-gemeldet; die Suche springt nicht still auf einen niedrigeren Pool weiter.
+Siegel. Ein unbrauchbarer persönlicher Pool verhindert die Locale-Auswahl
+nicht. Innerhalb der Locale-Auswahl zählt dagegen der erste vorhandene Pool,
+auch wenn er keinen nutzbaren Text liefert. Zuerst wird die gewählte Sprache,
+bei fehlendem Pool Deutsch durchsucht.
 
 ## Projektstruktur
 
@@ -176,6 +194,8 @@ PaladinRP/
 - [ui/Settings.lua](ui/Settings.lua): Platzhalter nur im Quellprojekt, nicht in TOC oder ZIP.
 - `locales/`: Laufzeittexte je Sprache. Die parallel vorhandenen Dateien unter
   `data/` sind nicht in der TOC-Ladefolge enthalten.
+- `locales/<locale>/Expansion.lua`: zusätzliche geladene Textbestände,
+  die RP Text Studio nicht bearbeitet.
 
 Die Kernmodule verwenden `BuildText`, `SendText`, `CooldownReady` und
 `StartCooldown`, wie die anderen AddOns. Die bisherigen Namen `BuildRPText`,
@@ -214,7 +234,7 @@ Quellprojekt vorhanden, nicht im Installations-ZIP.
 
 ## Kompatibilität
 
-Die TOC deklariert `Interface: 16001` und Version `0.1.0`. Prüfe die passende
+Die TOC deklariert `Interface: 16001` und Version `0.2.0`. Prüfe die passende
 Interface-Version für deinen Client; weitere unterstützte Client-Versionen
 sind nicht festgelegt.
 
