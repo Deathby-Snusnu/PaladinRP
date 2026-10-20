@@ -60,7 +60,7 @@ wieder ein, beispielsweise Chance 30 und Cooldown 20.
 ## Befehle
 
 | Befehl | Bedeutung |
-|--------|-----------|
+| --- | --- |
 | `/prp` oder `/prp help` | Hilfe mit Beispielen |
 | `/prp list` | Verfügbare Textschlüssel auflisten |
 | `/prp status` | Aktuelle Einstellungen anzeigen |
