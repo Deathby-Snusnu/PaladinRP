@@ -1,21 +1,22 @@
-PaladinRP
-========================
+# PaladinRP
 
 Copyright (c) 2026 Hannes Weichselbaum
 
 This distribution uses split licensing by file category. It is not an
 "either/or" dual license. The SPDX identifier in each file is authoritative.
 
-SOURCE CODE
------------
-Program code is licensed under the Mozilla Public License 2.0 (MPL-2.0).
-See LICENSE-CODE.
+## Source code
 
-ROLE-PLAYING TEXTS AND TRANSLATIONS
-----------------------------------
+Program code is licensed under the Mozilla Public License 2.0 (MPL-2.0).
+See [LICENSE-CODE](LICENSE-CODE).
+
+## Role-playing texts and translations
+
 Role-playing dialogue, emote text, ambient text, racial/class text pools, and
 translations are licensed under Creative Commons Attribution-ShareAlike 4.0
-International (CC BY-SA 4.0). See LICENSE-TEXTS.
+International (CC BY-SA 4.0). See [LICENSE-TEXTS](LICENSE-TEXTS).
+
+## Trademark notice
 
 World of Warcraft and related names and trademarks are property of Blizzard
 Entertainment, Inc. This is an independent fan-created project and is not

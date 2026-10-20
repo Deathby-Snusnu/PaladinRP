@@ -29,7 +29,8 @@ Einstellungen verwenden.
 
 ## Installation
 
-Kopiere den Ordner `PaladinRP` in das AddOn-Verzeichnis des gewünschten Clients:
+Kopiere den Ordner `PaladinRP` in das Add-on-Verzeichnis des gewünschten
+Clients:
 
 ```text
 <WoW-Installationsordner>\<Client>\Interface\AddOns\PaladinRP
@@ -121,10 +122,10 @@ liegen je Sprache unter `addon.localeData.<locale>` in den Tabellen
 
 Pools können einfache Listen oder Tabellen mit `ziel`- und `gruppe`-Listen sein.
 `%s` wird durch den für den Schlüssel aufgelösten Namen ersetzt.
-Die Ersetzung ist literal, keine
-`string.format`-Formatierung: andere Prozentzeichen bleiben unverändert.
-Ohne aufgelösten Namen werden Texte mit `%s` nicht ausgegeben. Nach der Ersetzung gelten
-maximal 255 Bytes, keine Zeilenumbrüche und keine `|`-Chatmarkierungen.
+Die Ersetzung ist literal, keine `string.format`-Formatierung: andere
+Prozentzeichen bleiben unverändert. Ohne aufgelösten Namen werden Texte mit
+`%s` nicht ausgegeben. Nach der Ersetzung gelten maximal 255 Bytes, keine
+Zeilenumbrüche und keine `|`-Chatmarkierungen.
 
 Segen mit den Schlüsseln MIGHT, WISDOM, PROTECTION, SALVATION, FREEDOM,
 KINGS sowie GREATER_MIGHT, GREATER_WISDOM, GREATER_KINGS,
@@ -200,7 +201,7 @@ PaladinRP/
 Die Kernmodule verwenden `BuildText`, `SendText`, `CooldownReady` und
 `StartCooldown`, wie die anderen AddOns. Die bisherigen Namen `BuildRPText`,
 `SendRPText` und `IsCooldownReady` bleiben als Aliase erhalten.
-`PaladinRP.TryText` ist die oeffentliche manuelle Schnittstelle.
+`PaladinRP.TryText` ist die öffentliche manuelle Schnittstelle.
 
 Die TOC lädt zunächst Konfiguration und Sprachdaten, dann die Kernmodule und
 zuletzt die Hauptdatei. Interne Funktionen und Daten teilen ausschließlich
@@ -246,8 +247,11 @@ Mocks und belegen deshalb keine vollständige Ingame-Kompatibilität.
 
 Dieses AddOn verwendet eine **geteilte Lizenzierung nach Dateityp**:
 
-- Programmcode: **Mozilla Public License 2.0 (MPL-2.0)**, siehe [LICENSE](./LICENSE).
-- RP-Dialoge, Emote-/Ambient-Texte und Übersetzungen: **CC BY-SA 4.0**, siehe [LICENSE-TEXTS](./LICENSE-TEXTS).
-- Die verbindliche Zuordnung einer Lua-Datei steht in ihrem `SPDX-License-Identifier`.
+- Programmcode: **Mozilla Public License 2.0 (MPL-2.0)**, siehe
+  [LICENSE](./LICENSE).
+- RP-Dialoge, Emote-/Ambient-Texte und Übersetzungen: **CC BY-SA 4.0**, siehe
+  [LICENSE-TEXTS](./LICENSE-TEXTS).
+- Die verbindliche Zuordnung einer Lua-Datei steht in ihrem
+  `SPDX-License-Identifier`.
 
 Weitere Hinweise und der Markenhinweis stehen in [NOTICE](./NOTICE).

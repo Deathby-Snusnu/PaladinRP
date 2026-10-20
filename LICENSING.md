@@ -14,4 +14,6 @@ Datendatei. [LICENSE-CODE](LICENSE-CODE) enthaelt die Codelizenz;
 verbindlichen Rechtstext. Weitere Rechte- und Markenhinweise stehen in
 [NOTICE](NOTICE). Diese Erlaeuterung aendert keine Lizenzbedingungen.
 
-Installation und Nutzung: [README](README.md).
+## Installation und Nutzung
+
+[README](README.md)
