@@ -24,6 +24,7 @@ function addon.TryText(emote)
         addon.Notify("Benutzung: /prp <textschlüssel>. /prp list zeigt alle Texte.")
         return false
     end
+    if addon.FlushPendingAmbient and addon.FlushPendingAmbient() then return true end
     emote = emote:upper()
     if not addon.CooldownReady() then
         return false
@@ -51,6 +52,7 @@ eventFrame:SetScript("OnEvent", function()
     local _, class = UnitClass("player")
     addon.isPaladin = class == "PALADIN"
     addon.ready = true
+    addon.StartAmbientSystem()
     print("|cffc79c6ePaladin RP|r geladen. Befehl: |cffffd100/prp|r")
     if not addon.isPaladin then
         addon.Notify("Kein Paladin: Einstellungen verfügbar, RP-Ausgabe deaktiviert.")

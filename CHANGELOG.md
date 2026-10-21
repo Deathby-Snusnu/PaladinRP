@@ -85,3 +85,11 @@ Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 
 - Die Datei fuer die Einstellungsoberflaeche ist vorhanden, eine grafische
   Konfigurationsoberflaeche ist jedoch nicht implementiert.
+
+## Ambient-Erweiterung (21.10.2026)
+
+Klassen- und rassenspezifisches, dreisprachiges Ambient-System; Konfiguration mit `/prp ambient`. Details in `AMBIENT.md`.
+
+## Ambient-Textausbau (21.10.2026)
+
+- Sechs neue Varianten je allgemeiner Kategorie, plus Rassentexte fuer Zwerg, Mensch und Blutelf. Keine Aenderung an den Ambient-Triggern oder SavedVariables.

@@ -25,4 +25,9 @@ addon.defaults = {
     -- INSTANCE_CHAT -> Instanzgruppe
     -- AUTO -> automatisch passend zum Gruppenstatus
     chatChannel = "SAY",
+    ambientEnabled = true,
+    ambientMinInterval = 180,
+    ambientMaxInterval = 420,
+    ambientChance = 70,
+    ambientInCombat = false,
 }
