@@ -7,6 +7,100 @@
 
 local _, addon = ...
 
+-- Dynamic text-key listing, including keys added through RP Text Studio.
+-- "list": usable for this character; "list racial": racial keys for this race;
+-- "list all": all races/classes, with source labels.
+local function ShowDynamicList(mode, kind)
+    if mode ~= "" and mode ~= "racial" and mode ~= "all" then
+        addon.Notify("Benutzung: /" .. kind .. " list [racial|all]")
+        return
+    end
+    local race = addon.GetPlayerRaceToken and addon.GetPlayerRaceToken() or select(2, UnitRace("player"))
+    local _, class = UnitClass("player")
+    local found = {}
+    local function Add(key, source)
+        if type(key) ~= "string" then return end
+        if not found[key] then found[key] = {} end
+        found[key][source] = true
+    end
+    local function Flat(pool, source)
+        if type(pool) ~= "table" then return end
+        for key, val in pairs(pool) do
+            if type(val) == "table" then Add(key, source) end
+        end
+    end
+    local function Racial(pool, source)
+        if type(pool) ~= "table" then return end
+        if mode == "all" then
+            for raceKey, values in pairs(pool) do Flat(values, source .. ":" .. raceKey) end
+        else
+            Flat(pool[race], source .. ":" .. tostring(race))
+        end
+    end
+    local function Class(pool, source)
+        if type(pool) ~= "table" then return end
+        if mode == "all" then
+            for classKey, values in pairs(pool) do Flat(values, source .. ":" .. classKey) end
+        else
+            Flat(pool[class], source .. ":" .. tostring(class))
+        end
+    end
+    local function RaceClass(pool)
+        if type(pool) ~= "table" then return end
+        if mode == "all" then
+            for raceKey, classes in pairs(pool) do
+                for classKey, values in pairs(classes) do
+                    Flat(values, "Rasse+Klasse:" .. raceKey .. "/" .. classKey)
+                end
+            end
+        else
+            local classes = pool[race]
+            if type(classes) == "table" then Flat(classes[class], "Rasse+Klasse:" .. tostring(race) .. "/" .. tostring(class)) end
+        end
+    end
+    local lang = addon.GetOutputLanguage and addon.GetOutputLanguage() or "deDE"
+    for _, locale in ipairs({lang, "deDE"}) do
+        local data = addon.localeData and addon.localeData[locale]
+        if type(data) == "table" then
+            if mode ~= "racial" then
+                if kind == "prp" then
+                    for _, tableName in ipairs({"Blessings", "Auras", "Seals", "Abilities"}) do Flat(data[tableName], tableName) end
+                    if type(data.GreaterBlessings) == "table" then
+                        for key, val in pairs(data.GreaterBlessings) do
+                            if type(val) == "table" then Add("GREATER_" .. key, "GreaterBlessings") end
+                        end
+                    end
+                elseif kind == "rc" then
+                    Flat(data.generalTexts, "Allgemein")
+                    Class(data.classTexts, "Klasse")
+                    RaceClass(data.raceClassTexts)
+                else
+                    Flat(data.texts, "Allgemein")
+                end
+            end
+            if kind == "prp" then Racial(data.Racial, "Rasse")
+            elseif kind == "rc" then Racial(data.raceTexts, "Rasse")
+            else Racial(data.racial, "Rasse") end
+        end
+    end
+    if mode ~= "racial" and type(addon.db) == "table" then Flat(addon.db.personalTexts, "Persoenlich") end
+    local keys = {}
+    for key in pairs(found) do keys[#keys + 1] = key end
+    table.sort(keys)
+    addon.Notify("Textschluessel (" .. (mode == "" and "aktuell" or mode) .. "): " .. #keys)
+    if #keys == 0 then addon.Notify("Keine passenden Textschluessel gefunden.") end
+    for _, key in ipairs(keys) do
+        if mode == "all" then
+            local sources = {}
+            for source in pairs(found[key]) do sources[#sources + 1] = source end
+            table.sort(sources)
+            addon.Notify(key .. " [" .. table.concat(sources, ", ") .. "]")
+        else
+            addon.Notify(key)
+        end
+    end
+end
+
 local function ShowHelp()
     print("|cffc79c6ePaladin RP|r")
     print("/prp might")
@@ -16,7 +110,7 @@ local function ShowHelp()
     print("/prp kings")
     print("/prp devotion")
     print("/prp retribution")
-    print("/prp help | list | status")
+    print("/prp help | list [racial|all] | status")
     print("/prp chance 0-100 | /prp cooldown 0-3600")
     print("/prp channel [SAY|PARTY|RAID|INSTANCE_CHAT|AUTO]")
     print("/prp language deDE|enUS|frFR")
@@ -139,20 +233,8 @@ function addon.HandleCommand(message)
         return
     end
 
-    if command == "list" and argument == "" then
-        local keys = {}
-        for _, pools in ipairs({ addon.Blessings, addon.Auras, addon.Seals, addon.Abilities,
-            addon.db.personalTexts }) do
-            for key in pairs(pools) do keys[key] = true end
-        end
-        for key in pairs(addon.GreaterBlessings) do keys["GREATER_" .. key] = true end
-        for _, pools in pairs(addon.Racial) do
-            for key in pairs(pools) do keys[key] = true end
-        end
-        local sorted = {}
-        for key in pairs(keys) do sorted[#sorted + 1] = key end
-        table.sort(sorted)
-        for _, key in ipairs(sorted) do addon.Notify(key) end
+    if command == "list" then
+        ShowDynamicList(argument:lower(), "prp")
         return
     end
     if command == "status" and argument == "" then
