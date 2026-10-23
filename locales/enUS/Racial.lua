@@ -20,7 +20,12 @@ addon.localeData.enUS.Racial = {
         WISDOM={"May the Light grant you wisdom, %s.","May the Light guide your judgement, %s.","Let prudence guide your next step, %s."},
         CRUSADER={"In the name of the Light, I go forward.","Duty before fear. The road lies ahead.","My oath shows me the way."},
         RIGHTEOUSNESS={"May my judgement be just and my hand sure.","The Light guide my hand, not my anger.","I act from duty, not revenge."},
-        FURY={"Your anger is mine. Leave my companions out of it.","I stand my ground. Come.","No step backward."},
+        FURY={
+            "Your anger is mine. Leave my companions out of it.",
+            "I stand my ground. Come.",
+            "No step backward.",
+            "Your wrath is aimed at me. Leave my companions out of this.",
+        },
     },
     Undead = {
         MIGHT={"May the Light lend you strength, %s. Accept it.","Death has not made strength meaningless, %s.","May your will be stronger than fear, %s."},
