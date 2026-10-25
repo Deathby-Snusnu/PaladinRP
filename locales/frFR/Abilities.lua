@@ -7,4 +7,45 @@
 
 local _, addon = ...
 
-addon.localeData.frFR.Abilities = {HAMMER={name="Marteau",ziel={"Le jugement vient pour vous, %s.","*lance un marteau béni vers %s.*"},gruppe={"Par la Lumière !"}},LAYONHANDS={name="Imposition des mains",ziel={"Pas aujourd'hui, %s. La Lumière a encore besoin de vous.","*pose les deux mains sur %s et déverse toute sa réserve de Lumière dans la guérison.*"},gruppe={"La Lumière n'abandonne pas les siens."}},DIVINE_SHIELD={name="Bouclier divin",gruppe={"La Lumière est mon bouclier.","*lève une main tandis qu'une barrière radieuse se referme autour du corps.*"}}}
+addon.localeData.frFR.Abilities = {HAMMER={name="Marteau",ziel={"Le jugement vient pour vous, %s.","*lance un marteau béni vers %s.*"},gruppe={"Par la Lumière !"}},LAYONHANDS={name="Imposition des mains",ziel={"Pas aujourd'hui, %s. La Lumière a encore besoin de vous.","*pose les deux mains sur %s et déverse toute sa réserve de Lumière dans la guérison.*"},gruppe={"La Lumière n'abandonne pas les siens."}},DIVINE_SHIELD={name="Bouclier divin",gruppe={"La Lumière est mon bouclier.","*lève une main tandis qu'une barrière radieuse se referme autour du corps.*"}}
+    ["PURIFY"] = {
+        name = "Purification",
+        ziel = {
+            "Que la Lumière vous délivre de ce fardeau, %s.",
+            "Tenez bon, %s. Je vais dissiper ce mal.",
+            "Aucun poison ne doit affaiblir votre volonté, %s.",
+            "Respirez, %s. La Lumière vous accompagne.",
+            "Que cette corruption vous quitte, %s.",
+            "*pose doucement une main sur %s et murmure une prière purificatrice.*",
+            "*trace un symbole lumineux au-dessus de %s jusqu'à ce que la souillure s'efface.*",
+            "*s'agenouille auprès de %s et invoque une lumière apaisante.*",
+        },
+        gruppe = {
+            "Que la Lumière chasse ce qui nous affaiblit.",
+            "Tenez bon. Ce mal va disparaître.",
+            "*ouvre la paume et laisse rayonner une clarté purificatrice.*",
+            "*dessine dans l'air un signe de purification.*",
+        },
+    },
+
+    ["CLEANSE"] = {
+        name = "Épuration",
+        ziel = {
+            "Que la Lumière vous libère de cet enchantement, %s.",
+            "Votre volonté vous appartient, %s. Nul sort ne doit l'enchaîner.",
+            "Cette malédiction n'a aucun droit sur vous, %s.",
+            "Gardez courage, %s. Je vais rompre ce sort.",
+            "Que la foi chasse l'ombre de votre esprit, %s.",
+            "*lève la main au-dessus de %s et appelle une lueur dorée.*",
+            "*récite une ancienne litanie tandis que la magie hostile se dissipe autour de %s.*",
+            "*trace un signe lumineux devant %s et balaie la malédiction.*",
+        },
+        gruppe = {
+            "Là où la magie enchaîne, la Lumière libère.",
+            "Aucune malédiction ne nous barrera la route.",
+            "*trace un cercle de lumière qui disperse les dernières traces de magie.*",
+            "*prononce une prière de purification et abaisse lentement la main.*",
+        },
+    },
+
+}
