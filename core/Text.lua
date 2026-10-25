@@ -11,7 +11,7 @@ local GREATER_PREFIX = "GREATER_"
 local FRIENDLY_OR_SELF = {
     MIGHT=true, WISDOM=true, PROTECTION=true, SALVATION=true, FREEDOM=true, KINGS=true,
     GREATER_MIGHT=true, GREATER_WISDOM=true, GREATER_KINGS=true, GREATER_SALVATION=true,
-    LAYONHANDS=true,
+    LAYONHANDS=true, PURIFY=true, CLEANSE=true,
 }
 local SELF_ONLY = {
     DEVOTION=true, RETRIBUTION=true, CONCENTRATION=true, SHADOW=true, FIRE=true, FROST=true,
