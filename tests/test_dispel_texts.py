@@ -58,7 +58,7 @@ class DispelTextsTests(unittest.TestCase):
             content = (ROOT / "locales" / locale / "Abilities.lua").read_text(encoding="utf-8")
             with self.subTest(locale=locale):
                 self.assertIn('"HAMMER_OF_JUSTICE"', content)
-                self.assertRegex(content, r'(?:\bHAMMER\b|\["HAMMER"\])\s*=')
+                self.assertRegex(content, r'(?:\bHAMMER_OF_WRATH\b|\["HAMMER_OF_WRATH"\])\s*=')
                 start = content.index('    ["HAMMER_OF_JUSTICE"] = {')
                 end = content.index('    ["PURIFY"] = {', start)
                 block = content[start:end]
