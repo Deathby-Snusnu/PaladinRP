@@ -13,6 +13,7 @@ local FRIENDLY_OR_SELF = {
     GREATER_MIGHT=true, GREATER_WISDOM=true, GREATER_KINGS=true, GREATER_SALVATION=true,
     LAYONHANDS=true, PURIFY=true, CLEANSE=true,
 }
+-- HAMMER_OF_JUSTICE is hostile-targeted and intentionally not FRIENDLY_OR_SELF.
 local SELF_ONLY = {
     DEVOTION=true, RETRIBUTION=true, CONCENTRATION=true, SHADOW=true, FIRE=true, FROST=true,
     RIGHTEOUSNESS=true, COMMAND=true, DIVINE_SHIELD=true,
