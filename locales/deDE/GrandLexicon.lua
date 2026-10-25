@@ -32,7 +32,7 @@ local lexicon = {
     FROST = {"Kalter Wind mag unsere Wangen schneiden, nicht unseren Zusammenhalt.", "*zieht den Umhang fester und lässt einen warmen Schimmer über die Gefährten ziehen.*"},
     HAMMER = {"Nicht Zorn führt diesen Wurf, sondern Entschlossenheit.", "*schleudert einen Hammer aus gebündeltem Licht auf den Feind.*"},
     LAYONHANDS = {"Bleibt bei mir, %s. Das Licht hat Euch noch nicht aufgegeben.", "*kniet neben %s nieder und legt beide Hände behutsam auf die Wunden.*"},
-    DIVINE_SHIELD = {"Manchmal braucht selbst ein Schild einen Schild.", "*spannt eine strahlende Kuppel um sich und steht unbeirrt weiter."},
+    DIVINE_SHIELD = {"Manchmal braucht selbst ein Schild einen Schild.", "*spannt eine strahlende Kuppel um sich und steht unbeirrt weiter.*"},
 }
 
 local containers = { "Blessings", "GreaterBlessings", "Auras", "Seals", "Abilities" }
@@ -68,7 +68,7 @@ local ambient = {
         "*zeichnet mit zwei Fingern ein kaum sichtbares Segenszeichen in die Luft.*",
     },
     OATH = {
-        "Mein Schild soll zuerst die treffen, die hinter ihm Schutz suchen.",
+        "Mein Schild soll zuerst denen Schutz bieten, die hinter ihm Zuflucht suchen.",
         "Ein Schwur wird nicht wahr, weil man ihn laut ausspricht.",
         "*prüft den Sitz des Wappenrocks und umfasst den Schildriemen fester.*",
         "Ich will nicht unfehlbar sein. Ich will verlässlich sein.",
@@ -123,7 +123,16 @@ for race, texts in pairs(racial) do
     end
     if type(racePool) == "table" then
         for _, category in ipairs({"PRAYER", "OATH", "REFLECTION", "VIGIL", "BLESSING"}) do
-            if type(racePool[category]) ~= "table" then racePool[category] = {} end
+            if type(racePool[category]) ~= "table" then
+                racePool[category] = {}
+                local genericPool = addon.localeData.deDE.ambient
+                    and addon.localeData.deDE.ambient[category]
+                if type(genericPool) == "table" then
+                    for _, phrase in ipairs(genericPool) do
+                        addUnique(racePool[category], phrase)
+                    end
+                end
+            end
             for _, phrase in ipairs(texts) do addUnique(racePool[category], phrase) end
         end
     end
