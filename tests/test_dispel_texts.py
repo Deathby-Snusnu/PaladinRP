@@ -27,7 +27,7 @@ class DispelTextsTests(unittest.TestCase):
             with self.subTest(locale=locale):
                 self.assertRegex(
                     text,
-                    r'DIVINE_SHIELD=\{[^\n]+\}\},\s*\["PURIFY"\]\s*=',
+                    r'DIVINE_SHIELD=\{[^\n]+\}\},\s*\["HAMMER_OF_JUSTICE"\]\s*=',
                 )
 
     def test_each_spell_has_a_varied_text_collection(self):
@@ -58,21 +58,13 @@ class DispelTextsTests(unittest.TestCase):
             content = (ROOT / "locales" / locale / "Abilities.lua").read_text(encoding="utf-8")
             with self.subTest(locale=locale):
                 self.assertIn('"HAMMER_OF_JUSTICE"', content)
-                self.assertIn('"HAMMER"', content)
+                self.assertRegex(content, r'(?:\bHAMMER\b|\["HAMMER"\])\s*=')
                 start = content.index('    ["HAMMER_OF_JUSTICE"] = {')
                 end = content.index('    ["PURIFY"] = {', start)
                 block = content[start:end]
                 self.assertIn("ziel = {", block)
                 self.assertIn("gruppe = {", block)
-                phrases = re.findall(r'^\s*"([^"\n]+)",?\s*
-        toc = (ROOT / "PaladinRP.toc").read_text(encoding="utf-8")
-        for locale in ("deDE", "enUS", "frFR"):
-            self.assertIn("locales\\" + locale + "\\Abilities.lua", toc)
-
-
-if __name__ == "__main__":
-    unittest.main()
-, block, re.MULTILINE)
+                phrases = re.findall(r'^\s*"([^"\n]+)",?\s*$', block, re.MULTILINE)
                 self.assertGreaterEqual(len(phrases), minimum)
                 self.assertEqual(len(phrases), len(set(phrases)))
                 self.assertTrue(any("%s" in phrase for phrase in phrases))
