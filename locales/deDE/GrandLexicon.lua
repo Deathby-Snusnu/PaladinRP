@@ -30,7 +30,7 @@ local lexicon = {
     SHADOW = {"Selbst die tiefste Finsternis soll uns nicht auseinanderbringen.", "*zeichnet ein schimmerndes Schutzzeichen gegen die Schatten.*"},
     FIRE = {"Feuer prüft Stahl und Mut gleichermaßen.", "*hält die Hand gegen eine eingebildete Flamme und ruft schützendes Licht.*"},
     FROST = {"Kalter Wind mag unsere Wangen schneiden, nicht unseren Zusammenhalt.", "*zieht den Umhang fester und lässt einen warmen Schimmer über die Gefährten ziehen.*"},
-    HAMMER = {"Nicht Zorn führt diesen Wurf, sondern Entschlossenheit.", "*schleudert einen Hammer aus gebündeltem Licht auf den Feind.*"},
+    HAMMER_OF_WRATH = {"Nicht Zorn führt diesen Wurf, sondern Entschlossenheit.", "*schleudert einen Hammer aus gebündeltem Licht auf den Feind.*"},
     LAYONHANDS = {"Bleibt bei mir, %s. Das Licht hat Euch noch nicht aufgegeben.", "*kniet neben %s nieder und legt beide Hände behutsam auf die Wunden.*"},
     DIVINE_SHIELD = {"Manchmal braucht selbst ein Schild einen Schild.", "*spannt eine strahlende Kuppel um sich und steht unbeirrt weiter.*"},
 }

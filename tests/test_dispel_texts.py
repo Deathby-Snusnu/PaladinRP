@@ -58,7 +58,7 @@ class DispelTextsTests(unittest.TestCase):
             content = (ROOT / "locales" / locale / "Abilities.lua").read_text(encoding="utf-8")
             with self.subTest(locale=locale):
                 self.assertIn('"HAMMER_OF_JUSTICE"', content)
-                self.assertRegex(content, r'(?:\bHAMMER\b|\["HAMMER"\])\s*=')
+                self.assertRegex(content, r'(?:\bHAMMER_OF_WRATH\b|\["HAMMER_OF_WRATH"\])\s*=')
                 start = content.index('    ["HAMMER_OF_JUSTICE"] = {')
                 end = content.index('    ["PURIFY"] = {', start)
                 block = content[start:end]
@@ -71,6 +71,18 @@ class DispelTextsTests(unittest.TestCase):
                 self.assertTrue(any(phrase.startswith("*") for phrase in phrases))
                 self.assertTrue(any(not phrase.startswith("*") for phrase in phrases))
                 self.assertTrue(all(phrase.startswith("*") == phrase.endswith("*") for phrase in phrases))
+
+    def test_hammer_of_wrath_key_and_legacy_alias(self):
+        for locale in ("deDE", "enUS", "frFR"):
+            file = (ROOT / "locales" / locale / "Abilities.lua").read_text(encoding="utf-8")
+            with self.subTest(locale=locale):
+                self.assertIn("HAMMER_OF_WRATH", file)
+                self.assertNotRegex(file, r'(?:\["HAMMER"\]|\bHAMMER\s*=\s*\{)')
+                self.assertIn("HAMMER_OF_JUSTICE", file)
+        lexicon = (ROOT / "locales/deDE/GrandLexicon.lua").read_text(encoding="utf-8")
+        self.assertIn("HAMMER_OF_WRATH = {", lexicon)
+        core = (ROOT / "core/Text.lua").read_text(encoding="utf-8")
+        self.assertIn('HAMMER = "HAMMER_OF_WRATH"', core)
 
     def test_all_locale_files_loaded(self):
         toc = (ROOT / "PaladinRP.toc").read_text(encoding="utf-8")

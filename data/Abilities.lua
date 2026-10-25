@@ -8,7 +8,7 @@ local _, addon = ...
 
 addon.Abilities = {
 
-    ["HAMMER"] = {
+    ["HAMMER_OF_WRATH"] = {
         name = "Hammer des Zorns",
 
         gruppe = {

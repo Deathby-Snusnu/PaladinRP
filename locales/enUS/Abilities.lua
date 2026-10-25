@@ -7,7 +7,7 @@
 
 local _, addon = ...
 
-addon.localeData.enUS.Abilities = {HAMMER={name="Hammer",ziel={"Judgment comes for you, %s.","*hurls a blessed hammer toward %s.*"},gruppe={"By the Light!"}},LAYONHANDS={name="Lay on Hands",ziel={"Not today, %s. The Light still has need of you.","*places both hands upon %s and pours every reserve of Light into the healing.*"},gruppe={"The Light does not abandon its own."}},DIVINE_SHIELD={name="Divine Shield",gruppe={"The Light is my shield.","*raises a hand as a radiant barrier closes around the body.*"}},
+addon.localeData.enUS.Abilities = {HAMMER_OF_WRATH={name="Hammer of Wrath",ziel={"Judgment comes for you, %s.","*hurls a blessed hammer toward %s.*"},gruppe={"By the Light!"}},LAYONHANDS={name="Lay on Hands",ziel={"Not today, %s. The Light still has need of you.","*places both hands upon %s and pours every reserve of Light into the healing.*"},gruppe={"The Light does not abandon its own."}},DIVINE_SHIELD={name="Divine Shield",gruppe={"The Light is my shield.","*raises a hand as a radiant barrier closes around the body.*"}},
     ["HAMMER_OF_JUSTICE"] = {
         name = "Hammer of Justice",
         ziel = {

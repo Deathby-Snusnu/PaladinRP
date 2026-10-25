@@ -213,7 +213,7 @@ test("Poolpriorität: allgemeine Daten und Namenskollisionen", function()
     equal(app.GetTextPool("KINGS"), app.GreaterBlessings.KINGS)
     equal(app.GetTextPool("DEVOTION"), app.Auras.DEVOTION)
     equal(app.GetTextPool("COMMAND"), app.Seals.COMMAND)
-    equal(app.GetTextPool("HAMMER"), app.Abilities.HAMMER)
+    equal(app.GetTextPool("HAMMER_OF_WRATH"), app.Abilities.HAMMER_OF_WRATH)
     equal(app.GetTextPool("UNKNOWN"), nil)
     app.Blessings.COLLISION = { "Segen" }
     app.GreaterBlessings.COLLISION = { "Großer Segen" }
@@ -237,7 +237,7 @@ test("Bestehende Daten und Ziel-/Gruppentexte", function()
     state.target = nil
     equal(app.BuildRPText("MIGHT"), "Das Licht gebe Euch Macht und Stärke.")
     equal(app.BuildRPText("GREATER_MIGHT"), "Das Licht gebe uns Macht und Stärke.")
-    equal(app.BuildRPText("HAMMER"), "Das Licht richtet.")
+    equal(app.BuildRPText("HAMMER_OF_WRATH"), "Das Licht richtet.")
     equal(app.BuildRPText("UNKNOWN"), nil)
 end)
 
@@ -341,7 +341,7 @@ test("Chance und Cooldown nach erfolgreichem Versand", function()
     state.login()
     local db = env.PaladinRP_CharacterDB
     db.textChance = 0
-    env.PaladinRP.TryText("hammer")
+    env.PaladinRP.TryText("hammer_of_wrath")
     equal(#state.sent, 0)
     db.textChance = 30
     state.roll = 31
@@ -419,19 +419,19 @@ end)
 test("Vor Login sicher, erster Text sofort, Klassenbeschränkung", function()
     local env, app, state = newAddon({ textChance = 100, cooldown = 20 })
     state.now = 0
-    equal(env.PaladinRP.TryText("HAMMER"), false)
+    equal(env.PaladinRP.TryText("HAMMER_OF_WRATH"), false)
     state.command("chance 5")
     equal(env.PaladinRP_CharacterDB.textChance, 100)
     state.login()
     equal(app.GetRemainingCooldown(), 0)
-    equal(env.PaladinRP.TryText("HAMMER"), true)
+    equal(env.PaladinRP.TryText("HAMMER_OF_WRATH"), true)
     equal(app.GetRemainingCooldown(), 20)
     local other, _, otherState = newAddon()
     otherState.class = "DRUID"
     otherState.login()
     otherState.command("chance 100")
     equal(other.PaladinRP_CharacterDB.textChance, 100)
-    equal(other.PaladinRP.TryText("HAMMER"), false)
+    equal(other.PaladinRP.TryText("HAMMER_OF_WRATH"), false)
     equal(#otherState.sent, 0)
 end)
 
@@ -513,7 +513,7 @@ test("Abgelehnter Versand startet keinen Cooldown", function()
     local env, app, state = newAddon({ textChance = 100, cooldown = 20 })
     state.login()
     env.C_ChatInfo = nil
-    equal(env.PaladinRP.TryText("HAMMER"), false)
+    equal(env.PaladinRP.TryText("HAMMER_OF_WRATH"), false)
     equal(app.IsCooldownReady(), true)
     equal(app.GetRemainingCooldown(), 0)
 end)

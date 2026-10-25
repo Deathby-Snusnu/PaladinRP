@@ -15,7 +15,7 @@ local _, addon = ...
 
 addon.localeData.deDE.Abilities = {
 
-    ["HAMMER"] = {
+    ["HAMMER_OF_WRATH"] = {
         name = "Hammer des Zorns",
 
         gruppe = {

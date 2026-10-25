@@ -7,6 +7,7 @@
 
 local _, addon = ...
 local GREATER_PREFIX = "GREATER_"
+local LEGACY_KEY_ALIASES = { HAMMER = "HAMMER_OF_WRATH" }
 
 local FRIENDLY_OR_SELF = {
     MIGHT=true, WISDOM=true, PROTECTION=true, SALVATION=true, FREEDOM=true, KINGS=true,
@@ -75,13 +76,19 @@ local function FindLocalePool(language, key)
 end
 
 function addon.GetTextPool(key)
+    key = LEGACY_KEY_ALIASES[key] or key
     local lang = addon.GetOutputLanguage()
     return FindLocalePool(lang, key) or FindLocalePool("deDE", key)
 end
 
 function addon.BuildText(key)
+    -- Keep older /prp hammer macros and personal text overrides working.
+    local originalKey = key
+    key = LEGACY_KEY_ALIASES[key] or key
     local targetName = ResolveTargetName(key)
-    local personal = addon.db.personalTexts and addon.db.personalTexts[key]
+    local personal = addon.db.personalTexts and
+        (addon.db.personalTexts[key] or addon.db.personalTexts[originalKey]
+            or (key == "HAMMER_OF_WRATH" and addon.db.personalTexts.HAMMER))
     if personal then
         local text = ChooseText(personal, targetName)
         if text then return text end
