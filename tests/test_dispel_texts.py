@@ -27,7 +27,7 @@ class DispelTextsTests(unittest.TestCase):
             with self.subTest(locale=locale):
                 self.assertRegex(
                     text,
-                    r'DIVINE_SHIELD=\\{[^\\n]+\\}\\},\\s*\\["PURIFY"\\]\\s*=',
+                    r'DIVINE_SHIELD=\{[^\n]+\}\},\s*\["PURIFY"\]\s*=',
                 )
 
     def test_each_spell_has_a_varied_text_collection(self):
@@ -38,21 +38,7 @@ class DispelTextsTests(unittest.TestCase):
                     start = text.index('    ["' + key + '"] = {')
                     end = text.find('    ["', start + 5)
                     block = text[start:end] if end != -1 else text[start:]
-                    lines = re.findall(r'^\\s*"([^"\\n]+)",?\\s*
-        source = (ROOT / "core/Text.lua").read_text(encoding="utf-8")
-        self.assertIn("PURIFY=true", source)
-        self.assertIn("CLEANSE=true", source)
-        self.assertIn('"Abilities"', source)
-
-    def test_all_locale_files_loaded(self):
-        toc = (ROOT / "PaladinRP.toc").read_text(encoding="utf-8")
-        for locale in ("deDE", "enUS", "frFR"):
-            self.assertIn("locales\\" + locale + "\\Abilities.lua", toc)
-
-
-if __name__ == "__main__":
-    unittest.main()
-, block, re.MULTILINE)
+                    lines = re.findall(r'^\s*"([^"\n]+)",?\s*$', block, re.MULTILINE)
                     self.assertGreaterEqual(len(lines), 18 if locale == "deDE" else 12)
                     self.assertEqual(len(lines), len(set(lines)), "Duplicate RP lines")
                     self.assertTrue(any(line.startswith("*") for line in lines))
