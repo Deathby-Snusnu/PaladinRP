@@ -48,7 +48,7 @@ for _, containerName in ipairs(containers) do
                 local pool = node.ziel or node.gruppe
                 if type(pool) == "table" then
                     for _, phrase in ipairs(lines) do
-                        if phrase:find("%%s", 1, true) then
+                        if phrase:find("%s", 1, true) then
                             if type(node.ziel) == "table" then addUnique(node.ziel, phrase) end
                         elseif type(node.gruppe) == "table" then
                             addUnique(node.gruppe, phrase)
