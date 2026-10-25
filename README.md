@@ -13,7 +13,7 @@ Die öffentliche Schnittstelle bleibt `_G.PaladinRP.TryText(emote)`.
 Beispiel für ein Makro nach dem Login:
 
 ```text
-/run PaladinRP.TryText("HAMMER")
+/run PaladinRP.TryText("HAMMER_OF_WRATH")
 ```
 
 Die API liefert `true` nach einem erfolgreichen Chat-API-Aufruf, andernfalls
@@ -49,7 +49,7 @@ Nach dem Login zeigt `/prp` die bisherige Kurzhilfe. Zum Ausprobieren:
 ```text
 /prp chance 100
 /prp cooldown 0
-/prp hammer
+/prp hammer_of_wrath
 /prp might
 /prp greater_might
 ```
