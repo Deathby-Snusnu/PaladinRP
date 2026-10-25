@@ -17,6 +17,7 @@ locales\deDE\Abilities.lua
 locales\deDE\Racial.lua
 locales\deDE\Ambient.lua
 locales\deDE\AmbientRacial.lua
+locales\deDE\GrandLexicon.lua
 locales\deDE\Expansion.lua
 locales\enUS\Blessings.lua
 locales\enUS\GreaterBlessings.lua
