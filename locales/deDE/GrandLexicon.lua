@@ -122,7 +122,9 @@ for race, texts in pairs(racial) do
         addon.localeData.deDE.ambientRacial[race] = racePool
     end
     if type(racePool) == "table" then
-        if type(racePool.OATH) ~= "table" then racePool.OATH = {} end
-        for _, phrase in ipairs(texts) do addUnique(racePool.OATH, phrase) end
+        for _, category in ipairs({"PRAYER", "OATH", "REFLECTION", "VIGIL", "BLESSING"}) do
+            if type(racePool[category]) ~= "table" then racePool[category] = {} end
+            for _, phrase in ipairs(texts) do addUnique(racePool[category], phrase) end
+        end
     end
 end
