@@ -87,7 +87,8 @@ function addon.BuildText(key)
     key = LEGACY_KEY_ALIASES[key] or key
     local targetName = ResolveTargetName(key)
     local personal = addon.db.personalTexts and
-        (addon.db.personalTexts[key] or addon.db.personalTexts[originalKey])
+        (addon.db.personalTexts[key] or addon.db.personalTexts[originalKey]
+            or (key == "HAMMER_OF_WRATH" and addon.db.personalTexts.HAMMER))
     if personal then
         local text = ChooseText(personal, targetName)
         if text then return text end
