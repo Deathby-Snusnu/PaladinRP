@@ -311,6 +311,31 @@ test("Markierte Handlungen werden als /me gesendet", function()
     equal(#state.sent, sentCount)
 end)
 
+test("Deutsches Zusatzlexikon bleibt additiv und gültig", function()
+    local _, app, state = newAddon()
+    state.login()
+
+    local shieldPool = app.localeData.deDE.Abilities.DIVINE_SHIELD.gruppe
+    local shieldEmote = shieldPool[#shieldPool]
+    equal(shieldEmote:sub(1, 1), "*")
+    equal(shieldEmote:sub(-1), "*")
+    equal(app.SendRPText(shieldEmote), true)
+    equal(state.sent[1].text, shieldEmote:sub(2, -2))
+    equal(state.sent[1].channel, "EMOTE")
+
+    local generic = app.localeData.deDE.ambient.VIGIL
+    local human = app.localeData.deDE.ambientRacial.Human.VIGIL
+    equal(#human, #generic + 2)
+    for index, phrase in ipairs(generic) do
+        equal(human[index], phrase, "Allgemeiner Wachtext")
+    end
+    state.race = "Human"
+    equal(app.BuildAmbient("VIGIL"), generic[1])
+
+    local oath = app.localeData.deDE.ambient.OATH
+    equal(oath[#oath - 3], "Mein Schild soll zuerst denen Schutz bieten, die hinter ihm Zuflucht suchen.")
+end)
+
 test("Chance und Cooldown nach erfolgreichem Versand", function()
     local env, app, state = newAddon()
     state.login()
