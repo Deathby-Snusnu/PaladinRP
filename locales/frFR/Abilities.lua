@@ -8,6 +8,28 @@
 local _, addon = ...
 
 addon.localeData.frFR.Abilities = {HAMMER={name="Marteau",ziel={"Le jugement vient pour vous, %s.","*lance un marteau béni vers %s.*"},gruppe={"Par la Lumière !"}},LAYONHANDS={name="Imposition des mains",ziel={"Pas aujourd'hui, %s. La Lumière a encore besoin de vous.","*pose les deux mains sur %s et déverse toute sa réserve de Lumière dans la guérison.*"},gruppe={"La Lumière n'abandonne pas les siens."}},DIVINE_SHIELD={name="Bouclier divin",gruppe={"La Lumière est mon bouclier.","*lève une main tandis qu'une barrière radieuse se referme autour du corps.*"}},
+    ["HAMMER_OF_JUSTICE"] = {
+        name = "Marteau de justice",
+        ziel = {
+            "Au nom de la Lumière, arrêtez-vous, %s !",
+            "Votre assaut s'arrête ici, %s !",
+            "Pas un pas de plus, %s !",
+            "Baissez vos armes, %s, tant qu'il est temps.",
+            "La justice vous ordonne de vous arrêter, %s.",
+            "Que cet instant vous ramène à la raison, %s.",
+            "*projette un marteau de lumière sacrée sur %s.*",
+            "*trace un sceau lumineux vers %s avant de frapper d'un marteau sacré.*",
+            "*lève la main tandis qu'un marteau doré s'abat sur %s.*",
+            "*invoque un marteau rayonnant et le dirige vers %s.*",
+        },
+        gruppe = {
+            "Au nom de la Lumière, cela suffit !",
+            "Que la justice fasse taire la violence.",
+            "*lève la paume, faisant apparaître un marteau lumineux.*",
+            "*prononce un jugement solennel au milieu d'étincelles dorées.*",
+        },
+    },
+
     ["PURIFY"] = {
         name = "Purification",
         ziel = {

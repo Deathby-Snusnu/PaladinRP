@@ -8,6 +8,28 @@
 local _, addon = ...
 
 addon.localeData.enUS.Abilities = {HAMMER={name="Hammer",ziel={"Judgment comes for you, %s.","*hurls a blessed hammer toward %s.*"},gruppe={"By the Light!"}},LAYONHANDS={name="Lay on Hands",ziel={"Not today, %s. The Light still has need of you.","*places both hands upon %s and pours every reserve of Light into the healing.*"},gruppe={"The Light does not abandon its own."}},DIVINE_SHIELD={name="Divine Shield",gruppe={"The Light is my shield.","*raises a hand as a radiant barrier closes around the body.*"}},
+    ["HAMMER_OF_JUSTICE"] = {
+        name = "Hammer of Justice",
+        ziel = {
+            "By the Light, halt, %s!",
+            "Your assault ends here, %s!",
+            "Not another step, %s.",
+            "Stand down, %s, while you still can.",
+            "Let this moment teach you restraint, %s.",
+            "Justice commands you to stop, %s.",
+            "*hurls a radiant hammer of justice at %s.*",
+            "*traces a glowing sigil toward %s before a hammer of Light strikes.*",
+            "*raises a hand as a golden hammer falls upon %s.*",
+            "*summons a shining hammer and directs it at %s.*",
+        },
+        gruppe = {
+            "In the name of the Light, enough!",
+            "Let justice still the violence.",
+            "*raises a palm as a hammer of Light forms in the air.*",
+            "*speaks a solemn judgment beneath a shower of golden sparks.*",
+        },
+    },
+
     ["PURIFY"] = {
         name = "Purify",
         ziel = {

@@ -27,7 +27,7 @@ class DispelTextsTests(unittest.TestCase):
             with self.subTest(locale=locale):
                 self.assertRegex(
                     text,
-                    r'DIVINE_SHIELD=\{[^\n]+\}\},\s*\["PURIFY"\]\s*=',
+                    r'DIVINE_SHIELD=\{[^\n]+\}\},\s*\["HAMMER_OF_JUSTICE"\]\s*=',
                 )
 
     def test_each_spell_has_a_varied_text_collection(self):
@@ -50,6 +50,27 @@ class DispelTextsTests(unittest.TestCase):
         self.assertIn("PURIFY=true", source)
         self.assertIn("CLEANSE=true", source)
         self.assertIn('"Abilities"', source)
+
+    def test_hammer_of_justice_is_hostile_and_distinct(self):
+        resolver = (ROOT / "core" / "Text.lua").read_text(encoding="utf-8")
+        self.assertNotRegex(resolver, r"(?:FRIENDLY_OR_SELF|SELF_ONLY)\s*=\s*\{[^}]*HAMMER_OF_JUSTICE\s*=")
+        for locale, minimum in (("deDE", 24), ("enUS", 14), ("frFR", 14)):
+            content = (ROOT / "locales" / locale / "Abilities.lua").read_text(encoding="utf-8")
+            with self.subTest(locale=locale):
+                self.assertIn('"HAMMER_OF_JUSTICE"', content)
+                self.assertRegex(content, r'(?:\bHAMMER\b|\["HAMMER"\])\s*=')
+                start = content.index('    ["HAMMER_OF_JUSTICE"] = {')
+                end = content.index('    ["PURIFY"] = {', start)
+                block = content[start:end]
+                self.assertIn("ziel = {", block)
+                self.assertIn("gruppe = {", block)
+                phrases = re.findall(r'^\s*"([^"\n]+)",?\s*$', block, re.MULTILINE)
+                self.assertGreaterEqual(len(phrases), minimum)
+                self.assertEqual(len(phrases), len(set(phrases)))
+                self.assertTrue(any("%s" in phrase for phrase in phrases))
+                self.assertTrue(any(phrase.startswith("*") for phrase in phrases))
+                self.assertTrue(any(not phrase.startswith("*") for phrase in phrases))
+                self.assertTrue(all(phrase.startswith("*") == phrase.endswith("*") for phrase in phrases))
 
     def test_all_locale_files_loaded(self):
         toc = (ROOT / "PaladinRP.toc").read_text(encoding="utf-8")

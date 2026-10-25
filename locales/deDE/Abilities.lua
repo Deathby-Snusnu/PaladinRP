@@ -68,6 +68,38 @@ addon.localeData.deDE.Abilities = {
         },
     },
 
+    ["HAMMER_OF_JUSTICE"] = {
+        name = "Hammer der Gerechtigkeit",
+        ziel = {
+            "Im Namen des Lichts: Haltet ein, %s!",
+            "Eure Raserei endet hier, %s!",
+            "Das Licht gebietet Euch Einhalt, %s.",
+            "Keinen Schritt weiter, %s!",
+            "Legt die Waffen nieder, %s. Ihr seid gewarnt.",
+            "Gerechtigkeit verlangt, dass Ihr jetzt innehaltet, %s.",
+            "Dies ist Eure letzte Gelegenheit, zur Besinnung zu kommen, %s.",
+            "Stillgestanden, %s! Das Licht hat ein Wort mit Euch zu reden.",
+            "Ihr werdet niemanden mehr bedrohen, %s!",
+            "Ein Augenblick der Stille für Euch, %s.",
+            "Möge Euch dieser Schlag zur Vernunft bringen, %s.",
+            "Haltet inne und überdenkt Eure Taten, %s.",
+            "*hebt die Hand und schleudert einen Hammer aus goldenem Licht auf %s.*",
+            "*zeichnet ein leuchtendes Siegel über %s und lässt einen Lichtschlag folgen.*",
+            "*streckt den Arm gegen %s aus, während ein strahlender Hammer niederfährt.*",
+            "*ruft einen Hammer aus Licht herbei und lenkt ihn mit entschlossener Geste auf %s.*",
+            "*schlägt die Faust in die offene Hand, als ein heiliger Hammer %s trifft.*",
+            "*fixiert %s mit strengem Blick und lässt einen gleißenden Hammer herabsausen.*",
+        },
+        gruppe = {
+            "Das Licht gebietet Einhalt!",
+            "Nicht jeder Kampf muss bis zum bitteren Ende geführt werden.",
+            "Ein Moment der Besinnung ist manchmal die gerechteste Strafe.",
+            "Genug! Im Namen des Lichts!",
+            "*hebt die rechte Hand, und ein goldener Hammer nimmt Gestalt an.*",
+            "*spricht ein kurzes Urteil, während Lichtfunken um die ausgestreckte Hand tanzen.*",
+        },
+    },
+
     ["PURIFY"] = {
         name = "Läutern",
         ziel = {
