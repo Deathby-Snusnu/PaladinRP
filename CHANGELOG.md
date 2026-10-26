@@ -2,7 +2,7 @@
 
 Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 
-## [Unreleased]
+## [0.6.0] - 2026-10-26
 
 ### Dokumentation
 
@@ -11,6 +11,8 @@ Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 
 ### Geaendert
 
+- `HAMMER_OF_WRATH` als kanonischen Schluessel eingefuehrt; bestehende
+  `HAMMER`-Makros und persoenliche Texte bleiben kompatibel.
 - Gemeinsame Kernfunktionen in `TryText` auf `BuildText`, `SendText` und
   `CooldownReady` umgestellt; bisherige Funktionsnamen bleiben als Aliase.
 - Dokumentation und Integrationstests um die projektweit einheitliche
@@ -45,6 +47,13 @@ Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 
 ### Hinzugefuegt
 
+- Lokalisierte Rollenspieltexte fuer `PURIFY`, `CLEANSE` und
+  `HAMMER_OF_JUSTICE`; Purify/Cleanse verwenden ein freundliches Ziel oder
+  den eigenen Charakter, Hammer der Gerechtigkeit ein feindliches Ziel.
+- Der deutsche Grosslexikon-Textbestand wurde um Zauber, Auren, Segen,
+  Ambient- und Rassentexte erweitert.
+- Dynamische Schluessellisten mit `/prp list`, `/prp list racial` und
+  `/prp list all` ergaenzt.
 - `/prp help`, `/prp list` und `/prp status`.
 - TOC-gesteuerte Regressionstests in `tests/test_addon.lua` fuer Lua 5.1 und
   Lua 5.4 mit isolierten Mock-Umgebungen; nicht Bestandteil des Installations-ZIP.

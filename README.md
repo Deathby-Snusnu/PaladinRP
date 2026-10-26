@@ -39,8 +39,8 @@ Clients:
 Aktiviere **Paladin RP** im AddOn-Menü. Änderungen an den Quelldateien erfordern
 normalerweise `/reload` oder einen Neustart des Spiels. Die Ladeliste steht in
 [PaladinRP.toc](PaladinRP.toc).
-Das Installations-ZIP enthält Spieldateien, Dokumentation und Lizenz,
-aber keine Tests, Git- oder Editor-Dateien.
+Das Installations-ZIP enthält Laufzeitdateien und Lizenz-/Rechtehinweise,
+aber keine Entwicklungsdokumentation, Tests, Git- oder Editor-Dateien.
 
 ## Schnellstart
 
@@ -63,7 +63,9 @@ wieder ein, beispielsweise Chance 30 und Cooldown 20.
 | Befehl | Bedeutung |
 | --- | --- |
 | `/prp` oder `/prp help` | Hilfe mit Beispielen |
-| `/prp list` | Verfügbare Textschlüssel auflisten |
+| `/prp list` | Für den Charakter verwendbare Textschlüssel auflisten |
+| `/prp list racial` | Schlüssel des aktuellen Volks auflisten |
+| `/prp list all` | Rassen- und klassenspezifische Schlüssel mit Herkunft auflisten |
 | `/prp status` | Aktuelle Einstellungen anzeigen |
 | `/prp <schlüssel>` | Versucht die Ausgabe eines Textes |
 | `/prp chance <0-100>` | Textchance als ganze Zahl einstellen |
@@ -71,6 +73,9 @@ wieder ein, beispielsweise Chance 30 und Cooldown 20.
 | `/prp channel` | Aktuellen Kanal und Kanalbenutzung anzeigen |
 | `/prp channel <kanal>` | `SAY`, `PARTY`, `RAID`, `INSTANCE_CHAT` oder `AUTO` einstellen |
 | `/prp language [deDE\|enUS\|frFR]` | RP-Ausgabesprache anzeigen oder setzen |
+
+Die Herkunfts- und Fallback-Regeln der drei Listenvarianten stehen im
+[Listen-Handbuch](../../docs/LISTEN-HANDBUCH.md).
 
 Groß-/Kleinschreibung von Befehlen, Kanälen und Textschlüsseln ist unerheblich.
 Beispiele für Schlüssel sind `MIGHT`, `WISDOM`, `PROTECTION`, `SALVATION`,
@@ -235,7 +240,7 @@ Quellprojekt vorhanden, nicht im Installations-ZIP.
 
 ## Kompatibilität
 
-Die TOC deklariert `Interface: 16001` und Version `0.2.0`. Prüfe die passende
+Die TOC deklariert `Interface: 16001` und Version `0.5.0`. Prüfe die passende
 Interface-Version für deinen Client; weitere unterstützte Client-Versionen
 sind nicht festgelegt.
 
