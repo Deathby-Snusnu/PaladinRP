@@ -70,4 +70,17 @@ addon.localeData.frFR.Abilities = {HAMMER_OF_WRATH={name="Marteau de courroux",z
         },
     },
 
+    ["RIGHTEOUS_FURY"] = {
+        name = "Fureur vertueuse",
+        gruppe = {
+            "Que leur fureur se tourne vers moi. Je protegerai mes compagnons !",
+            "La justice exige de la fermete. Je ne reculerai pas.",
+            "C'est ici que votre avance prend fin.",
+            "*leve son bouclier tandis qu'une lueur doree enveloppe son armure.*",
+            "*frappe son bouclier du poing et se place devant ses allies.*",
+            "*prononce un serment solennel et attire l'attention des ennemis.*",
+        },
+    },
+
+
 }
