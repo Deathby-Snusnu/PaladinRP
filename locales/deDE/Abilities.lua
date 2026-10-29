@@ -152,4 +152,21 @@ addon.localeData.deDE.Abilities = {
         },
     },
 
+    ["RIGHTEOUS_FURY"] = {
+        name = "Zorn der Gerechtigkeit",
+        gruppe = {
+            "Das Licht staerke meine Entschlossenheit. Kein Feind soll an mir vorueber!",
+            "Euren Zorn auf mich. Meine Gefaehrten stehen unter meinem Schutz!",
+            "Gerechtigkeit verlangt Standhaftigkeit. Ich weiche keinen Schritt.",
+            "Hier stehe ich. Hier endet Euer Vormarsch.",
+            "Kommt nur. Mein Schild kennt keine Furcht.",
+            "*hebt den Schild und umhuellt sich mit dem goldenen Schein des Lichts.*",
+            "*schlaegt die Faust gegen den Schild und stellt sich schuetzend vor die Gefaehrten.*",
+            "*spricht einen ernsten Eid und zieht die Aufmerksamkeit der Gegner auf sich.*",
+            "*senkt den Schwerpunkt und erwartet den Ansturm hinter dem erhobenen Schild.*",
+            "Beim Licht, an mir kommt Ihr nicht vorbei!",
+        },
+    },
+
+
 }
