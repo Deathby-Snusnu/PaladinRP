@@ -42,8 +42,8 @@ addon.localeData.deDE.Blessings = {
             "Gemeinsam stehen wir stark.",
             "Möge unsere Kraft dem rechten Zweck dienen.",
             "*hebt beide Hände und spricht einen kräftigenden Segen über die versammelte Gruppe.*",
-            "*lässt den Blick über seine Gefährten schweifen und zeichnet das Zeichen des Lichts in die Luft.*",
-            "*spricht mit fester Stimme einen Segen, während er sich der Gruppe zuwendet.*",
+            "*lässt den Blick über die Gefährten schweifen und zeichnet das Zeichen des Lichts in die Luft.*",
+            "*spricht mit fester Stimme einen Segen und wendet sich der Gruppe zu.*",
         },
     },
 
