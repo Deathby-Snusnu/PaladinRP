@@ -44,18 +44,25 @@ local function ChooseText(pool, targetName)
     end
     local text = ChooseArray(pool.gruppe, targetName)
     if text then return text end
+    -- Never substitute the caster name when a self spell has no other target.
     return ChooseArray(pool.ziel, targetName)
 end
 
 local function GetFriendlyTargetOrSelf()
-    if UnitExists("target") and UnitCanAssist("player", "target") then return UnitName("target") end
-    return UnitName("player")
+    if UnitExists("target") and UnitCanAssist("player", "target") then
+        if UnitIsUnit and UnitIsUnit("target", "player") then return nil end
+        return UnitName("target")
+    end
+    return nil
 end
 
 local function ResolveTargetName(key)
     if SELF_ONLY[key] then return nil end
     if FRIENDLY_OR_SELF[key] then return GetFriendlyTargetOrSelf() end
-    if UnitExists("target") then return UnitName("target") end
+    if UnitExists("target") then
+        if UnitIsUnit and UnitIsUnit("target", "player") then return nil end
+        return UnitName("target")
+    end
 end
 
 local function FindLocalePool(language, key)
