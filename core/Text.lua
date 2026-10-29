@@ -65,7 +65,7 @@ local function ResolveTargetName(key)
     end
 end
 
-local function FindLocalePool(language, key)
+local function FindLocalePool(language, key, skipRacial)
     local race = addon.GetPlayerRaceToken and addon.GetPlayerRaceToken() or select(2, UnitRace("player"))
     if race == "Scourge" then race = "Undead" end
 
@@ -74,8 +74,10 @@ local function FindLocalePool(language, key)
         local greater = addon.GetLocalePoolExact(language, "GreaterBlessings", baseKey)
         if greater then return greater end
     end
-    local racial = addon.GetLocalePoolExact(language, "Racial", race, key)
-    if racial then return racial end
+    if not skipRacial then
+        local racial = addon.GetLocalePoolExact(language, "Racial", race, key)
+        if racial then return racial end
+    end
     for _, tableName in ipairs({"Blessings","GreaterBlessings","Auras","Seals","Abilities"}) do
         local pool = addon.GetLocalePoolExact(language, tableName, key)
         if pool then return pool end
@@ -100,7 +102,13 @@ function addon.BuildText(key)
         local text = ChooseText(personal, targetName)
         if text then return text end
     end
-    return ChooseText(addon.GetTextPool(key), targetName)
+    local pool = addon.GetTextPool(key)
+    local text = ChooseText(pool, targetName)
+    if text or targetName then return text end
+
+    local language = addon.GetOutputLanguage()
+    pool = FindLocalePool(language, key, true) or FindLocalePool("deDE", key, true)
+    return ChooseText(pool, targetName)
 end
 
 addon.ChooseStructuredText = ChooseText

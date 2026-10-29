@@ -241,6 +241,18 @@ test("Bestehende Daten und Ziel-/Gruppentexte", function()
     equal(app.BuildRPText("UNKNOWN"), nil)
 end)
 
+test("Rassentexte ohne Ziel fallen auf allgemeine Gruppentexte zurück", function()
+    local _, app, state = newAddon()
+    state.login()
+    state.target = nil
+    for _, race in ipairs({ "Human", "Dwarf", "Undead" }) do
+        state.race = race
+        for _, key in ipairs({ "MIGHT", "WISDOM" }) do
+            equal(app.BuildRPText(key), app.Blessings[key].gruppe[1], race .. " " .. key)
+        end
+    end
+end)
+
 test("Persönliche Textstrukturen und leere Pools", function()
     local env, app, state = newAddon()
     state.login()
