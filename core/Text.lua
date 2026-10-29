@@ -17,7 +17,7 @@ local FRIENDLY_OR_SELF = {
 -- HAMMER_OF_JUSTICE is hostile-targeted and intentionally not FRIENDLY_OR_SELF.
 local SELF_ONLY = {
     DEVOTION=true, RETRIBUTION=true, CONCENTRATION=true, SHADOW=true, FIRE=true, FROST=true,
-    RIGHTEOUSNESS=true, COMMAND=true, DIVINE_SHIELD=true,
+    RIGHTEOUSNESS=true, COMMAND=true, RIGHTEOUS_FURY=true, DIVINE_SHIELD=true,
 }
 
 local function ChooseArray(pool, targetName)

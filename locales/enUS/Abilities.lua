@@ -70,4 +70,18 @@ addon.localeData.enUS.Abilities = {HAMMER_OF_WRATH={name="Hammer of Wrath",ziel=
         },
     },
 
+    ["RIGHTEOUS_FURY"] = {
+        name = "Righteous Fury",
+        gruppe = {
+            "Let their fury fall on me. My companions remain under my protection!",
+            "Justice demands resolve. I shall not yield.",
+            "Here I stand. Your advance ends here.",
+            "Come then. My shield shall not falter.",
+            "*raises a shield as golden radiance gathers around the armor.*",
+            "*strikes a fist against the shield and steps before the allies.*",
+            "*swears an oath to the Light and draws the foes' attention.*",
+        },
+    },
+
+
 }
