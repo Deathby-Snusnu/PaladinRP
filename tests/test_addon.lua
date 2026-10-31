@@ -304,6 +304,50 @@ test("Bestehende Volkssprache und Chat-API", function()
     equal(state.sent[3].language, nil)
 end)
 
+test("RPChatMod-Sprachresolver und Fallback", function()
+    local env, app, state = newAddon()
+    state.login()
+    local calls = {}
+    local resolvedLanguage = 42
+    env.RPChatMod = {
+        GetChatLanguageID = function(channel)
+            calls[#calls + 1] = channel
+            return resolvedLanguage
+        end,
+    }
+
+    equal(app.SendRPText("Resolver"), true)
+    equal(calls[1], "SAY")
+    equal(state.sent[#state.sent].language, 42)
+
+    resolvedLanguage = nil
+    equal(app.SendRPText("Keine Sprache"), true)
+    equal(calls[2], "SAY")
+    equal(state.sent[#state.sent].language, nil)
+
+    env.RPChatMod = nil
+    equal(app.SendRPText("Ohne AddOn"), true)
+    equal(state.sent[#state.sent].language, 7)
+    env.RPChatMod = {}
+    equal(app.SendRPText("Ohne Resolver"), true)
+    equal(state.sent[#state.sent].language, 7)
+    env.RPChatMod.GetChatLanguageID = true
+    equal(app.SendRPText("Ungültiger Resolver"), true)
+    equal(state.sent[#state.sent].language, 7)
+
+    state.party, state.raid, state.instance = true, true, true
+    for _, channel in ipairs({ "PARTY", "RAID", "INSTANCE_CHAT" }) do
+        env.PaladinRP_CharacterDB.chatChannel = channel
+        equal(app.SendRPText("Gruppe"), true)
+        equal(state.sent[#state.sent].channel, channel)
+        equal(state.sent[#state.sent].language, nil)
+    end
+    equal(app.SendRPText("*Handlung*"), true)
+    equal(state.sent[#state.sent].channel, "EMOTE")
+    equal(state.sent[#state.sent].language, nil)
+    equal(#calls, 2)
+end)
+
 test("Markierte Handlungen werden als /me gesendet", function()
     local env, app, state = newAddon()
     state.login()

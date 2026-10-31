@@ -106,7 +106,12 @@ function addon.SendText(text)
     end
     local languageID = nil
     if channel == "SAY" or channel == "YELL" then
-        languageID = GetRacialLanguageID()
+        local rpChat = _G.RPChatMod
+        if type(rpChat) == "table" and type(rpChat.GetChatLanguageID) == "function" then
+            languageID = rpChat.GetChatLanguageID(channel)
+        else
+            languageID = GetRacialLanguageID()
+        end
     end
 
     C_ChatInfo.SendChatMessage(message, channel, languageID)
