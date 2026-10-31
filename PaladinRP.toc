@@ -5,6 +5,7 @@
 ## Version: 0.7.0
 
 ## SavedVariablesPerCharacter: PaladinRP_CharacterDB
+## OptionalDeps: RPChatMod
 
 config\Settings.lua
 
