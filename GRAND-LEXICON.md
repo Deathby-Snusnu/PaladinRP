@@ -18,8 +18,11 @@ Die Datei `locales/deDE/GrandLexicon.lua` wird nach den übrigen deutschen Textd
 
 ## Test
 
+Aus dem `PaladinRP`-Quellverzeichnis:
+
 ```powershell
 python -m unittest discover -s tests -p test_grand_lexicon.py -v
 ```
 
-Zusätzlich im Spiel mit verschiedenen Rassen, Fähigkeits- und Ambient-Ereignissen testen. Die Offline-Strukturtests wurden hinzugefügt, in dieser Umgebung aber nicht ausgeführt.
+Zusätzlich im Spiel mit verschiedenen Rassen, Fähigkeiten und manuellen
+Ambient-Aufrufen testen. Die Offline-Strukturtests ersetzen keinen Clienttest.

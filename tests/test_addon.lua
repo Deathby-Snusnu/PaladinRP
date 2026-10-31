@@ -79,6 +79,7 @@ local function newAddon(savedDatabase)
     environment.UnitClass = function() return state.class, state.class end
     environment.UnitExists = function() return state.target ~= nil end
     environment.UnitName = function() return state.target end
+    environment.UnitCanAssist = function() return state.target ~= nil end
     environment.GetNumLanguages = function() return #state.languages end
     environment.GetLanguageByIndex = function(index)
         return state.languages[index][1], state.languages[index][2]
@@ -193,13 +194,14 @@ test("Nur fehlende Felder erhalten Defaults", function()
     equal(env.PaladinRP_CharacterDB.chatChannel, "SAY")
 end)
 
-test("Poolpriorität: persönlich vor GREATER_ vor Rasse", function()
+test("GetTextPool bleibt getrennt von persönlichen Overrides", function()
     local env, app, state = newAddon()
     state.login()
     local personal = { "Persönlich" }
     env.PaladinRP_CharacterDB.personalTexts.GREATER_MIGHT = personal
     app.Racial.Human.GREATER_MIGHT = { "Rasse" }
-    equal(app.GetTextPool("GREATER_MIGHT"), personal)
+    equal(app.GetTextPool("GREATER_MIGHT"), app.GreaterBlessings.MIGHT)
+    equal(app.BuildText("GREATER_MIGHT"), "Persönlich")
     env.PaladinRP_CharacterDB.personalTexts.GREATER_MIGHT = nil
     equal(app.GetTextPool("GREATER_MIGHT"), app.GreaterBlessings.MIGHT)
     equal(app.GetTextPool("MIGHT"), app.Racial.Human.MIGHT)

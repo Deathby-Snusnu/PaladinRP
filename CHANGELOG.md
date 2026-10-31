@@ -2,6 +2,17 @@
 
 Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 
+## Aktueller Quellstand: 0.7.0 (unveroeffentlicht)
+
+- Fuer unterstuetzende Schluessel wird kein eigener Charaktername als Ersatz
+  fuer ein fehlendes freundliches Ziel eingesetzt. Ziel- und Poolregeln
+  stehen in der README.
+- Die Lua-Suite prueft persoenliche Pools ueber `BuildText` und stellt den
+  `UnitCanAssist`-Mock bereit, passend zum aktuellen Laufzeitpfad.
+- `RIGHTEOUS_FURY` mit lokalisierten Selbstbuff-Texten ergaenzt; zwei deutsche
+  Segens-Emotes geschlechtsneutral formuliert.
+- Zielbehandlung fuer Selbstzauber und ziellose Rassentexte abgesichert.
+
 ## [0.6.0] - 2026-10-26
 
 ### Dokumentation
@@ -48,8 +59,7 @@ Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 ### Hinzugefuegt
 
 - Lokalisierte Rollenspieltexte fuer `PURIFY`, `CLEANSE` und
-  `HAMMER_OF_JUSTICE`; Purify/Cleanse verwenden ein freundliches Ziel oder
-  den eigenen Charakter, Hammer der Gerechtigkeit ein feindliches Ziel.
+  `HAMMER_OF_JUSTICE`; die aktuellen Zielregeln stehen in der README.
 - Der deutsche Grosslexikon-Textbestand wurde um Zauber, Auren, Segen,
   Ambient- und Rassentexte erweitert.
 - Dynamische Schluessellisten mit `/prp list`, `/prp list racial` und

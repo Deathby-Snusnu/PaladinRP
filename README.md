@@ -6,8 +6,9 @@ Paladin RP enthält deutsche, englische und französische Rollenspieltexte zu
 Segen, großen Segen, Auren, Siegeln, Fähigkeiten und Völkern.
 `/prp <schlüssel>` versucht, einen zufälligen Text anhand der gespeicherten
 Textchance und Abklingzeit auszugeben. Es gibt keine automatische Auslösung
-durch Zauber und keine grafische Einstellungsoberfläche. Das AddOn benötigt
-kein anderes AddOn.
+durch Zauber und keine eigene grafische Einstellungsoberfläche. Das AddOn
+benötigt kein anderes AddOn; das optionale RP Control Center kann vorhandene
+Einstellungen über ein gemeinsames Fenster ändern.
 
 Die öffentliche Schnittstelle bleibt `_G.PaladinRP.TryText(emote)`.
 Beispiel für ein Makro nach dem Login:
@@ -26,6 +27,10 @@ Einstellungen verwenden.
 [Sammlungsübersicht](../../README.md) · [Changelog](CHANGELOG.md) ·
 [Texteditor und Handbuch](../../docs/RPTextStudio/HANDBUCH.md) ·
 [Verpackung und gemeinsame Tests](../../docs/VERPACKUNG.md)
+
+Die gemeinsamen relativen Links setzen den vollständigen Sammlungs-Checkout
+voraus. Im einzelnen AddOn-Repository sind die Anleitungen über das
+[Sammlungsrepository](https://github.com/Deathby-Snusnu/RPAddOns) erreichbar.
 
 ## Installation
 
@@ -54,9 +59,9 @@ Nach dem Login zeigt `/prp` die bisherige Kurzhilfe. Zum Ausprobieren:
 /prp greater_might
 ```
 
-Die letzten beiden Aufrufe verwenden bei vorhandenem Ziel Zieltexte, soweit
-der gewählte Pool diese anbietet. Stelle anschließend die gewünschten Werte
-wieder ein, beispielsweise Chance 30 und Cooldown 20.
+Die letzten beiden Aufrufe können bei einem freundlichen Ziel Zieltexte
+verwenden, soweit der gewählte Pool diese anbietet. Stelle anschließend die
+gewünschten Werte wieder ein, beispielsweise Chance 30 und Cooldown 20.
 
 ## Befehle
 
@@ -134,10 +139,13 @@ Zeilenumbrüche und keine `|`-Chatmarkierungen.
 
 Segen mit den Schlüsseln MIGHT, WISDOM, PROTECTION, SALVATION, FREEDOM,
 KINGS sowie GREATER_MIGHT, GREATER_WISDOM, GREATER_KINGS,
-GREATER_SALVATION und LAYONHANDS verwenden ein freundliches Ziel, sonst
-den eigenen Charakter. DEVOTION, RETRIBUTION, CONCENTRATION, SHADOW, FIRE,
-FROST, RIGHTEOUSNESS, COMMAND und DIVINE_SHIELD verwenden keinen Zielnamen.
-Andere Schlüssel nutzen das aktuelle Ziel, sofern vorhanden.
+GREATER_SALVATION, LAYONHANDS, PURIFY und CLEANSE verwenden den Namen eines
+freundlichen Ziels. Ist `UnitIsUnit` verfügbar, wird der eigene Charakter
+nicht als Zielname eingesetzt. Ohne geeignetes Ziel wird kein eigener Name
+als Ersatz eingefügt. DEVOTION, RETRIBUTION, CONCENTRATION, SHADOW, FIRE,
+FROST, RIGHTEOUSNESS, COMMAND, RIGHTEOUS_FURY und DIVINE_SHIELD verwenden
+keinen Zielnamen. Andere Schlüssel nutzen das aktuelle Ziel, sofern
+vorhanden; eine Prüfung auf feindliche Ziele erfolgt dabei nicht.
 Bei strukturierten Pools wird mit Namen zuerst `ziel`, danach `gruppe`
 versucht; anschließend sind zielunabhängige Einträge aus `ziel` möglich.
 Dies bestätigt keinen Zaubererfolg.
@@ -163,11 +171,15 @@ Für die Auswahl gilt unverändert:
 
 Beispielsweise hat der normale Segen `WISDOM` Vorrang vor dem gleichnamigen
 Siegel. Ein unbrauchbarer persönlicher Pool verhindert die Locale-Auswahl
-nicht. Innerhalb der Locale-Auswahl zählt dagegen der erste vorhandene Pool,
-auch wenn er keinen nutzbaren Text liefert. Zuerst wird die gewählte Sprache,
-bei fehlendem Pool Deutsch durchsucht.
+nicht. Zuerst wird die gewählte Sprache, bei fehlendem Pool Deutsch
+durchsucht. Innerhalb dieser Auswahl zählt zunächst der erste vorhandene
+Pool. Liefert er ohne Zielnamen keinen nutzbaren Text, wird zusätzlich eine
+Auswahl ohne Rassentabelle versucht; mit Zielnamen erfolgt dieser erneute
+Versuch nicht.
 
 ## Projektstruktur
+
+Wichtige Dateien und Ordner:
 
 ```text
 PaladinRP/
@@ -183,12 +195,23 @@ PaladinRP/
 │   ├── Text.lua
 │   ├── Chat.lua
 │   ├── Cooldown.lua
+│   ├── Ambient.lua
 │   └── Commands.lua
+├── data/
 ├── ui/Settings.lua
-├── tests/test_addon.lua
+├── tests/
+│   ├── test_addon.lua
+│   ├── test_dispel_texts.py
+│   ├── test_gender_neutral_blessings.py
+│   ├── test_grand_lexicon.py
+│   └── test_self_target_contract.py
+├── AMBIENT.md
+├── GRAND-LEXICON.md
 ├── README.md
 ├── CHANGELOG.md
-└── LICENSE
+├── LICENSE
+├── LICENSE-TEXTS
+└── NOTICE
 ```
 
 - [PaladinRP.lua](PaladinRP.lua): Login und globale öffentliche API.
@@ -196,6 +219,7 @@ PaladinRP/
 - [core/Text.lua](core/Text.lua): Poolpriorität, Auswahl und Textaufbereitung.
 - [core/Chat.lua](core/Chat.lua): Kanal, Volkssprache und Chat-Ausgabe.
 - [core/Cooldown.lua](core/Cooldown.lua): Gemeinsamer Cooldown-Zustand.
+- [core/Ambient.lua](core/Ambient.lua): Ambient-Timer und vorgemerkte Texte.
 - [core/Commands.lua](core/Commands.lua): Registrierung und Verarbeitung von `/prp`.
 - [ui/Settings.lua](ui/Settings.lua): Platzhalter nur im Quellprojekt, nicht in TOC oder ZIP.
 - `locales/`: Laufzeittexte je Sprache. Die parallel vorhandenen Dateien unter
@@ -238,9 +262,13 @@ Sprachwahl, Chance, Cooldown, Slash-Befehle, strikte Eingabeprüfung,
 Klassenbeschränkung, Textgrenzen und Fehlerfälle. Die Tests sind nur im
 Quellprojekt vorhanden, nicht im Installations-ZIP.
 
+Die Suite prüft persönliche Überschreibungen über `BuildText`, wo sie
+ausgewertet werden; `GetTextPool` bleibt auf Locale-Pools beschränkt. Der
+Client-Mock stellt außerdem `UnitCanAssist` für die Zielauswahl bereit.
+
 ## Kompatibilität
 
-Die TOC deklariert `Interface: 16001` und Version `0.5.0`. Prüfe die passende
+Die TOC deklariert `Interface: 16001` und Version `0.7.0`. Prüfe die passende
 Interface-Version für deinen Client; weitere unterstützte Client-Versionen
 sind nicht festgelegt.
 
@@ -263,4 +291,5 @@ Weitere Hinweise und der Markenhinweis stehen in [NOTICE](./NOTICE).
 
 ## Ambient-Erweiterung (21.10.2026)
 
-Klassen- und rassenspezifisches, dreisprachiges Ambient-System; Konfiguration mit `/prp ambient`. Details in `AMBIENT.md`.
+Klassen- und rassenspezifisches, dreisprachiges Ambient-System; Konfiguration
+mit `/prp ambient`. Details in [AMBIENT.md](AMBIENT.md).
