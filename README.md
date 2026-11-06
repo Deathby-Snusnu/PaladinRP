@@ -47,6 +47,69 @@ normalerweise `/reload` oder einen Neustart des Spiels. Die Ladeliste steht in
 Das Installations-ZIP enthält Laufzeitdateien und Lizenz-/Rechtehinweise,
 aber keine Entwicklungsdokumentation, Tests, Git- oder Editor-Dateien.
 
+## PaladinRP 0.8.0: vollständiger Forever-Zauberbuch-Abgleich
+
+Der aktuelle Katalog berücksichtigt **52 Zauberbuch-Einträge** aus dem
+Forever-Client (Build 1.60.1.70790): 21 Heilig, 21 Schutz,
+8 Vergeltung und 2 Reittier-Fähigkeiten. 26 zuvor fehlende,
+eindeutige RP-Schlüssel sind in **deDE, enUS und frFR** neu hinzugekommen.
+Das ist ein Textkatalog, **keine Aussage darüber, ob dein Paladin die
+entsprechende Fähigkeit bereits gelernt hat**. Manche erfordern Talente,
+passende Stufen oder ein bestimmtes Volk.
+
+Quelle: https://foreverchanges.pro/de/spellbook/paladin
+
+### Richturteil
+
+**Richturteil** hat den Schlüssel `JUDGEMENT`, mit dem amerikanischen
+Alias `JUDGMENT`. Beispiel im deutschen Client:
+
+```text
+#showtooltip Richturteil
+/cast Richturteil
+/prp JUDGEMENT
+```
+
+`/cast` wirkt den Zauber. `/prp` löst lediglich einen zufälligen
+RP-Text oder ein `/me`-Emote aus und erkennt **keinen tatsächlichen
+Zaubererfolg**. Die Ausgabe beachtet weiterhin Textchance und Cooldown.
+
+### Weitere neue Schlüssel
+
+| Heilig | Schutz | Vergeltung / Reittiere |
+| --- | --- | --- |
+| `HOLY_LIGHT`, `REDEMPTION`, `CONSECRATION` | `DIVINE_PROTECTION`, `SEAL_OF_JUSTICE` | `JUDGEMENT`, `HOLY_STRIKE` |
+| `EXORCISM`, `FLASH_OF_LIGHT`, `VOICE_OF_TRUTH` | `DIVINE_INTERVENTION`, `HOLY_SHIELD` | `REPENTANCE` |
+| `TURN_UNDEAD`, `HOLY_SHOCK`, `LIGHT_WATCH` | `HAMMER_OF_THE_RIGHTEOUS`, `SACRIFICE` | `SUMMON_WARHORSE` |
+| `HOLY_WRATH`, `DIVINE_FAVOR`, `OATH_OF_LIGHT` | `TEMPLARS_BULWARK`, `SWIFT_JUDGEMENT` | `SUMMON_CHARGER` |
+| `SEAL_OF_WISDOM` | | |
+
+Alle übrigen Zauberbuch-Einträge verwenden bestehende Schlüssel aus
+`Blessings`, `GreaterBlessings`, `Auras`, `Seals` und `Abilities`.
+`data/ForeverSpellbook.lua` dokumentiert alle 52 Schlüssel mit Zielregeln.
+
+**Achtung bei Weisheit:** `WISDOM` bleibt aus Kompatibilitätsgründen der
+*Segen der Weisheit*. Für das *Siegel der Weisheit* benutze ausdrücklich
+`SEAL_OF_WISDOM`. Das neue `SEAL_OF_JUSTICE` steht für das *Siegel
+der Gerechtigkeit*. Bisherige Siegel-, Segen-, Aura- und Hammer-Schlüssel
+bleiben unverändert verwendbar.
+
+### Sichere Zielbehandlung
+
+- Freundliche Heilungen, Segen und Rettungszauber verwenden ausschließlich
+  assistierbare Ziele, nicht den eigenen Charakter als ersetzten Namen.
+- Richturteil, Heiliger Stoß und weitere feindgerichtete Fähigkeiten
+  dürfen nur angreifbare Ziele beim Namen nennen.
+- `HOLY_SHOCK` kann befreundete oder feindliche Ziele ansprechen.
+- Selbstzauber, Auren, Siegel, Flächeneffekte und Reittiere übernehmen
+  keinen zufällig ausgewählten Zielnamen.
+- Ist kein passendes Ziel vorhanden, wird ein allgemeiner Text benutzt.
+  Persönliche `PaladinRP_CharacterDB.personalTexts` haben stets Vorrang.
+
+Neue Paladin-Aktionen verwenden je Sprache mehrere eigene Sätze und
+`*...*`-Emotes. Alte persönliche Texte, bestehende Defaults und das
+vorgemerkte Ambient-Verhalten bleiben erhalten.
+
 ## Schnellstart
 
 Nach dem Login zeigt `/prp` die bisherige Kurzhilfe. Zum Ausprobieren:
@@ -55,6 +118,9 @@ Nach dem Login zeigt `/prp` die bisherige Kurzhilfe. Zum Ausprobieren:
 /prp chance 100
 /prp cooldown 0
 /prp hammer_of_wrath
+/prp JUDGEMENT
+/prp HOLY_STRIKE
+/prp HOLY_SHIELD
 /prp might
 /prp greater_might
 ```
@@ -144,8 +210,10 @@ freundlichen Ziels. Ist `UnitIsUnit` verfügbar, wird der eigene Charakter
 nicht als Zielname eingesetzt. Ohne geeignetes Ziel wird kein eigener Name
 als Ersatz eingefügt. DEVOTION, RETRIBUTION, CONCENTRATION, SHADOW, FIRE,
 FROST, RIGHTEOUSNESS, COMMAND, RIGHTEOUS_FURY und DIVINE_SHIELD verwenden
-keinen Zielnamen. Andere Schlüssel nutzen das aktuelle Ziel, sofern
-vorhanden; eine Prüfung auf feindliche Ziele erfolgt dabei nicht.
+keinen Zielnamen. Für die 52 Forever-Zauberbuch-Schlüssel gelten die oben dokumentierten
+Zielkategorien aus `data/ForeverSpellbook.lua`. Zusätzliche ältere,
+nicht im Katalog enthaltene RP-Schlüssel behalten ihre bisherige
+Zielbehandlung.
 Bei strukturierten Pools wird mit Namen zuerst `ziel`, danach `gruppe`
 versucht; anschließend sind zielunabhängige Einträge aus `ziel` möglich.
 Dies bestätigt keinen Zaubererfolg.
@@ -232,7 +300,7 @@ Die Kernmodule verwenden `BuildText`, `SendText`, `CooldownReady` und
 `SendRPText` und `IsCooldownReady` bleiben als Aliase erhalten.
 `PaladinRP.TryText` ist die öffentliche manuelle Schnittstelle.
 
-Die TOC lädt zunächst Konfiguration und Sprachdaten, dann die Kernmodule und
+Die TOC lädt zunächst Konfiguration, das Forever-Zauberbuch und Sprachdaten, dann die Kernmodule und
 zuletzt die Hauptdatei. Interne Funktionen und Daten teilen ausschließlich
 die private AddOn-Tabelle; die globalen Datencontainer und
 `RPChatMod_Settings` entfallen. Extern bleiben `PaladinRP.TryText` und die
@@ -268,7 +336,7 @@ Client-Mock stellt außerdem `UnitCanAssist` für die Zielauswahl bereit.
 
 ## Kompatibilität
 
-Die TOC deklariert `Interface: 16001` und Version `0.7.0`. Prüfe die passende
+Die TOC deklariert `Interface: 16001` und Version `0.8.0`. Prüfe die passende
 Interface-Version für deinen Client; weitere unterstützte Client-Versionen
 sind nicht festgelegt.
 
