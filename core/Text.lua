@@ -7,7 +7,7 @@
 
 local _, addon = ...
 local GREATER_PREFIX = "GREATER_"
-local LEGACY_KEY_ALIASES = { HAMMER = "HAMMER_OF_WRATH" }
+local LEGACY_KEY_ALIASES = { HAMMER = "HAMMER_OF_WRATH", JUDGMENT = "JUDGEMENT" }
 
 local FRIENDLY_OR_SELF = {
     MIGHT=true, WISDOM=true, PROTECTION=true, SALVATION=true, FREEDOM=true, KINGS=true,
@@ -57,6 +57,32 @@ local function GetFriendlyTargetOrSelf()
 end
 
 local function ResolveTargetName(key)
+    -- Forever client metadata controls target names for all spellbook keys.
+    -- Older custom text keys continue to use their established behaviour.
+    local metadata = addon.foreverSpellbook and addon.foreverSpellbook[key]
+    if metadata then
+        local mode = metadata.mode
+        if mode == "S" then return nil end
+        if mode == "F" then return GetFriendlyTargetOrSelf() end
+        if not UnitExists("target") then return nil end
+        if UnitIsUnit and UnitIsUnit("target", "player") then return nil end
+        if mode == "E" then
+            if type(UnitCanAttack) == "function"
+                and UnitCanAttack("player", "target") then
+                return UnitName("target")
+            end
+            return nil
+        end
+        if mode == "D" then
+            if (type(UnitCanAttack) == "function"
+                    and UnitCanAttack("player", "target"))
+                or (type(UnitCanAssist) == "function"
+                    and UnitCanAssist("player", "target")) then
+                return UnitName("target")
+            end
+            return nil
+        end
+    end
     if SELF_ONLY[key] then return nil end
     if FRIENDLY_OR_SELF[key] then return GetFriendlyTargetOrSelf() end
     if UnitExists("target") then
