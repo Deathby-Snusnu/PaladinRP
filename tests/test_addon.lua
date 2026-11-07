@@ -597,7 +597,7 @@ test("Forever-Zauberbuch hat 52 Schlüssel und bietet Texte in allen Sprachen", 
             local line = app.BuildText(key)
             assert(type(line) == "string" and line ~= "",
                 language .. ": no target-free text " .. key)
-            assert(#line <= 255 and not line:find("%%s", 1, true),
+            assert(#line <= 255 and not line:find("%s", 1, true),
                 language .. ": unsafe line " .. key)
         end
     end
