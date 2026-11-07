@@ -28,6 +28,7 @@ local function newAddon(savedDatabase)
         race = "Human",
         class = "PALADIN",
         target = "Anduin",
+        hostile = false,
         instance = false,
         raid = false,
         party = false,
@@ -79,7 +80,8 @@ local function newAddon(savedDatabase)
     environment.UnitClass = function() return state.class, state.class end
     environment.UnitExists = function() return state.target ~= nil end
     environment.UnitName = function() return state.target end
-    environment.UnitCanAssist = function() return state.target ~= nil end
+    environment.UnitCanAssist = function() return state.target ~= nil and not state.hostile end
+    environment.UnitCanAttack = function() return state.target ~= nil and state.hostile end
     environment.GetNumLanguages = function() return #state.languages end
     environment.GetLanguageByIndex = function(index)
         return state.languages[index][1], state.languages[index][2]
@@ -212,7 +214,8 @@ test("Poolpriorität: allgemeine Daten und Namenskollisionen", function()
     state.login()
     state.race = "Draenei"
     equal(app.GetTextPool("WISDOM"), app.Blessings.WISDOM)
-    equal(app.GetTextPool("KINGS"), app.GreaterBlessings.KINGS)
+    equal(app.GetTextPool("KINGS"), app.Blessings.KINGS)
+    equal(app.GetTextPool("GREATER_KINGS"), app.GreaterBlessings.KINGS)
     equal(app.GetTextPool("DEVOTION"), app.Auras.DEVOTION)
     equal(app.GetTextPool("COMMAND"), app.Seals.COMMAND)
     equal(app.GetTextPool("HAMMER_OF_WRATH"), app.Abilities.HAMMER_OF_WRATH)
@@ -437,8 +440,9 @@ test("Bisherige Slash-Befehle und Kanalabfrage", function()
     local env, _, state = newAddon()
     state.login()
     state.command("")
-    equal(state.messages[#state.messages],
+    equal(state.messages[#state.messages - 1],
         "/prp channel [SAY|PARTY|RAID|INSTANCE_CHAT|AUTO]")
+    equal(state.messages[#state.messages], "/prp language deDE|enUS|frFR")
     state.command(" ChAnCe 55 ")
     equal(env.PaladinRP_CharacterDB.textChance, 55)
     state.command("cooldown 8")
@@ -574,6 +578,107 @@ test("Abgelehnter Versand startet keinen Cooldown", function()
     equal(env.PaladinRP.TryText("HAMMER_OF_WRATH"), false)
     equal(app.IsCooldownReady(), true)
     equal(app.GetRemainingCooldown(), 0)
+end)
+
+
+test("Forever-Zauberbuch hat 52 Schlüssel und bietet Texte in allen Sprachen", function()
+    local env, app, state = newAddon({ textChance = 100, cooldown = 0 })
+    state.login()
+    local count, groups = 0, {}
+    for key, info in pairs(app.foreverSpellbook) do
+        count = count + 1
+        groups[info.group] = (groups[info.group] or 0) + 1
+        assert(info.mode == "E" or info.mode == "F"
+            or info.mode == "S" or info.mode == "D", key)
+        for _, language in ipairs({"deDE", "enUS", "frFR"}) do
+            state.command("language " .. language)
+            assert(app.GetTextPool(key), language .. ": missing " .. key)
+            state.target = nil
+            local line = app.BuildText(key)
+            assert(type(line) == "string" and line ~= "",
+                language .. ": no target-free text " .. key)
+            assert(#line <= 255 and not line:find("%s", 1, true),
+                language .. ": unsafe line " .. key)
+        end
+    end
+    equal(count, 52)
+    equal(groups.HOLY, 21)
+    equal(groups.PROTECTION, 21)
+    equal(groups.RETRIBUTION, 8)
+    equal(groups.MOUNTS, 2)
+end)
+
+test("Richturteil spricht nur Feinde, Heilung nur Freunde an", function()
+    local env, app, state = newAddon({ textChance = 100, cooldown = 0 })
+    state.login()
+    state.race = "Draenei" -- no existing racial pool overrides
+    state.target = "FRIENDLY_NAME_973"
+    state.hostile = false
+    local friendlyJudgement = app.BuildText("JUDGEMENT")
+    assert(friendlyJudgement and not friendlyJudgement:find(state.target,1,true),
+        "Judgement must not name a friendly target")
+    local friendlyHeal = app.BuildText("HOLY_LIGHT")
+    assert(friendlyHeal and friendlyHeal:find(state.target,1,true),
+        "Heal should use an assistable friend")
+    state.target = "HOSTILE_NAME_419"
+    state.hostile = true
+    local judgement = app.BuildText("JUDGEMENT")
+    assert(judgement and judgement:find(state.target,1,true),
+        "Judgement should address a hostile target")
+    local strike = app.BuildText("HOLY_STRIKE")
+    assert(strike and strike:find(state.target,1,true),
+        "Holy Strike should address a hostile target")
+    local heal = app.BuildText("HOLY_LIGHT")
+    assert(heal and not heal:find(state.target,1,true),
+        "Heal must not name an enemy")
+    local shield = app.BuildText("DIVINE_PROTECTION")
+    assert(shield and not shield:find(state.target,1,true),
+        "Self spell must not name the current target")
+    local dual = app.BuildText("HOLY_SHOCK")
+    assert(dual and dual:find(state.target,1,true),
+        "Holy Shock can address a hostile target")
+    state.hostile = false
+    assert(app.BuildText("HOLY_SHOCK"):find(state.target,1,true),
+        "Holy Shock can also address a friendly target")
+    state.target = nil
+    assert(app.BuildText("JUDGEMENT"), "Judgement works without a target")
+end)
+
+test("WISDOM kollidiert nicht mit SEAL_OF_WISDOM", function()
+    local env, app, state = newAddon({ textChance = 100, cooldown = 0 })
+    state.login()
+    for _, lang in ipairs({"deDE", "enUS", "frFR"}) do
+        state.command("language " .. lang)
+        state.race = "Draenei"
+        local locale = app.localeData[lang]
+        equal(app.GetTextPool("WISDOM"), locale.Blessings.WISDOM)
+        equal(app.GetTextPool("SEAL_OF_WISDOM"), locale.Seals.SEAL_OF_WISDOM)
+        equal(locale.Seals.SEAL_OF_WISDOM, locale.Seals.WISDOM)
+        equal(app.GetTextPool("SEAL_OF_JUSTICE"), locale.Seals.SEAL_OF_JUSTICE)
+        assert(app.BuildText("SEAL_OF_WISDOM"), "Seal Wisdom narration")
+    end
+    state.command("language deDE")
+    state.target = nil
+    equal(app.BuildText("JUDGMENT"), app.BuildText("JUDGEMENT"),
+        "American spelling remains accepted")
+    local emote = app.localeData.deDE.Abilities.JUDGEMENT.gruppe[3]
+    assert(emote:sub(1,1) == "*" and emote:sub(-1) == "*")
+    equal(app.SendText(emote), true)
+    equal(state.sent[#state.sent].channel, "EMOTE")
+    equal(state.sent[#state.sent].text, emote:sub(2,-2))
+end)
+
+test("Persönliche Richturteil-Texte und alter Hammer bleiben erhalten", function()
+    local env, app, state = newAddon({
+        textChance=100, cooldown=0,
+        personalTexts={ JUDGEMENT={ "Eigener Richturteil-Spruch" },
+                        HAMMER={ "Alter Hammer-Spruch" } },
+    })
+    state.login()
+    equal(app.BuildText("JUDGEMENT"), "Eigener Richturteil-Spruch")
+    equal(app.BuildText("HAMMER"), "Alter Hammer-Spruch")
+    state.command("judgement")
+    equal(state.sent[#state.sent].text, "Eigener Richturteil-Spruch")
 end)
 
 local failures = 0

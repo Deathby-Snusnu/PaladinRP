@@ -2,7 +2,7 @@
 ## Title: Paladin RP
 ## Notes: Rollenspiel-Unterstützung für Paladine
 ## Author: Hannes
-## Version: 0.7.0
+## Version: 0.8.0
 
 ## SavedVariablesPerCharacter: PaladinRP_CharacterDB
 ## OptionalDeps: RPChatMod
@@ -10,6 +10,7 @@
 config\Settings.lua
 
 locales\Init.lua
+data\ForeverSpellbook.lua
 locales\deDE\Blessings.lua
 locales\deDE\GreaterBlessings.lua
 locales\deDE\Auras.lua

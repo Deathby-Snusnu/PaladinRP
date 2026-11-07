@@ -2,7 +2,15 @@
 
 Aenderungen an PaladinRP werden in dieser Datei dokumentiert.
 
-## Aktueller Quellstand: 0.7.0 (unveroeffentlicht)
+## Aktueller Quellstand: 0.8.0 (unveröffentlicht)
+
+- **Richturteil** (`JUDGEMENT`, Alias `JUDGMENT`) mit umfangreichen eigenen /say- und /me-Texten in Deutsch, Englisch und Französisch eingeführt.
+- Gegen das Forever-Paladin-Zauberbuch (Build 1.60.1.70790) abgeglichen: **52 eindeutige Schlüssel** für Heilig, Schutz, Vergeltung und Reittiere. **26 bisher fehlende** RP-Schlüssel ergänzt, darunter Heiliger Stoß, Weihe, Heiliger Schild und Buße.
+- `SEAL_OF_WISDOM` als eindeutigen Siegel-Schlüssel neben dem bisherigen `WISDOM` (Segen der Weisheit) ergänzt. Neues `SEAL_OF_JUSTICE` ohne Änderung bestehender Siegel.
+- Zielauflösung je Fähigkeit: Freund, Gegner, beide oder keine Namen; keine feindlichen Namensansprachen für befreundete Ziele.
+- Python- und Lua-5.1/5.4-Regressionstests für Sprachparität, Zielregeln, Emotes, Bestandsschutz und TOC-Ladereihenfolge.
+
+## Historischer Quellstand: 0.7.0 (unveröffentlicht)
 
 - Fuer unterstuetzende Schluessel wird kein eigener Charaktername als Ersatz
   fuer ein fehlendes freundliches Ziel eingesetzt. Ziel- und Poolregeln

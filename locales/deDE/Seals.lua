@@ -95,3 +95,10 @@ addon.localeData.deDE.Seals = {
         },
     },
 }
+
+-- Explicit Seal of Wisdom key avoids collision with Blessing of Wisdom.
+addon.localeData.deDE.Seals.SEAL_OF_WISDOM = addon.localeData.deDE.Seals.WISDOM
+addon.localeData.deDE.Seals.SEAL_OF_JUSTICE = {
+    name = "Siegel der Gerechtigkeit",
+    gruppe = { "Ein Siegel ist kein Schmuck. Es ist ein Versprechen.", "Heute sollen selbst die schnellen Füße innehalten.", "*zeichnet ein strahlendes Siegel über der erhobenen Waffe.*", "*legt die freie Hand auf den Schwertknauf und spricht einen kurzen Eid.*" },
+}
