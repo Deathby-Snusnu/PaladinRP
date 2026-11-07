@@ -46,7 +46,7 @@ class ForeverPaladinCoverageTests(unittest.TestCase):
                 for key in NEW_ABILITIES:
                     matches = list(re.finditer(rf"\b{key}\s*=\s*\{{", source))
                     self.assertEqual(len(matches), 1, (lang, key))
-                    block = source[matches[0].start():]
+                    block = source[matches[0].start():source.index("\n    },", matches[0].end())]
                     self.assertIn("gruppe = {", block)
                 self.assertIn('ziel = {', source)
                 self.assertNotIn("Neuer RP-Text", source)
