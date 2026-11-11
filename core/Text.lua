@@ -6,6 +6,23 @@
 -- file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 local _, addon = ...
+
+-- Protected WoW clients may return secret strings for unit names.
+-- Use a safe placeholder before comparison or text interpolation.
+local function SafeUnitName(unit)
+    local name = UnitName(unit)
+    if type(issecretvalue) == "function" and issecretvalue(name) then
+        local placeholders = {
+            deDE = { pet = "Euer Begleiter", player = "Ihr", target = "das Ziel" },
+            enUS = { pet = "your companion", player = "you", target = "the target" },
+            frFR = { pet = "votre compagnon", player = "vous", target = "la cible" },
+        }
+        local names = placeholders[addon.GetOutputLanguage()] or placeholders.deDE
+        return names[unit] or names.target
+    end
+    return name
+end
+
 local GREATER_PREFIX = "GREATER_"
 local LEGACY_KEY_ALIASES = { HAMMER = "HAMMER_OF_WRATH", JUDGMENT = "JUDGEMENT" }
 
@@ -51,7 +68,7 @@ end
 local function GetFriendlyTargetOrSelf()
     if UnitExists("target") and UnitCanAssist("player", "target") then
         if UnitIsUnit and UnitIsUnit("target", "player") then return nil end
-        return UnitName("target")
+        return SafeUnitName("target")
     end
     return nil
 end
@@ -69,7 +86,7 @@ local function ResolveTargetName(key)
         if mode == "E" then
             if type(UnitCanAttack) == "function"
                 and UnitCanAttack("player", "target") then
-                return UnitName("target")
+                return SafeUnitName("target")
             end
             return nil
         end
@@ -78,7 +95,7 @@ local function ResolveTargetName(key)
                     and UnitCanAttack("player", "target"))
                 or (type(UnitCanAssist) == "function"
                     and UnitCanAssist("player", "target")) then
-                return UnitName("target")
+                return SafeUnitName("target")
             end
             return nil
         end
@@ -87,7 +104,7 @@ local function ResolveTargetName(key)
     if FRIENDLY_OR_SELF[key] then return GetFriendlyTargetOrSelf() end
     if UnitExists("target") then
         if UnitIsUnit and UnitIsUnit("target", "player") then return nil end
-        return UnitName("target")
+        return SafeUnitName("target")
     end
 end
 
