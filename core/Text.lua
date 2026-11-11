@@ -12,13 +12,7 @@ local _, addon = ...
 local function SafeUnitName(unit)
     local name = UnitName(unit)
     if type(issecretvalue) == "function" and issecretvalue(name) then
-        local placeholders = {
-            deDE = { pet = "Euer Begleiter", player = "Ihr", target = "das Ziel" },
-            enUS = { pet = "your companion", player = "you", target = "the target" },
-            frFR = { pet = "votre compagnon", player = "vous", target = "la cible" },
-        }
-        local names = placeholders[addon.GetOutputLanguage()] or placeholders.deDE
-        return names[unit] or names.target
+        return nil -- Select a target-free RP line instead of an awkward label.
     end
     return name
 end
