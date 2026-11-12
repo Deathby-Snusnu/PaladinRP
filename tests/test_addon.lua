@@ -608,7 +608,7 @@ test("Forever-Zauberbuch hat 52 Schlüssel und bietet Texte in allen Sprachen", 
     equal(groups.MOUNTS, 2)
 end)
 
-test("Geheime Zielnamen werden lokalisiert und sicher ersetzt", function()
+test("Geheime Zielnamen verwenden sichere zielunabhängige Texte", function()
     local env, app, state = newAddon({
         textChance = 100, cooldown = 0,
         personalTexts = { HAMMER = { "Legacy target %s" } },
@@ -618,32 +618,29 @@ test("Geheime Zielnamen werden lokalisiert und sicher ersetzt", function()
     state.target = secretName
     env.issecretvalue = function(value) return value == secretName end
 
-    local languages = {
-        { "deDE", "das Ziel" },
-        { "enUS", "the target" },
-        { "frFR", "la cible" },
-    }
-    for _, language in ipairs(languages) do
-        state.command("language " .. language[1])
-        state.hostile = false
-        local friendly = app.BuildText("HOLY_LIGHT")
-        assert(friendly and friendly:find(language[2], 1, true),
-            language[1] .. ": friendly target placeholder")
-        local friendlyDual = app.BuildText("HOLY_SHOCK")
-        assert(friendlyDual and friendlyDual:find(language[2], 1, true),
-            language[1] .. ": friendly dual-target placeholder")
-
-        state.hostile = true
-        local hostile = app.BuildText("JUDGEMENT")
-        assert(hostile and hostile:find(language[2], 1, true),
-            language[1] .. ": hostile target placeholder")
-        local hostileDual = app.BuildText("HOLY_SHOCK")
-        assert(hostileDual and hostileDual:find(language[2], 1, true),
-            language[1] .. ": hostile dual-target placeholder")
-        local legacy = app.BuildText("HAMMER")
-        assert(legacy and legacy:find(language[2], 1, true),
-            language[1] .. ": legacy-key target placeholder")
+    for _, language in ipairs({ "deDE", "enUS", "frFR" }) do
+        state.command("language " .. language)
+        for _, case in ipairs({
+            { "HOLY_LIGHT", false }, { "HOLY_SHOCK", false },
+            { "MIGHT", false }, { "JUDGEMENT", true },
+            { "HOLY_SHOCK", true }, { "HAMMER", true },
+        }) do
+            state.hostile = case[2]
+            state.target = nil
+            local targetFree = app.BuildText(case[1])
+            assert(type(targetFree) == "string" and targetFree ~= ""
+                and not targetFree:find("%s", 1, true),
+                language .. ": missing target-free text for " .. case[1])
+            state.target = secretName
+            equal(app.BuildText(case[1]), targetFree,
+                language .. ": secret target for " .. case[1])
+        end
     end
+
+    env.PaladinRP_CharacterDB.personalTexts.TEST = { "Target %s", "Target-free personal text" }
+    equal(app.BuildText("TEST"), "Target-free personal text")
+    env.PaladinRP_CharacterDB.personalTexts.TEST = { "Target %s" }
+    equal(app.BuildText("TEST"), nil)
 
     state.hostile = false
     state.target = "Ordinary Name"

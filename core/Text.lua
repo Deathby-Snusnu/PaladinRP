@@ -8,17 +8,11 @@
 local _, addon = ...
 
 -- Protected WoW clients may return secret strings for unit names.
--- Use a safe placeholder before comparison or text interpolation.
+-- Select target-free text without comparing or interpolating secret values.
 local function SafeUnitName(unit)
     local name = UnitName(unit)
     if type(issecretvalue) == "function" and issecretvalue(name) then
-        local placeholders = {
-            deDE = { pet = "Euer Begleiter", player = "Ihr", target = "das Ziel" },
-            enUS = { pet = "your companion", player = "you", target = "the target" },
-            frFR = { pet = "votre compagnon", player = "vous", target = "la cible" },
-        }
-        local names = placeholders[addon.GetOutputLanguage()] or placeholders.deDE
-        return names[unit] or names.target
+        return nil
     end
     return name
 end
