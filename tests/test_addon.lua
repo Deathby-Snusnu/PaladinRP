@@ -622,7 +622,8 @@ test("Geheime Zielnamen verwenden sichere zielunabhängige Texte", function()
         state.command("language " .. language)
         for _, case in ipairs({
             { "HOLY_LIGHT", false }, { "HOLY_SHOCK", false },
-            { "JUDGEMENT", true }, { "HOLY_SHOCK", true }, { "HAMMER", true },
+            { "MIGHT", false }, { "JUDGEMENT", true },
+            { "HOLY_SHOCK", true }, { "HAMMER", true },
         }) do
             state.hostile = case[2]
             state.target = nil
