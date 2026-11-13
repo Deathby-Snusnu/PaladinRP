@@ -165,6 +165,7 @@ test("Login initialisiert Defaults und meldet sich", function()
     equal(rawget(env, "PaladinRP_CharacterDB"), nil)
     state.login()
     equal(env.PaladinRP_CharacterDB.textChance, 30)
+    equal(env.PaladinRP_CharacterDB.racialTextChance, 40)
     equal(env.PaladinRP_CharacterDB.cooldown, 20)
     equal(env.PaladinRP_CharacterDB.chatChannel, "SAY")
     equal(type(env.PaladinRP_CharacterDB.personalTexts), "table")
@@ -174,18 +175,26 @@ end)
 
 test("Gespeicherte Daten und persönliche Texte bleiben erhalten", function()
     local texts = { HAMMER = { "Eigener Text" } }
-    local db = { textChance = 0, cooldown = 3600, chatChannel = "PARTY",
+    local db = {
+        textChance = 0, racialTextChance = 0, cooldown = 3600, chatChannel = "PARTY",
         personalTexts = texts, additionalKey = "behalten" }
     local env, _, state = newAddon(db)
     state.login()
     equal(env.PaladinRP_CharacterDB, db)
     equal(db.textChance, 0)
+    equal(db.racialTextChance, 0)
     equal(db.cooldown, 3600)
     equal(db.chatChannel, "PARTY")
     equal(db.personalTexts, texts)
     equal(db.additionalKey, "behalten")
     state.login()
     equal(db.personalTexts, texts, "Erneuter Login")
+    equal(db.racialTextChance, 0, "Rassentextchance beim erneuten Login")
+    local high, _, highState = newAddon({ racialTextChance = 100 })
+    highState.login()
+    equal(high.PaladinRP_CharacterDB.racialTextChance, 100)
+    highState.login()
+    equal(high.PaladinRP_CharacterDB.racialTextChance, 100, "100 beim erneuten Login")
 end)
 
 test("Nur fehlende Felder erhalten Defaults", function()
@@ -530,6 +539,12 @@ test("Beschädigte Daten reparieren und AUTO erhalten", function()
     equal(env.PaladinRP_CharacterDB.chatChannel, "SAY")
     equal(type(env.PaladinRP_CharacterDB.personalTexts), "table")
     assert(#state.messages >= 5, "Reparaturen werden gemeldet")
+    for _, value in ipairs({ -1, 101, 1.5, "bad" }) do
+        local invalid, _, invalidState = newAddon({ racialTextChance = value })
+        invalidState.login()
+        equal(invalid.PaladinRP_CharacterDB.racialTextChance, 40,
+            "Ungültige rassenspezifische Textchance")
+    end
     local repaired, _, repairedState = newAddon("bad database")
     repairedState.login()
     equal(type(repaired.PaladinRP_CharacterDB), "table")
