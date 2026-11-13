@@ -33,6 +33,7 @@ local function newAddon(savedDatabase)
         raid = false,
         party = false,
         roll = 1,
+        rollIndex = 0,
         messages = {},
         sent = {},
         frames = {},
@@ -68,6 +69,10 @@ local function newAddon(savedDatabase)
     end
     environment.math.random = function(limit)
         if limit == 100 then
+            if type(state.roll) == "table" then
+                state.rollIndex = state.rollIndex + 1
+                return state.roll[state.rollIndex]
+            end
             return state.roll
         end
         return 1
@@ -265,6 +270,61 @@ test("Rassentexte ohne Ziel fallen auf allgemeine Gruppentexte zurück", functio
             equal(app.BuildRPText(key), app.Blessings[key].gruppe[1], race .. " " .. key)
         end
     end
+end)
+
+test("Rassentext-Chance, Prioritäten und Sprach-Fallback", function()
+    local env, app, state = newAddon()
+    state.login()
+    local db = env.PaladinRP_CharacterDB
+    local racial = app.localeData.deDE.Racial.Human.MIGHT
+    local ordinary = app.localeData.deDE.Blessings.MIGHT
+
+    state.target = "Anduin"
+    db.racialTextChance = 0
+    state.roll = 1
+    equal(app.BuildText("MIGHT"), ordinary.ziel[1]:gsub("%%s", "Anduin"),
+        "Allgemeiner Text bei 0 Prozent")
+
+    db.racialTextChance = 40
+    state.roll = 40
+    equal(app.BuildText("MIGHT"), racial[1]:gsub("%%s", "Anduin"),
+        "Schwellwert wird eingeschlossen")
+    state.roll = 41
+    equal(app.BuildText("MIGHT"), ordinary.ziel[1]:gsub("%%s", "Anduin"),
+        "Rassentext wird oberhalb abgelehnt")
+
+    db.racialTextChance = 100
+    state.roll = 100
+    equal(app.BuildText("MIGHT"), racial[1]:gsub("%%s", "Anduin"),
+        "100 Prozent schließt Wurf 100 ein")
+
+    db.personalTexts.MIGHT = { "Persönlicher Text" }
+    equal(app.BuildText("MIGHT"), "Persönlicher Text",
+        "Persönlicher Text hat Vorrang")
+    db.personalTexts.MIGHT = nil
+
+    state.target = nil
+    app.localeData.deDE.Racial.Human.GREATER_MIGHT = { "Rassentext für großen Segen" }
+    state.roll = 1
+    equal(app.BuildText("GREATER_MIGHT"),
+        app.localeData.deDE.GreaterBlessings.MIGHT.gruppe[1],
+        "Großer Segen hat Vorrang vor Rassentext")
+
+    db.racialTextChance = 0
+    state.roll = 1
+    local targetFree = app.BuildText("MIGHT")
+    equal(targetFree, ordinary.gruppe[1], "Zieltextfreier allgemeiner Fallback")
+    assert(not targetFree:find("%%s"), "Zieltextfreier Text enthält keinen Platzhalter")
+
+    state.command("language enUS")
+    db.racialTextChance = 50
+    app.localeData.deDE.Racial.Human.SEQUENCE_TEST = { "Deutscher Rassentext" }
+    app.localeData.deDE.Blessings.SEQUENCE_TEST = { "Deutscher allgemeiner Text" }
+    state.roll = { 51, 50 }
+    state.rollIndex = 0
+    equal(app.BuildText("SEQUENCE_TEST"), "Deutscher Rassentext",
+        "Deutscher Rassentext nach fehlendem englischen Text")
+    equal(state.rollIndex, 2, "Sprach-Fallback prüft beide Rassentext-Würfe")
 end)
 
 test("Persönliche Textstrukturen und leere Pools", function()
