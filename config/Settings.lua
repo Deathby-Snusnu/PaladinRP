@@ -14,6 +14,7 @@ addon.defaults = {
     -- Wahrscheinlichkeit, dass zusätzlich zum Emote
     -- ein Text ausgegeben wird.
     textChance = 30,
+    racialTextChance = 40,
 
     -- Mindestabstand zwischen zwei Textnachrichten.
     cooldown = 20,
