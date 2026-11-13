@@ -111,7 +111,7 @@ local function FindLocalePool(language, key, skipRacial)
         local greater = addon.GetLocalePoolExact(language, "GreaterBlessings", baseKey)
         if greater then return greater end
     end
-    if not skipRacial then
+    if not skipRacial and math.random(100) <= (addon.db and addon.db.racialTextChance or 40) then
         local racial = addon.GetLocalePoolExact(language, "Racial", race, key)
         if racial then return racial end
     end

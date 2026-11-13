@@ -33,6 +33,7 @@ local function newAddon(savedDatabase)
         raid = false,
         party = false,
         roll = 1,
+        rollIndex = 0,
         messages = {},
         sent = {},
         frames = {},
@@ -68,6 +69,10 @@ local function newAddon(savedDatabase)
     end
     environment.math.random = function(limit)
         if limit == 100 then
+            if type(state.roll) == "table" then
+                state.rollIndex = state.rollIndex + 1
+                return state.roll[state.rollIndex]
+            end
             return state.roll
         end
         return 1
@@ -165,6 +170,7 @@ test("Login initialisiert Defaults und meldet sich", function()
     equal(rawget(env, "PaladinRP_CharacterDB"), nil)
     state.login()
     equal(env.PaladinRP_CharacterDB.textChance, 30)
+    equal(env.PaladinRP_CharacterDB.racialTextChance, 40)
     equal(env.PaladinRP_CharacterDB.cooldown, 20)
     equal(env.PaladinRP_CharacterDB.chatChannel, "SAY")
     equal(type(env.PaladinRP_CharacterDB.personalTexts), "table")
@@ -174,18 +180,26 @@ end)
 
 test("Gespeicherte Daten und persönliche Texte bleiben erhalten", function()
     local texts = { HAMMER = { "Eigener Text" } }
-    local db = { textChance = 0, cooldown = 3600, chatChannel = "PARTY",
+    local db = {
+        textChance = 0, racialTextChance = 0, cooldown = 3600, chatChannel = "PARTY",
         personalTexts = texts, additionalKey = "behalten" }
     local env, _, state = newAddon(db)
     state.login()
     equal(env.PaladinRP_CharacterDB, db)
     equal(db.textChance, 0)
+    equal(db.racialTextChance, 0)
     equal(db.cooldown, 3600)
     equal(db.chatChannel, "PARTY")
     equal(db.personalTexts, texts)
     equal(db.additionalKey, "behalten")
     state.login()
     equal(db.personalTexts, texts, "Erneuter Login")
+    equal(db.racialTextChance, 0, "Rassentextchance beim erneuten Login")
+    local high, _, highState = newAddon({ racialTextChance = 100 })
+    highState.login()
+    equal(high.PaladinRP_CharacterDB.racialTextChance, 100)
+    highState.login()
+    equal(high.PaladinRP_CharacterDB.racialTextChance, 100, "100 beim erneuten Login")
 end)
 
 test("Nur fehlende Felder erhalten Defaults", function()
@@ -256,6 +270,61 @@ test("Rassentexte ohne Ziel fallen auf allgemeine Gruppentexte zurück", functio
             equal(app.BuildRPText(key), app.Blessings[key].gruppe[1], race .. " " .. key)
         end
     end
+end)
+
+test("Rassentext-Chance, Prioritäten und Sprach-Fallback", function()
+    local env, app, state = newAddon()
+    state.login()
+    local db = env.PaladinRP_CharacterDB
+    local racial = app.localeData.deDE.Racial.Human.MIGHT
+    local ordinary = app.localeData.deDE.Blessings.MIGHT
+
+    state.target = "Anduin"
+    db.racialTextChance = 0
+    state.roll = 1
+    equal(app.BuildText("MIGHT"), ordinary.ziel[1]:gsub("%%s", "Anduin"),
+        "Allgemeiner Text bei 0 Prozent")
+
+    db.racialTextChance = 40
+    state.roll = 40
+    equal(app.BuildText("MIGHT"), racial[1]:gsub("%%s", "Anduin"),
+        "Schwellwert wird eingeschlossen")
+    state.roll = 41
+    equal(app.BuildText("MIGHT"), ordinary.ziel[1]:gsub("%%s", "Anduin"),
+        "Rassentext wird oberhalb abgelehnt")
+
+    db.racialTextChance = 100
+    state.roll = 100
+    equal(app.BuildText("MIGHT"), racial[1]:gsub("%%s", "Anduin"),
+        "100 Prozent schließt Wurf 100 ein")
+
+    db.personalTexts.MIGHT = { "Persönlicher Text" }
+    equal(app.BuildText("MIGHT"), "Persönlicher Text",
+        "Persönlicher Text hat Vorrang")
+    db.personalTexts.MIGHT = nil
+
+    state.target = nil
+    app.localeData.deDE.Racial.Human.GREATER_MIGHT = { "Rassentext für großen Segen" }
+    state.roll = 1
+    equal(app.BuildText("GREATER_MIGHT"),
+        app.localeData.deDE.GreaterBlessings.MIGHT.gruppe[1],
+        "Großer Segen hat Vorrang vor Rassentext")
+
+    db.racialTextChance = 0
+    state.roll = 1
+    local targetFree = app.BuildText("MIGHT")
+    equal(targetFree, ordinary.gruppe[1], "Zieltextfreier allgemeiner Fallback")
+    assert(not targetFree:find("%%s"), "Zieltextfreier Text enthält keinen Platzhalter")
+
+    state.command("language enUS")
+    db.racialTextChance = 50
+    app.localeData.deDE.Racial.Human.SEQUENCE_TEST = { "Deutscher Rassentext" }
+    app.localeData.deDE.Blessings.SEQUENCE_TEST = { "Deutscher allgemeiner Text" }
+    state.roll = { 51, 50 }
+    state.rollIndex = 0
+    equal(app.BuildText("SEQUENCE_TEST"), "Deutscher Rassentext",
+        "Deutscher Rassentext nach fehlendem englischen Text")
+    equal(state.rollIndex, 2, "Sprach-Fallback prüft beide Rassentext-Würfe")
 end)
 
 test("Persönliche Textstrukturen und leere Pools", function()
@@ -530,6 +599,12 @@ test("Beschädigte Daten reparieren und AUTO erhalten", function()
     equal(env.PaladinRP_CharacterDB.chatChannel, "SAY")
     equal(type(env.PaladinRP_CharacterDB.personalTexts), "table")
     assert(#state.messages >= 5, "Reparaturen werden gemeldet")
+    for _, value in ipairs({ -1, 101, 1.5, "bad" }) do
+        local invalid, _, invalidState = newAddon({ racialTextChance = value })
+        invalidState.login()
+        equal(invalid.PaladinRP_CharacterDB.racialTextChance, 40,
+            "Ungültige rassenspezifische Textchance")
+    end
     local repaired, _, repairedState = newAddon("bad database")
     repairedState.login()
     equal(type(repaired.PaladinRP_CharacterDB), "table")
