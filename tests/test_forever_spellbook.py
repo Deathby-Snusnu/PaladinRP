@@ -51,7 +51,9 @@ class ForeverPaladinCoverageTests(unittest.TestCase):
                 self.assertIsNotNone(table, lang)
                 abilities = table.group(1)
                 for key in NEW_ABILITIES:
-                    matches = list(re.finditer(rf"\b{key}\s*=\s*\{{", abilities))
+                    matches = list(
+                        re.finditer(rf"\b{key}\s*=\s*\{{\s*name\s*=", abilities)
+                    )
                     self.assertEqual(len(matches), 1, (lang, key))
                     block = abilities[
                         matches[0].start():abilities.index("\n    },", matches[0].end())
