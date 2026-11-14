@@ -177,3 +177,42 @@ for _, line in ipairs({
     "*prüft den Sitz des Schildriemens und setzt sich dann in Bewegung.*",
     "Wer hinter mir steht, kommt wieder heim. Darauf könnt Ihr mich festnageln.",
 }) do table.insert(dwarf.CRUSADER, line) end
+
+
+-- Editorial pass II: contrasting interpretations of service and devotion.
+local voices = addon.localeData.deDE.Racial
+local additions = {
+    Dwarf = {
+        MIGHT = {
+            "Ich kann Euch keinen leichteren Weg segnen. Nur stärkere Beine dafür.",
+            "*fasst seinen Gefährten kurz am Unterarm und spricht einen rauen Segen.*",
+        },
+        FURY = {
+            "Der Schild ist aus Stahl. Das Versprechen dahinter ist härter.",
+            "*stellt den Schild so, dass zwischen ihm und den Gefährten kein Spalt bleibt.*",
+            "Wenn Ihr Streit sucht, fangt bei mir an. Die anderen haben zu tun.",
+        },
+        WISDOM = {
+            "Mein Großvater sagte: Erst denken, dann schlagen. Meistens hatte er recht.",
+            "*reibt sich nachdenklich über den Bart und spricht einen kurzen Segen.*",
+        },
+    },
+    Human = {
+        MIGHT = {
+            "Eure Stärke hat ihren Wert dort, wo jemand auf sie angewiesen ist.",
+            "*verneigt sich knapp und legt dem Gefährten die Hand auf die Schulter.*",
+        },
+        CRUSADER = {
+            "Ein Eid gilt besonders dann, wenn keiner zusieht.",
+            "*richtet das Wappen auf seiner Brust und tritt aus der Reihe nach vorn.*",
+        },
+    },
+}
+for race, spells in pairs(additions) do
+    for key, lines in pairs(spells) do
+        local entry = voices[race] and voices[race][key]
+        if type(entry) == "table" then
+            for _, line in ipairs(lines) do table.insert(entry, line) end
+        end
+    end
+end

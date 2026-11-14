@@ -268,16 +268,19 @@ test("Rassentexte ohne Ziel fallen auf allgemeine Gruppentexte zurück", functio
         state.race = race
         for _, key in ipairs({ "MIGHT", "WISDOM" }) do
             local text = app.BuildRPText(key)
-            if race == "Dwarf" and key == "MIGHT" then
-                local found = false
-                for _, racialText in ipairs(app.Racial.Dwarf.MIGHT) do
-                    if not racialText:find("%%s")
-                        and text == racialText then
+            local hasTargetlessRacialText, found = false, false
+            local racialPool = app.Racial[race] and app.Racial[race][key] or {}
+            for _, racialText in ipairs(racialPool) do
+                if not racialText:find("%%s") then
+                    hasTargetlessRacialText = true
+                    if text == racialText then
                         found = true
                         break
                     end
                 end
-                assert(found, "Dwarf MIGHT uses a targetless racial text")
+            end
+            if hasTargetlessRacialText then
+                assert(found, race .. " " .. key .. " uses a targetless racial text")
             else
                 equal(text, app.Blessings[key].gruppe[1], race .. " " .. key)
             end

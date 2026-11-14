@@ -43,10 +43,21 @@ class ForeverPaladinCoverageTests(unittest.TestCase):
                 source = (ROOT / "locales" / lang / "Abilities.lua").read_text(
                     encoding="utf-8"
                 )
+                table = re.search(
+                    rf"addon\.localeData\.{re.escape(lang)}\.Abilities\s*=\s*\{{(.*?)^\}}",
+                    source,
+                    re.DOTALL | re.MULTILINE,
+                )
+                self.assertIsNotNone(table, lang)
+                abilities = table.group(1)
                 for key in NEW_ABILITIES:
-                    matches = list(re.finditer(rf"\b{key}\s*=\s*\{{", source))
+                    matches = list(
+                        re.finditer(rf"\b{key}\s*=\s*\{{\s*name\s*=", abilities)
+                    )
                     self.assertEqual(len(matches), 1, (lang, key))
-                    block = source[matches[0].start():source.index("\n    },", matches[0].end())]
+                    block = abilities[
+                        matches[0].start():abilities.index("\n    },", matches[0].end())
+                    ]
                     self.assertIn("gruppe = {", block)
                 self.assertIn('ziel = {', source)
                 self.assertNotIn("Neuer RP-Text", source)

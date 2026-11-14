@@ -305,3 +305,54 @@ addon.localeData.deDE.Abilities = {
         gruppe = { "Für die lange Straße und den nächsten gerechten Kampf.", "Ein stolzes Ross trägt mehr als Rüstung. Es trägt Vertrauen.", "*ruft sein Streitross mit einem feierlichen Zeichen herbei.*", "*prüft den Sattel und richtet die Zügel mit geübter Hand.*" },
     },
 }
+
+
+-- Editorial pass II: practical faith, duty and distinct situations.
+local additions = {
+    HOLY_STRIKE = {
+        "Ich schlage nicht für meinen Stolz. Ich schlage, damit die anderen weiterleben.",
+        "*fasst den Griff fester und führt einen kurzen, entschlossenen Hieb.*",
+        "Das Licht mag den Weg zeigen. Gehen muss ich ihn selbst.",
+    },
+    JUDGEMENT = {
+        "Ein Urteil ist keine Ausrede für Zorn.",
+        "*hält einen Herzschlag inne, bevor er die Waffe senkt.*",
+        "Ich bin kein Richter über Seelen. Nur über das, was Ihr jetzt tut.",
+    },
+    HOLY_SHIELD = {
+        "Dieser Schild ist kein Schmuckstück. Er hat Arbeit vor sich.",
+        "*stellt sich breitbeinig vor seine Gefährten und hebt den Schild.*",
+        "Hinter mir. Und bleibt dort, bis ich etwas anderes sage.",
+    },
+    HAMMER_OF_JUSTICE = {
+        "Genug geredet. Jetzt steht Ihr still.",
+        "*hebt die freie Hand und setzt dem Vormarsch des Feindes ein leuchtendes Zeichen entgegen.*",
+        "Eine Atempause für Eure schlechten Entscheidungen.",
+    },
+    LAYONHANDS = {
+        "Ihr bleibt hier. Die Toten haben heute keinen Anspruch auf Euch.",
+        "*legt die Handflächen auf die Wunde und spricht mit fester, ungewohnt leiser Stimme.*",
+        "Solange ich noch Kraft habe, geb ich Euch etwas davon ab.",
+    },
+    PURIFY = {
+        "Was Euch krank macht, soll an mir nicht vorbeikommen.",
+        "*prüft sorgfältig die Zeichen des Leidens und spricht ein kurzes Gebet.*",
+        "Das Übel ist hartnäckig. Gut, dass ich es auch bin.",
+    },
+    CONSECRATION = {
+        "Hier ziehen wir eine Grenze. Und hier wird sie gehalten.",
+        "*senkt die Waffe zur Erde, während sich Licht über den Boden ausbreitet.*",
+        "Wer diesen Boden betritt, muss an uns vorbei.",
+    },
+    REDEMPTION = {
+        "Wir sind noch nicht fertig miteinander. Steht wieder auf.",
+        "*kniet neben dem Gefallenen und verharrt einen Augenblick in stillem Gebet.*",
+        "Niemand soll allein zurückbleiben. Nicht heute.",
+    },
+}
+for key, lines in pairs(additions) do
+    local entry = addon.localeData.deDE.Abilities[key]
+    if entry and type(entry.gruppe) == "table" then
+        for _, line in ipairs(lines) do table.insert(entry.gruppe, line) end
+    end
+end
