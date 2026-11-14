@@ -174,6 +174,6 @@ for _, line in ipairs({
 }) do table.insert(dwarf.MIGHT, line) end
 for _, line in ipairs({
     "Ein Eid ist schnell gesprochen. Ich bevorzuge es, ihn einzulösen.",
-    "*prüft den Sitz des Schildriemens, bevor er die ersten Schritte macht.*",
+    "*prüft den Sitz des Schildriemens und setzt sich dann in Bewegung.*",
     "Wer hinter mir steht, kommt wieder heim. Darauf könnt Ihr mich festnageln.",
 }) do table.insert(dwarf.CRUSADER, line) end
