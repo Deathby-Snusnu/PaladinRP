@@ -267,7 +267,20 @@ test("Rassentexte ohne Ziel fallen auf allgemeine Gruppentexte zurück", functio
     for _, race in ipairs({ "Human", "Dwarf", "Undead" }) do
         state.race = race
         for _, key in ipairs({ "MIGHT", "WISDOM" }) do
-            equal(app.BuildRPText(key), app.Blessings[key].gruppe[1], race .. " " .. key)
+            local text = app.BuildRPText(key)
+            if race == "Dwarf" and key == "MIGHT" then
+                local found = false
+                for _, racialText in ipairs(app.Racial.Dwarf.MIGHT) do
+                    if not racialText:find("%%s")
+                        and text == racialText then
+                        found = true
+                        break
+                    end
+                end
+                assert(found, "Dwarf MIGHT uses a targetless racial text")
+            else
+                equal(text, app.Blessings[key].gruppe[1], race .. " " .. key)
+            end
         end
     end
 end)
