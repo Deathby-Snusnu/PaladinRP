@@ -163,3 +163,17 @@ addon.localeData.deDE.Racial = {
         },
     },
 }
+
+-- Editorial expansion: dwarven oaths, workmanlike faith and restrained humor.
+local dwarf = addon.localeData.deDE.Racial.Dwarf
+for _, line in ipairs({
+    "Ein Segen ersetzt keine Übung. Aber er hilft, wenn die Hände müde werden.",
+    "*legt die schwielige Hand an den Unterarm des Gefährten und spricht einen knappen Segen.*",
+    "Haltet den Schild hoch. Ich kümmere mich um den Rest des Gebets.",
+    "Meine Ahnen hatten keinen leichten Weg. Sie gingen ihn trotzdem.",
+}) do table.insert(dwarf.MIGHT, line) end
+for _, line in ipairs({
+    "Ein Eid ist schnell gesprochen. Ich bevorzuge es, ihn einzulösen.",
+    "*prüft den Sitz des Schildriemens, bevor er die ersten Schritte macht.*",
+    "Wer hinter mir steht, kommt wieder heim. Darauf könnt Ihr mich festnageln.",
+}) do table.insert(dwarf.CRUSADER, line) end
