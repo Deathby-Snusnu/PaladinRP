@@ -103,6 +103,7 @@ end
 
 local function ShowHelp()
     print("|cffc79c6ePaladin RP|r")
+    print("/prp music on|off|status|chance 0-100")
     print("/prp might")
     print("/prp wisdom")
     print("/prp protection")
@@ -221,6 +222,25 @@ local function HandleAmbient(argument)
     addon.Notify(string.format("Ambient: %s | Chance: %d%% | Intervall: %d-%ds | Kampf: %s", addon.db.ambientEnabled and "on" or "off", addon.db.ambientChance, addon.db.ambientMinInterval, addon.db.ambientMaxInterval, addon.db.ambientInCombat and "on" or "off"))
 end
 
+local function HandleMusic(argument)
+    local action, value = (argument or ""):match("^%s*(%S*)%s*(.-)%s*$")
+    action = (action or ""):lower()
+    if action == "on" or action == "off" then
+        addon.db.musicEnabled = action == "on"
+    elseif action == "chance" then
+        local n = tonumber(value)
+        if not addon.ValidNumber(n, 100) then
+            addon.Notify("music chance 0-100")
+            return
+        end
+        addon.db.musicChance = n
+    elseif action ~= "" and action ~= "status" then
+        addon.Notify("music on|off|status|chance 0-100")
+        return
+    end
+    addon.Notify(string.format("MusicRP: %s | Chance %d%%", addon.db.musicEnabled and "an" or "aus", addon.db.musicChance))
+end
+
 function addon.HandleCommand(message)
     if not addon.ready then
         addon.Notify("Noch nicht geladen. Bitte wartet auf PLAYER_LOGIN.")
@@ -244,6 +264,7 @@ function addon.HandleCommand(message)
         return
     end
     if command == "ambient" then HandleAmbient(argument); return end
+    if command == "music" then HandleMusic(argument); return end
     local handler = handlers[command]
     if handler then
         handler(argument)
