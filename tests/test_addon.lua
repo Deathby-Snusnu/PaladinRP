@@ -846,6 +846,34 @@ test("MusicRP ist optional und in allen drei Sprachen vorhanden", function()
     equal(app.db.musicChance,100)
 end)
 
+test("MusicRP-Chance, Schwellwert und regulärer Fallback", function()
+    local _, app, state = newAddon({
+        musicEnabled = true, musicChance = 0, racialTextChance = 0,
+    })
+    state.login()
+    app.SetOutputLanguage("deDE")
+    state.target = "Anduin"
+    local ordinary = app.localeData.deDE.Blessings
+    local expected = ordinary.MIGHT.ziel[1]:gsub("%%s", "Anduin")
+
+    state.roll = 1
+    equal(app.BuildText("MIGHT"), expected, "Regulärer Text bei 0 Prozent")
+
+    app.db.musicChance = 15
+    state.roll = 15
+    equal(app.BuildText("MIGHT"), app.musicRP.deDE.MIGHT[1],
+        "MusicRP schließt den Schwellwert ein")
+    state.roll = 16
+    equal(app.BuildText("MIGHT"), expected,
+        "Regulärer Text oberhalb des Schwellwerts")
+
+    app.db.musicChance = 100
+    state.roll = 1
+    equal(app.ChooseMusicText("WISDOM"), nil)
+    equal(app.BuildText("WISDOM"), ordinary.WISDOM.ziel[1]:gsub("%%s", "Anduin"),
+        "Regulärer Text ohne MusicRP-Pool")
+end)
+
 test("Persönliche Paladin-Texte bleiben vor MusicRP", function()
     local _, app, state=newAddon({musicEnabled=true,musicChance=100,
         personalTexts={HOLY_STRIKE={"Mein eigener Lichtschlag."}}})
