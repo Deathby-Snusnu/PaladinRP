@@ -1,3 +1,18 @@
+## MusicRP: optionale Songmotive
+
+Sechs neue, eigenständig formulierte Musik-Anspielungen für Paladine (z. B. Bromli Fassbart) in **deDE, enUS und frFR**.
+Die Referenzen nennen Band und Song intern, übernehmen aber keine geschützten Songtextzeilen.
+Jeder Pool bietet eine gesprochene und eine `/me`-Variante. Auch Bogen- und Schusswaffen-Jäger werden nicht auf einen Waffentyp festgelegt.
+
+```text
+/prp music on
+/prp music chance 15
+/prp music status
+/prp music off
+```
+
+MusicRP ist **standardmäßig ausgeschaltet**. Bei einem aktivierten MusicRP werden passende Texte nach den persönlichen Texten und vor den regulären Rassen-/Klassentexten ausgewählt. Die normale RP-Ausgabechance, Cooldown- und Chatprüfung gelten weiterhin. Fehlt eine MusicRP-Variante, bleiben die bisherigen Texte unverändert verfügbar.
+
 # Paladin RP
 
 ## Beschreibung
