@@ -15,6 +15,8 @@ addon.defaults = {
     -- ein Text ausgegeben wird.
     textChance = 30,
     racialTextChance = 40,
+    musicEnabled = false,
+    musicChance = 15,
 
     -- Mindestabstand zwischen zwei Textnachrichten.
     cooldown = 20,
