@@ -66,6 +66,8 @@ function addon.InitializeDatabase()
         end
     end
     if db.ambientMaxInterval < db.ambientMinInterval then db.ambientMaxInterval = db.ambientMinInterval end
+    if type(db.musicEnabled) ~= "boolean" then db.musicEnabled = false end
+    if not addon.ValidNumber(db.musicChance, 100) then db.musicChance = 15 end
     if type(db.ambientEnabled) ~= "boolean" then db.ambientEnabled = addon.defaults.ambientEnabled end
     if type(db.ambientInCombat) ~= "boolean" then db.ambientInCombat = addon.defaults.ambientInCombat end
     addon.runtimeOutputLanguage = db.outputLanguage

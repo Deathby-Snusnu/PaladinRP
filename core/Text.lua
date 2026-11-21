@@ -139,6 +139,10 @@ function addon.BuildText(key)
         local text = ChooseText(personal, targetName)
         if text then return text end
     end
+    if addon.ChooseMusicText then
+        local music = addon.ChooseMusicText(key)
+        if music then return music end
+    end
     local pool = addon.GetTextPool(key)
     local text = ChooseText(pool, targetName)
     if text or targetName then return text end
