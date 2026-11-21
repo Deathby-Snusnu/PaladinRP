@@ -819,6 +819,40 @@ test("Persönliche Richturteil-Texte und alter Hammer bleiben erhalten", functio
     equal(state.sent[#state.sent].text, "Eigener Richturteil-Spruch")
 end)
 
+
+test("MusicRP ist optional und in allen drei Sprachen vorhanden", function()
+    local _, app, state = newAddon({textChance=100,cooldown=0})
+    state.login()
+    equal(app.db.musicEnabled,false)
+    equal(app.db.musicChance,15)
+    state.command("music on")
+    state.command("music chance 100")
+    equal(app.db.musicEnabled,true)
+    equal(app.db.musicChance,100)
+    for _, lang in ipairs({"deDE","enUS","frFR"}) do
+        app.SetOutputLanguage(lang)
+        for key, ref in pairs(app.musicRPReferences) do
+            local lines=app.musicRP[lang][key]
+            assert(type(ref.song)=="string" and type(ref.artist)=="string")
+            assert(type(lines)=="table" and #lines==2)
+            assert(lines[2]:sub(1,1)=="*" and lines[2]:sub(-1)=="*")
+            assert(#lines[1]<=255 and #lines[2]<=255)
+            equal(app.ChooseMusicText(key),lines[1])
+        end
+    end
+    state.command("music off")
+    equal(app.ChooseMusicText("HOLY_LIGHT"),nil)
+    state.command("music chance 101")
+    equal(app.db.musicChance,100)
+end)
+
+test("Persönliche Paladin-Texte bleiben vor MusicRP", function()
+    local _, app, state=newAddon({musicEnabled=true,musicChance=100,
+        personalTexts={HOLY_STRIKE={"Mein eigener Lichtschlag."}}})
+    state.login()
+    equal(app.BuildText("HOLY_STRIKE"),"Mein eigener Lichtschlag.")
+end)
+
 local failures = 0
 for _, entry in ipairs(tests) do
     local ok, err = pcall(entry.callback)
