@@ -834,9 +834,11 @@ test("MusicRP ist optional und in allen drei Sprachen vorhanden", function()
         for key, ref in pairs(app.musicRPReferences) do
             local lines=app.musicRP[lang][key]
             assert(type(ref.song)=="string" and type(ref.artist)=="string")
-            assert(type(lines)=="table" and #lines==2)
-            assert(lines[2]:sub(1,1)=="*" and lines[2]:sub(-1)=="*")
-            assert(#lines[1]<=255 and #lines[2]<=255)
+            assert(type(lines)=="table" and #lines>=2 and #lines%2==0)
+            for i, line in ipairs(lines) do
+                assert(#line<=255)
+                if i%2==0 then assert(line:sub(1,1)=="*" and line:sub(-1)=="*") end
+            end
             equal(app.ChooseMusicText(key),lines[1])
         end
     end
