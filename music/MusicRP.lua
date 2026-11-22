@@ -29,6 +29,20 @@ addon.musicRP.enUS.LAYONHANDS = { "I cannot stop the rain. But I will stay besid
 addon.musicRP.frFR.LAYONHANDS = { "Je ne peux arrêter la pluie. Mais je reste à vos côtés.", "*pose doucement ses mains sur les épaules du compagnon.*" }
 
 -- Called after personal texts, before ordinary class/racial text selection.
+-- Extra original spoken lines and actions for existing music-inspired keys.
+table.insert(addon.musicRP.deDE.HOLY_STRIKE, "Wenn die Nacht am dichtesten ist, braucht es nur einen entschlossenen Funken.")
+table.insert(addon.musicRP.deDE.HOLY_STRIKE, "*senkt den Hammer wie einen Sonnenstrahl durch die Wolken.*")
+table.insert(addon.musicRP.enUS.HOLY_STRIKE, "The thickest night yields to one determined spark.")
+table.insert(addon.musicRP.enUS.HOLY_STRIKE, "*brings the hammer down like sunlight breaking cloud.*")
+table.insert(addon.musicRP.frFR.HOLY_STRIKE, "La nuit la plus sombre cède à une étincelle résolue.")
+table.insert(addon.musicRP.frFR.HOLY_STRIKE, "*abat son marteau tel un rayon traversant les nuages.*")
+table.insert(addon.musicRP.deDE.REDEMPTION, "Ein verlorener Augenblick muss kein verlorenes Leben bleiben.")
+table.insert(addon.musicRP.deDE.REDEMPTION, "*kniet schweigend nieder und bietet dem Schicksal die Stirn.*")
+table.insert(addon.musicRP.enUS.REDEMPTION, "A lost moment need not become a lost life.")
+table.insert(addon.musicRP.enUS.REDEMPTION, "*kneels in silence and defies fate.*")
+table.insert(addon.musicRP.frFR.REDEMPTION, "Un instant perdu ne doit pas devenir une vie perdue.")
+table.insert(addon.musicRP.frFR.REDEMPTION, "*s'agenouille en silence et défie le destin.*")
+
 function addon.ChooseMusicText(key)
     if not addon.db or not addon.db.musicEnabled then return nil end
     local chance = addon.db.musicChance or 0
