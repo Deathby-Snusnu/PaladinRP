@@ -1,3 +1,11 @@
+## Erweiterte FURY-Textsammlung (Entwicklungsstand)
+
+Für `Siegel des Furors` (`FURY`) wurden die **bestehenden** Rollenspieltexte in `locales/deDE/Seals.lua`, `locales/enUS/Seals.lua` und `locales/frFR/Seals.lua` um eigenständige, volkstümliche Schutz- und Standhaftigkeitsmotive ergänzt. Jede Sprache hat mindestens 17 Zeilen, darunter vier `*...*`-RP-Aktionen. Der Zauber bleibt ein Selbstzauber (`mode="S"`); die neuen Texte enthalten daher keine Zielnamen und keine `%s`-Platzhalter.
+
+Der bestehende Schlüssel `RIGHTEOUS_FURY` bleibt unverändert und ist **nicht** mit `FURY` gleichzusetzen. Persönliche Textüberschreibungen, MusicRP-Priorität, Chat-Cooldown und das AddOn-Ereignissystem bleiben unverändert. Der neue Test `tests/test_fury_seal_voices.py` prüft Sprachabdeckung, sicherheitsrelevante Textgrenzen und die Selbstzauber-Einordnung. Keine automatische Ausgabe durch Buff-Ereignisse.
+
+**Veröffentlichung:** Noch keine neue TOC-Version und kein Release: zunächst CI sowie den Ingame-Test mit `FURY` abwarten und anschließend Versionierung und RPAddOns-Submodulstand gemeinsam anpassen.
+
 ## MusicRP: optionale Songmotive
 
 Sechs neue, eigenständig formulierte Musik-Anspielungen für Paladine (z. B. Bromli Fassbart) in **deDE, enUS und frFR**.
