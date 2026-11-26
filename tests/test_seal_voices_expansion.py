@@ -36,7 +36,19 @@ class PaladinSealVoices(unittest.TestCase):
             for key in KEYS:
                 with self.subTest(language=language, key=key):
                     lines = get_lines(source, key)
-                    self.assertGreaterEqual(len(lines), 4)
+                    if key == "SEAL_OF_JUSTICE":
+                        minimum = 16
+                    elif language == "deDE":
+                        minimum = {
+                            "RIGHTEOUSNESS": 9,
+                            "COMMAND": 9,
+                            "WISDOM": 8,
+                            "LIGHT": 8,
+                            "CRUSADER": 11,
+                        }[key]
+                    else:
+                        minimum = 5
+                    self.assertGreaterEqual(len(lines), minimum)
                     self.assertEqual(len(lines), len(set(lines)))
                     self.assertTrue(all("%s" not in line for line in lines))
                     self.assertTrue(all(len(line.encode("utf-8")) <= 255 for line in lines))
