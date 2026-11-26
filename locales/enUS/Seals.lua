@@ -19,7 +19,7 @@ addon.localeData.enUS.Seals = {RIGHTEOUSNESS={name="Seal of Righteousness",grupp
             "The dawn may be late. My shield will not be.",
             "Even the fiercest storm breaks against this shield.",
             "I am the barrier between danger and hope.",
-            "May the ancestors see that this dwarf does not yield.",
+            "May the ancestors see that I do not yield.",
             "For Khaz Modan, for our companions, and for another dawn!",
             "*plants both boots and raises the shield.*",
             "*traces a brief sign of the Light upon the breastplate.*",
