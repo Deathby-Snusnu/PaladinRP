@@ -1,3 +1,15 @@
+## Erweiterte Siegeltexte: Gerechtigkeit und weitere Siegel (Entwurf)
+
+Die sieben vorhandenen Siegel-Schlüssel bleiben bestehen. Dieser Änderungsstand ergänzt ausschließlich die vorhandenen Textpools in den drei Locale-Dateien `locales/{deDE,enUS,frFR}/Seals.lua`:
+
+- `SEAL_OF_JUSTICE` (Siegel der Gerechtigkeit): **12 zusätzliche Zeilen pro Sprache**, davon vier als beschreibende `*...*`-Emotes. Die bisherigen vier Zeilen bleiben erhalten.
+- `RIGHTEOUSNESS`, `COMMAND`, `WISDOM`, `LIGHT`, `CRUSADER`: zusätzliche gesprochene Texte, deutsch je drei und englisch/französisch je vier Varianten. Die bisher knappen Übersetzungen werden dadurch abwechslungsreicher.
+- `FURY` wurde bereits in einem vorangehenden PR erweitert und bleibt hier unverändert. `RIGHTEOUS_FURY` bleibt ein eigener Schlüssel. Der Alias `SEAL_OF_WISDOM` bleibt intakt.
+
+Alle neuen Zeilen sind eigenständig verfasst und bewahren die bestehenden Spielregeln: keine Zielnamen bei den Selbstzaubern, keine Änderung an Chat-API, Abklingzeiten, MusicRP oder geschützten WoW-Ereignissen. Der neue Test `tests/test_seal_voices_expansion.py` prüft die Locale-Pools, Nachrichtenlängen und Selbstzauber-Einordnung.
+
+**Veröffentlichung:** Dies ist ein vorbereiteter Text-PR, noch keine neue Release-Version. Vor dem Merge sind CI und der Ingame-Test mit `SEAL_OF_JUSTICE` sinnvoll; anschließend die Versionierung gemeinsam mit RPAddOns/RPTextStudio abstimmen.
+
 ## Erweiterte FURY-Textsammlung (Entwicklungsstand)
 
 Für `Siegel des Furors` (`FURY`) wurden die **bestehenden** Rollenspieltexte in `locales/deDE/Seals.lua`, `locales/enUS/Seals.lua` und `locales/frFR/Seals.lua` um eigenständige, volkstümliche Schutz- und Standhaftigkeitsmotive ergänzt. Jede Sprache hat mindestens 17 Zeilen, darunter vier `*...*`-RP-Aktionen. Der Zauber bleibt ein Selbstzauber (`mode="S"`); die neuen Texte enthalten daher keine Zielnamen und keine `%s`-Platzhalter.
