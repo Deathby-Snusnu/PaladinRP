@@ -195,3 +195,46 @@ addon.localeData.frFR.Abilities = {HAMMER_OF_WRATH={name="Marteau de courroux",z
         gruppe = { "Pour la longue route et le prochain combat juste.", "Un fier destrier porte plus qu'une armure. Il porte la confiance.", "*appelle son destrier d'un signe solennel.*", "*vérifie la selle et rassemble les rênes d'un geste assuré.*" },
     },
 }
+
+-- Additional trilingual protection and resurrection voice variants.
+-- Loaded after the original pools; preserved existing speech and gestures.
+do
+    local pool = addon.localeData.frFR.Abilities.RIGHTEOUS_FURY.gruppe
+    for _, line in ipairs({
+        "Un pas devant mes amis, et c'est moi que frappe la tempête.",
+        "Mon bouclier n'est pas une parure. Il marque une limite.",
+        "La fureur peut rugir. Le devoir doit parler plus fort.",
+        "Pour franchir cette ligne, il faut d'abord franchir mon serment.",
+        "La Lumière demande de la fermeté, pas de l'imprudence.",
+        "Un nain ne recule que pour mieux prendre son élan.",
+        "Derrière mon bouclier, il reste une place pour l'espoir.",
+        "Je tiens le front. Restez unis.",
+        "Mon marteau est lourd ; ma parole l'est davantage.",
+        "Pour chaque ami derrière moi, je tiens deux fois plus fermement.",
+        "*plante ses bottes au sol et lève son bouclier devant ses compagnons.*",
+        "*pose une main sur le bord du bouclier et murmure un bref serment.*",
+    }) do pool[#pool + 1] = line end
+end
+do
+    local pool = addon.localeData.frFR.Abilities.REDEMPTION.gruppe
+    for _, line in ipairs({
+        "Certains voyages ne doivent pas encore prendre fin.",
+        "Nous n'abandonnons personne tant que la Lumière répond.",
+        "Tous les miracles n'ont pas besoin d'un grand cri.",
+        "*s'agenouille près de la personne tombée et tend les mains en silence.*",
+        "*retire son casque et murmure une prière pour le retour.*",
+    }) do pool[#pool + 1] = line end
+end
+do
+    local pool = addon.localeData.frFR.Abilities.REDEMPTION.ziel
+    for _, line in ipairs({
+        "%s, votre place près du feu vous attend toujours.",
+        "Une nouvelle aube vous attend encore, %s.",
+        "%s, votre histoire mérite un autre chapitre.",
+        "Vous nous entendez, %s ? Vos compagnons sont là.",
+        "Encore un souffle, %s. Le chemin du retour commence.",
+        "%s, la Lumière vous invite à revenir.",
+        "Revenez parmi nous, %s. Notre tâche n'est pas achevée.",
+        "Debout, %s ! Je porte le bouclier, vous portez le courage.",
+    }) do pool[#pool + 1] = line end
+end
