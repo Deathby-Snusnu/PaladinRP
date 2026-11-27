@@ -1,3 +1,15 @@
+## Entwicklungsstand: Zorn der Gerechtigkeit und Erlösung (trilingual)
+
+Die Textpools der bereits registrierten Paladin-Fähigkeiten `RIGHTEOUS_FURY` (Zorn der Gerechtigkeit, Selbstzauber `mode="S"`) und `REDEMPTION` (Erlösung, freundliches Ziel `mode="F"`) wurden in `locales/deDE/Abilities.lua`, `locales/enUS/Abilities.lua` und `locales/frFR/Abilities.lua` additiv erweitert.
+
+- `RIGHTEOUS_FURY`: zwölf zusätzliche RP-Varianten je Sprache, davon zwei `*...*`-Gesten. Keine `%s`-Zielnamen bei Selbstzaubern.
+- `REDEMPTION`: acht neue zielabhängige Ansprachen mit `%s` und fünf allgemeine Texte/Gesten je Sprache. Bei nicht auflösbarem Zielnamen wählt der vorhandene Fallback allgemeine Texte.
+- `FURY` (Siegel des Furors) bleibt ein eigener unveränderter Schlüssel.
+- Persönliche Texte, MusicRP, Cooldowns und geschützte Ereignis-APIs wurden nicht geändert. Alle Formulierungen sind eigenständig verfasst.
+- Regressionstest: `tests/test_righteous_fury_redemption_voices.py`. Keine automatische Buff-Bedankung.
+
+Diese Arbeit ist ein PR-Entwurf, kein freigegebenes Update. Vor einem Release sind GitHub-CI und ein WoW-Forever-Ingame-Test erforderlich; die TOC-Version bleibt bis zur koordinierten Freigabe mit RPAddOns/RPTextStudio unverändert.
+
 ## Erweiterte Siegeltexte: Gerechtigkeit und weitere Siegel (Entwurf)
 
 Die sieben vorhandenen Siegel-Schlüssel bleiben bestehen. Dieser Änderungsstand ergänzt ausschließlich die vorhandenen Textpools in den drei Locale-Dateien `locales/{deDE,enUS,frFR}/Seals.lua`:
