@@ -196,3 +196,46 @@ addon.localeData.enUS.Abilities = {HAMMER_OF_WRATH={name="Hammer of Wrath",ziel=
         gruppe = { "For the long road and the next just fight.", "A proud steed bears more than armor. It bears trust.", "*summons a charger with a solemn sign.*", "*checks the saddle and gathers the reins with practiced hands.*" },
     },
 }
+
+-- Additional trilingual protection and resurrection voice variants.
+-- Loaded after the original pools; preserved existing speech and gestures.
+do
+    local pool = addon.localeData.enUS.Abilities.RIGHTEOUS_FURY.gruppe
+    for _, line in ipairs({
+        "One step before my friends, and the storm strikes me instead.",
+        "My shield is no ornament. It marks a boundary.",
+        "Fury may roar. Duty must speak louder.",
+        "To pass this line, you must first pass my oath.",
+        "The Light asks for resolve, not recklessness.",
+        "A dwarf only steps back to gather more momentum.",
+        "There is room for hope behind my shield.",
+        "I hold the front. You hold together.",
+        "My hammer is heavy; my word is heavier.",
+        "For every friend behind me I stand twice as firm.",
+        "*plants both boots and raises the shield before the companions.*",
+        "*rests a free hand on the shield rim and whispers a brief oath.*",
+    }) do pool[#pool + 1] = line end
+end
+do
+    local pool = addon.localeData.enUS.Abilities.REDEMPTION.gruppe
+    for _, line in ipairs({
+        "Some journeys are not meant to end yet.",
+        "We leave no one behind while the Light still answers.",
+        "Not every miracle needs a mighty shout.",
+        "*kneels beside the fallen and holds both hands quietly above them.*",
+        "*removes the helm and offers a quiet prayer for a return.*",
+    }) do pool[#pool + 1] = line end
+end
+do
+    local pool = addon.localeData.enUS.Abilities.REDEMPTION.ziel
+    for _, line in ipairs({
+        "%s, we have kept your place at the fire.",
+        "Another dawn still waits for you, %s.",
+        "%s, your story deserves another chapter.",
+        "Can you hear us, %s? Your companions are here.",
+        "One more breath, %s. Then the road back begins.",
+        "%s, the Light offers no farewell, but an invitation.",
+        "Return to us, %s. Our work is not finished.",
+        "Up you get, %s! I bear the shield; you bear the courage.",
+    }) do pool[#pool + 1] = line end
+end
