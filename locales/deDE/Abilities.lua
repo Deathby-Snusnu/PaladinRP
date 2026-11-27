@@ -356,3 +356,46 @@ for key, lines in pairs(additions) do
         for _, line in ipairs(lines) do table.insert(entry.gruppe, line) end
     end
 end
+
+-- Additional trilingual protection and resurrection voice variants.
+-- Loaded after the original pools; preserved existing speech and gestures.
+do
+    local pool = addon.localeData.deDE.Abilities.RIGHTEOUS_FURY.gruppe
+    for _, line in ipairs({
+        "Ein Schritt vor meine Gefährten, und der ganze Sturm trifft mich.",
+        "Mein Schild ist kein Schmuckstück. Er ist eine Grenze.",
+        "Zorn darf laut sein. Meine Pflicht muss stärker sein.",
+        "Wer hier durchwill, muss zuerst an meinem Eid vorbei.",
+        "Das Licht fordert keinen Leichtsinn, sondern Standhaftigkeit.",
+        "Ein Zwerg weicht höchstens zurück, um mehr Anlauf zu nehmen.",
+        "Hinter meinem Schild bleibt Platz für Hoffnung.",
+        "Ich halte die Front. Ihr haltet zusammen.",
+        "Mein Hammer ist schwer, mein Wort schwerer.",
+        "Für jeden Gefährten hinter mir stehe ich doppelt fest.",
+        "*stemmt die Stiefel in den Boden und hebt den Schild vor die Gefährten.*",
+        "*legt die freie Hand auf den Schildrand und spricht einen knappen Schwur.*",
+    }) do pool[#pool + 1] = line end
+end
+do
+    local pool = addon.localeData.deDE.Abilities.REDEMPTION.gruppe
+    for _, line in ipairs({
+        "Manche Wege dürfen noch nicht enden.",
+        "Wir lassen niemanden zurück, solange das Licht noch antwortet.",
+        "Nicht alle Wunder brauchen einen lauten Ruf.",
+        "*kniet neben der gefallenen Person und hält schweigend die Hände über ihr.*",
+        "*nimmt den Helm ab und spricht ein leises Gebet für die Rückkehr.*",
+    }) do pool[#pool + 1] = line end
+end
+do
+    local pool = addon.localeData.deDE.Abilities.REDEMPTION.ziel
+    for _, line in ipairs({
+        "%s, wir haben den Platz am Feuer noch nicht vergeben.",
+        "Noch wartet ein neuer Morgen auf Euch, %s.",
+        "%s, Eure Geschichte braucht ein weiteres Kapitel.",
+        "Hört Ihr die Stimmen, %s? Eure Gefährten sind hier.",
+        "Ein Atemzug noch, %s. Dann beginnt der Rückweg.",
+        "%s, das Licht ist kein Abschied. Es ist eine Einladung.",
+        "Kehrt zurück zu uns, %s. Die Arbeit ist noch nicht getan.",
+        "Aufstehen, %s! Ich trage den Schild, Ihr den Mut.",
+    }) do pool[#pool + 1] = line end
+end
