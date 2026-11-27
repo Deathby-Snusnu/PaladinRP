@@ -25,6 +25,9 @@ addon.localeData.deDE.Seals = {
             "Mein Schlag treffe nur, was das Recht herausfordert.",
             "Möge meine Waffe dem Recht des Lichts dienen.",
             "Gerechtigkeit verlangt einen festen Arm.",
+            "Recht ohne Mitgefühl ist nur ein scharfes Schwert.",
+            "Ein gerechter Hieb braucht einen ruhigen Geist.",
+            "Meine Waffe dient dem Eid, nicht dem Zorn.",
         },
     },
 
@@ -38,6 +41,9 @@ addon.localeData.deDE.Seals = {
             "Mein Schlag soll die Reihen des Feindes erschüttern.",
             "Möge das Licht jeden meiner Hiebe leiten.",
             "Für meine Gefährten und gegen unsere Feinde!",
+            "Kein Befehl übertönt das Gewissen.",
+            "Ich führe diese Waffe, doch der Eid führt mich.",
+            "Vorwärts, solange der Mut der Vernunft folgt.",
         },
     },
 
@@ -50,6 +56,9 @@ addon.localeData.deDE.Seals = {
             "Ein besonnener Geist führt die Hand sicher.",
             "Möge ich erkennen, bevor ich handle.",
             "Das Licht lehre mich, wann ich sprechen und wann ich schweigen soll.",
+            "Eine kluge Pause kann einen langen Kampf ersparen.",
+            "Nicht jedes Problem lässt sich mit dem Hammer richten.",
+            "Das Licht gebe mir Urteilskraft, bevor es mir Kraft gibt.",
         },
     },
 
@@ -62,6 +71,9 @@ addon.localeData.deDE.Seals = {
             "Im Licht finde ich den Mut, weiterzukämpfen.",
             "Möge meine Kraft aus dem Licht entspringen.",
             "Das Licht verlässt jene nicht, die standhaft bleiben.",
+            "Ein Funken Hoffnung kann eine ganze Nacht erhellen.",
+            "Ich trage Licht, nicht damit ich glänze, sondern damit andere sehen.",
+            "Wo die Schatten länger werden, halte ich die Flamme.",
         },
     },
 
@@ -77,6 +89,9 @@ addon.localeData.deDE.Seals = {
             "Kein Hindernis hält jene auf, die ihrem Eid folgen.",
             "Ich weiche nicht von meinem Pfad ab.",
             "Mit festem Schritt dem Ziel entgegen.",
+            "Ich ziehe nicht aus, um Recht zu behalten, sondern um Recht zu schützen.",
+            "Ein fester Schwur braucht noch festere Stiefel.",
+            "Der Weg ist weit. Der Eid reist mit.",
         },
     },
 
@@ -116,5 +131,19 @@ addon.localeData.deDE.Seals = {
 addon.localeData.deDE.Seals.SEAL_OF_WISDOM = addon.localeData.deDE.Seals.WISDOM
 addon.localeData.deDE.Seals.SEAL_OF_JUSTICE = {
     name = "Siegel der Gerechtigkeit",
-    gruppe = { "Ein Siegel ist kein Schmuck. Es ist ein Versprechen.", "Heute sollen selbst die schnellen Füße innehalten.", "*zeichnet ein strahlendes Siegel über der erhobenen Waffe.*", "*legt die freie Hand auf den Schwertknauf und spricht einen kurzen Eid.*" },
+    gruppe = { "Ein Siegel ist kein Schmuck. Es ist ein Versprechen.", "Heute sollen selbst die schnellen Füße innehalten.", "*zeichnet ein strahlendes Siegel über der erhobenen Waffe.*", "*legt die freie Hand auf den Schwertknauf und spricht einen kurzen Eid.*",
+    "Flieht nur. Die Gerechtigkeit hat einen langen Atem.",
+    "Ein gerechtes Urteil braucht keine Eile.",
+    "Man kann dem Licht den Rücken kehren, aber nicht der Verantwortung.",
+    "Mein Hammer ist kein Richter. Mein Eid erinnert mich daran.",
+    "Kein schneller Schritt überholt die eigene Schuld.",
+    "Ich fordere keine Unterwerfung, sondern dass Ihr innehaltet.",
+    "Der Weg der Gerechtigkeit beginnt manchmal mit einem einzigen Halt.",
+    "Ein Siegel zum Binden, nicht zum Prahlen.",
+    "*zeichnet mit dem Hammer einen goldenen Halbkreis in die Luft.*",
+    "*schlägt den Schildrand an und steht unbewegt vor dem Fluchtweg.*",
+    "*streicht mit dem Daumen über das leuchtende Siegel am Handschuh.*",
+    "*senkt die Waffe einen Augenblick, als würde ein stilles Urteil gesprochen.*",
+    },
+
 }
